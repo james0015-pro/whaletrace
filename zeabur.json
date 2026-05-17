@@ -1,6 +1,1 @@
-{
-  "build": {
-    "command": "npm install && npm run build"
-  },
-  "spa": true
-}
+{"build":{"command":"npm run build:prod"},"output":"dist","spa":true}
