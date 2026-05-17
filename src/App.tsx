@@ -28,7 +28,7 @@ export default function App() {
     <I18nextProvider i18n={i18n}>
       <Suspense fallback={<LoadingFallback />}>
         <QueryProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/whaletrace">
             <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#000' }}>
               <TopNavBar />
               <div style={{ flex: 1, overflow: 'hidden' }}>
