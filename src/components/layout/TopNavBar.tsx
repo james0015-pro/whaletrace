@@ -1,82 +1,89 @@
-import { Search, Bell, Menu } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { cn } from '@/lib/utils';
-import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
-interface TopNavBarProps {
-  onMenuClick: () => void;
-}
+// Simulated ticker tape data
+const TAPE_DATA = [
+  { ticker: 'AAPL', price: '196.34', change: '+2.15', up: true },
+  { ticker: 'NVDA', price: '1,036.80', change: '+24.50', up: true },
+  { ticker: 'MSFT', price: '412.11', change: '-3.22', up: false },
+  { ticker: 'TSLA', price: '248.90', change: '+8.40', up: true },
+  { ticker: 'META', price: '585.21', change: '-5.10', up: false },
+  { ticker: 'AMZN', price: '197.82', change: '+1.33', up: true },
+  { ticker: 'GOOGL', price: '175.44', change: '-0.88', up: false },
+  { ticker: 'JPM', price: '224.67', change: '+3.01', up: true },
+  { ticker: 'V', price: '310.92', change: '+1.45', up: true },
+  { ticker: 'WMT', price: '78.56', change: '-0.32', up: false },
+];
 
-export function TopNavBar({ onMenuClick }: TopNavBarProps) {
+export function TopNavBar() {
   const { t } = useTranslation();
+  const [time, setTime] = useState('');
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      setTime(d.toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/New_York' }) + ' ET');
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <header
-      className={cn(
-        'sticky top-0 z-40 flex items-center gap-3 px-4 sm:px-6',
-        'h-14 sm:h-[56px]',
-        'bg-canvas/80 backdrop-blur-md',
-        'border-b border-border-subtle'
-      )}
+      style={{
+        height: 'var(--bl-topbar-h)',
+        background: 'var(--bl-bg-panel)',
+        borderBottom: '1px solid var(--bl-border)',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+      }}
     >
-      {/* Mobile menu trigger */}
-      <button
-        onClick={onMenuClick}
-        className="sm:hidden p-2 -ml-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label={t('topBar.openMenu')}
-      >
-        <Menu size={20} />
-      </button>
-
-      {/* Logo */}
-      <a href="/" className="flex items-center gap-2 flex-shrink-0">
-        <span className="text-xl" role="img" aria-label="whale">
-          🐋
-        </span>
-        <span className="font-semibold text-text-primary text-base hidden xs:inline">
-          WhaleTrace
-        </span>
-      </a>
-
-      {/* Spacer */}
-      <div className="flex-1" />
-
-      {/* Language switcher */}
-      <LanguageSwitcher />
-
-      {/* Quick search */}
-      <div className="relative hidden md:block">
-        <Search
-          size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-        />
-        <input
-          type="text"
-          placeholder={t('topBar.search')}
-          className={cn(
-            'w-56 lg:w-72 h-9 pl-9 pr-3',
-            'bg-surface border border-border-default rounded-input',
-            'text-sm text-text-primary placeholder:text-text-muted',
-            'focus:outline-none focus:border-green-primary focus:ring-1 focus:ring-green-primary/20',
-            'transition-colors'
-          )}
-        />
+      {/* Left: logo */}
+      <div style={{
+        padding: '0 8px', color: 'var(--bl-amber)', fontWeight: 700,
+        fontSize: 'var(--bl-font-lg)', borderRight: '1px solid var(--bl-border)',
+        letterSpacing: 1, height: '100%', display: 'flex', alignItems: 'center',
+      }}>
+        WHALETRACE
       </div>
 
-      {/* Notification bell */}
-      <button
-        className="relative p-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label={t('topBar.notifications')}
-      >
-        <Bell size={18} />
-        {/* Notification dot */}
-        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-primary rounded-full" />
-      </button>
-
-      {/* User avatar placeholder */}
-      <div className="w-8 h-8 rounded-full bg-elevated border border-border-default flex items-center justify-center text-sm text-text-tertiary">
-        ?
+      {/* Ticker tape */}
+      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+        <div style={{
+          display: 'flex', gap: 24, padding: '0 12px', animation: 'scroll-tape 60s linear infinite',
+          width: 'max-content',
+        }}>
+          {[...TAPE_DATA, ...TAPE_DATA].map((q, i) => (
+            <span key={i} style={{ fontSize: 'var(--bl-font)', fontFamily: 'JetBrains Mono, monospace', display: 'flex', gap: 6, alignItems: 'center' }}>
+              <span style={{ color: 'var(--bl-white)', fontWeight: 500 }}>{q.ticker}</span>
+              <span style={{ color: 'var(--bl-white)' }}>{q.price}</span>
+              <span style={{ color: q.up ? 'var(--bl-green)' : 'var(--bl-red)', fontWeight: 600 }}>
+                {q.up ? '+' : ''}{q.change}%
+              </span>
+            </span>
+          ))}
+        </div>
       </div>
+
+      {/* Right: clock */}
+      <div style={{
+        padding: '0 10px', color: 'var(--bl-white)', fontSize: 'var(--bl-font)',
+        borderLeft: '1px solid var(--bl-border)', fontFamily: 'JetBrains Mono, monospace',
+        height: '100%', display: 'flex', alignItems: 'center', gap: 8,
+      }}>
+        <span style={{ color: 'var(--bl-amber)' }}>●</span>
+        <span>{time}</span>
+      </div>
+
+      <style>{`
+        @keyframes scroll-tape {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </header>
   );
 }
