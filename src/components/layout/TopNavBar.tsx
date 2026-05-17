@@ -1,11 +1,15 @@
 import { Search, Bell, Menu } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
 interface TopNavBarProps {
   onMenuClick: () => void;
 }
 
 export function TopNavBar({ onMenuClick }: TopNavBarProps) {
+  const { t } = useTranslation();
+
   return (
     <header
       className={cn(
@@ -19,7 +23,7 @@ export function TopNavBar({ onMenuClick }: TopNavBarProps) {
       <button
         onClick={onMenuClick}
         className="sm:hidden p-2 -ml-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label="開啟選單"
+        aria-label={t('topBar.openMenu')}
       >
         <Menu size={20} />
       </button>
@@ -37,6 +41,9 @@ export function TopNavBar({ onMenuClick }: TopNavBarProps) {
       {/* Spacer */}
       <div className="flex-1" />
 
+      {/* Language switcher */}
+      <LanguageSwitcher />
+
       {/* Quick search */}
       <div className="relative hidden md:block">
         <Search
@@ -45,7 +52,7 @@ export function TopNavBar({ onMenuClick }: TopNavBarProps) {
         />
         <input
           type="text"
-          placeholder="搜尋股票代號或公司..."
+          placeholder={t('topBar.search')}
           className={cn(
             'w-56 lg:w-72 h-9 pl-9 pr-3',
             'bg-surface border border-border-default rounded-input',
@@ -59,7 +66,7 @@ export function TopNavBar({ onMenuClick }: TopNavBarProps) {
       {/* Notification bell */}
       <button
         className="relative p-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label="通知"
+        aria-label={t('topBar.notifications')}
       >
         <Bell size={18} />
         {/* Notification dot */}

@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
   Zap,
@@ -7,21 +7,34 @@ import {
   Settings,
   X,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 
-const NAV_ITEMS = [
-  { to: '/', label: '交易動態', icon: LayoutDashboard },
-  { to: '/signals', label: '群組信號', icon: Zap },
-  { to: '/institutions', label: '機構 13F', icon: Building2 },
-  { to: '/watchlist', label: '我的關注', icon: Star },
-  { to: '/settings', label: '設定', icon: Settings },
-];
+const NAV_ICONS = {
+  '/': LayoutDashboard,
+  '/signals': Zap,
+  '/institutions': Building2,
+  '/watchlist': Star,
+  '/settings': Settings,
+};
+
+const NAV_KEYS: Record<string, string> = {
+  '/': 'nav.home',
+  '/signals': 'nav.signals',
+  '/institutions': 'nav.institutions',
+  '/watchlist': 'nav.watchlist',
+  '/settings': 'nav.settings',
+};
+
+const NAV_ITEMS = ['/', '/signals', '/institutions', '/watchlist', '/settings'];
 
 interface SidebarProps {
   onClose: () => void;
 }
 
 export function Sidebar({ onClose }: SidebarProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col h-full">
       {/* Mobile close button */}
@@ -32,7 +45,7 @@ export function Sidebar({ onClose }: SidebarProps) {
         <button
           onClick={onClose}
           className="p-1 text-text-tertiary hover:text-text-primary"
-          aria-label="關閉選單"
+          aria-label={t('topBar.closeMenu')}
         >
           <X size={20} />
         </button>
@@ -40,31 +53,35 @@ export function Sidebar({ onClose }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === '/'}
-            onClick={onClose}
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-button text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-green-subtle text-green-primary'
-                  : 'text-text-tertiary hover:bg-bg-hover hover:text-text-primary'
-              )
-            }
-          >
-            <item.icon size={18} />
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
+        {NAV_ITEMS.map((to) => {
+          const Icon = NAV_ICONS[to];
+          if (!Icon) return null;
+          return (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              onClick={onClose}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-button text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-green-subtle text-green-primary'
+                    : 'text-text-tertiary hover:bg-bg-hover hover:text-text-primary'
+                )
+              }
+            >
+              <Icon size={18} />
+              <span>{t(NAV_KEYS[to])}</span>
+            </NavLink>
+          );
+        })}
       </nav>
 
       {/* Footer */}
       <div className="px-4 py-3 border-t border-border-subtle">
         <p className="text-xs text-text-muted">
-          WhaleTrace v0.1.0
+          {t('common.version')}
         </p>
       </div>
     </div>

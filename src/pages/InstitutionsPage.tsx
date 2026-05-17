@@ -1,16 +1,15 @@
+import { useTranslation } from 'react-i18next';
+
 export default function InstitutionsPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8">
       <div className="mb-6">
-        <h1 className="text-heading-2 text-text-primary mb-1">
-          🏛️ 機構 13F 持股追蹤
-        </h1>
-        <p className="text-text-tertiary text-sm">
-          追蹤巴菲特、Burry、Dalio 等 25 位超級投資人的每季持股變動。Phase 3 實作。
-        </p>
+        <h1 className="text-heading-2 text-text-primary mb-1">{t('institutions.title')}</h1>
+        <p className="text-text-tertiary text-sm">{t('institutions.description')}</p>
       </div>
 
-      {/* Super investor grid placeholder */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {['Buffett', 'Burry', 'Dalio', 'Ackman', 'Wood', 'Tepper'].map((name) => (
           <div
@@ -21,7 +20,7 @@ export default function InstitutionsPage() {
               {name[0]}
             </div>
             <p className="text-text-secondary text-sm font-medium">{name}</p>
-            <p className="text-text-muted text-xs mt-0.5">載入中...</p>
+            <p className="text-text-muted text-xs mt-0.5">{t('institutions.loading')}</p>
           </div>
         ))}
       </div>

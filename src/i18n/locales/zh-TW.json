@@ -1,0 +1,123 @@
+{
+  "nav": {
+    "home": "交易動態",
+    "signals": "群組信號",
+    "institutions": "機構 13F",
+    "watchlist": "我的關注",
+    "settings": "設定"
+  },
+  "topBar": {
+    "search": "搜尋股票代號或公司...",
+    "notifications": "通知",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單"
+  },
+  "feed": {
+    "title": "🐋 WhaleTrace",
+    "summary_week": "本週共振訊號：",
+    "summary_count": "筆",
+    "summary_capital": "涉及資金：",
+    "section_signals": "📡 SIGNALS · 鯨魚共振訊號",
+    "section_institutions": "📊 INSTITUTIONS · 今日機構大單",
+    "section_insider_trades": "🔔 INSIDER TRADES · 最新內部人交易",
+    "total_signals": "共 {{count}} 筆",
+    "min_order": ">$100M 單筆",
+    "view_all": "查看全部 →",
+    "more_trades": "還有 {{count}} 筆交易 · 點擊查看全部 →",
+    "filters": {
+      "all": "全部",
+      "buy": "🟢 買入",
+      "sell": "🔴 賣出",
+      "cluster": "⚡ 群組信號"
+    },
+    "empty_title": "尚無符合條件的交易",
+    "empty_desc": "切換篩選條件或稍後再來查看"
+  },
+  "signals": {
+    "title": "⚡ 群組交易信號",
+    "description": "≥3 位內部人 30 天內集中買入 → 最強看漲信號。Phase 3 實作完整信號頁。",
+    "core_feature": "群組信號是 WhaleTrace 的核心差異化功能",
+    "research_note": "學術研究證實：內部人群組買入預測超額報酬的成功率最高"
+  },
+  "institutions": {
+    "title": "🏛️ 機構 13F 持股追蹤",
+    "description": "追蹤巴菲特、Burry、Dalio 等 25 位超級投資人的每季持股變動。Phase 3 實作。",
+    "loading": "載入中..."
+  },
+  "watchlist": {
+    "title": "⭐ 我的關注",
+    "description": "追蹤最多 20 檔股票，任何變動優先推送。Phase 4 實作（需登入）。",
+    "not_logged_in": "尚未登入",
+    "login_prompt": "Phase 4 將整合 Supabase Auth，登入後即可建立關注清單"
+  },
+  "settings": {
+    "title": "⚙️ 設定",
+    "description": "Telegram 綁定、Email 通知、帳號管理。Phase 4 實作。",
+    "telegram": {
+      "label": "Telegram 綁定",
+      "desc": "接收即時警報與每日摘要",
+      "status": "未連接"
+    },
+    "email": {
+      "label": "Email 通知",
+      "desc": "每週摘要與重大信號",
+      "status": "未設定"
+    },
+    "account": {
+      "label": "帳號管理",
+      "desc": "登入/登出/密碼修改",
+      "status": "未登入"
+    }
+  },
+  "stockDetail": {
+    "description": "股票詳情頁 — 信心分數、內部人時間軸、機構持股。Phase 2 實作。",
+    "metrics": {
+      "confidence": "信心分數",
+      "buy12m": "12月買入",
+      "sell12m": "12月賣出",
+      "cluster": "群組信號"
+    },
+    "chart_placeholder": "📈 時間軸圖表將在 Phase 2 實作"
+  },
+  "tradeCard": {
+    "volume": "交易量",
+    "avgPrice": "均價",
+    "total": "總額",
+    "signal_strength": "信號強度",
+    "sec_form4": "SEC Form 4"
+  },
+  "resonanceCard": {
+    "institutions": "家機構",
+    "insider_buy": "🟢 {{count}} 位內部人買入"
+  },
+  "institutionTable": {
+    "columns": {
+      "institution": "機構",
+      "ticker": "股票",
+      "amount": "金額",
+      "change": "變動"
+    },
+    "direction": {
+      "new": "NEW",
+      "increased": "增持",
+      "decreased": "減持"
+    }
+  },
+  "signalBadge": {
+    "buy": "🟢 買入",
+    "sell": "🔴 賣出",
+    "tenb5_1": "🟡 10b5-1",
+    "cluster": "⚡ 群組信號"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "retry": "重試",
+    "no_data": "無資料",
+    "version": "WhaleTrace v0.2.0"
+  },
+  "language": {
+    "switch": "中 / EN",
+    "label": "語言"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "nav": {
+    "home": "Feed",
+    "signals": "Cluster Signals",
+    "institutions": "Institutions 13F",
+    "watchlist": "My Watchlist",
+    "settings": "Settings"
+  },
+  "topBar": {
+    "search": "Search ticker or company...",
+    "notifications": "Notifications",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "feed": {
+    "title": "🐋 WhaleTrace",
+    "summary_week": "Resonance signals this week:",
+    "summary_count": "signals",
+    "summary_capital": "Total volume:",
+    "section_signals": "📡 SIGNALS · Whale Resonance",
+    "section_institutions": "📊 INSTITUTIONS · Today's Large Orders",
+    "section_insider_trades": "🔔 INSIDER TRADES · Latest",
+    "total_signals": "Total: {{count}}",
+    "min_order": ">$100M",
+    "view_all": "View all →",
+    "more_trades": "{{count}} more trades · Click to view all →",
+    "filters": {
+      "all": "All",
+      "buy": "🟢 Buy",
+      "sell": "🔴 Sell",
+      "cluster": "⚡ Cluster"
+    },
+    "empty_title": "No matching trades",
+    "empty_desc": "Try a different filter or check back later"
+  },
+  "signals": {
+    "title": "⚡ Cluster Trade Signals",
+    "description": "≥3 insiders buying within 30 days → strongest bullish signal. Phase 3 implementation.",
+    "core_feature": "Cluster Signals are WhaleTrace's core differentiator",
+    "research_note": "Academic research confirms: insider cluster buying has the highest success rate in predicting excess returns"
+  },
+  "institutions": {
+    "title": "🏛️ Institution 13F Holdings",
+    "description": "Track quarterly holdings of 25 super-investors including Buffett, Burry, Dalio. Phase 3 implementation.",
+    "loading": "Loading..."
+  },
+  "watchlist": {
+    "title": "⭐ My Watchlist",
+    "description": "Track up to 20 stocks with priority alerts. Phase 4 (login required).",
+    "not_logged_in": "Not logged in",
+    "login_prompt": "Phase 4 will integrate Supabase Auth for watchlist creation"
+  },
+  "settings": {
+    "title": "⚙️ Settings",
+    "description": "Telegram binding, email notifications, account management. Phase 4.",
+    "telegram": {
+      "label": "Telegram Binding",
+      "desc": "Receive real-time alerts and daily summaries",
+      "status": "Not connected"
+    },
+    "email": {
+      "label": "Email Notifications",
+      "desc": "Weekly digest and major signals",
+      "status": "Not set"
+    },
+    "account": {
+      "label": "Account Management",
+      "desc": "Login / Logout / Change Password",
+      "status": "Not logged in"
+    }
+  },
+  "stockDetail": {
+    "description": "Stock Details — Confidence Score, Insider Timeline, Institutional Holdings. Phase 2.",
+    "metrics": {
+      "confidence": "Confidence Score",
+      "buy12m": "12M Buys",
+      "sell12m": "12M Sells",
+      "cluster": "Cluster Signals"
+    },
+    "chart_placeholder": "📈 Timeline chart coming in Phase 2"
+  },
+  "tradeCard": {
+    "volume": "Volume",
+    "avgPrice": "Avg Price",
+    "total": "Total",
+    "signal_strength": "Signal Strength",
+    "sec_form4": "SEC Form 4"
+  },
+  "resonanceCard": {
+    "institutions": "institutions",
+    "insider_buy": "🟢 {{count}} insider buys"
+  },
+  "institutionTable": {
+    "columns": {
+      "institution": "Institution",
+      "ticker": "Ticker",
+      "amount": "Amount",
+      "change": "Change"
+    },
+    "direction": {
+      "new": "NEW",
+      "increased": "Increased",
+      "decreased": "Decreased"
+    }
+  },
+  "signalBadge": {
+    "buy": "🟢 Buy",
+    "sell": "🔴 Sell",
+    "tenb5_1": "🟡 10b5-1",
+    "cluster": "⚡ Cluster"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "no_data": "No data",
+    "version": "WhaleTrace v0.2.0"
+  },
+  "language": {
+    "switch": "中 / EN",
+    "label": "Language"
+  }
+}
