@@ -1,0 +1,174 @@
+/* ---- Font Import (must be first) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,510;14..32,590;14..32,600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   WhaleTrace Design Token System
+   Dark-mode-first, Linear-inspired precision
+   ============================================================ */
+
+/* ---- CSS Custom Properties ---- */
+:root {
+  /* Brand green — buy signal / growth */
+  --green-primary: #10b981;
+  --green-hover: #059669;
+  --green-subtle: rgba(16, 185, 129, 0.12);
+
+  /* Alert red — abnormal sell / danger */
+  --red-primary: #ef4444;
+  --red-subtle: rgba(239, 68, 68, 0.12);
+
+  /* Signal purple — cluster buy signal (product differentiator) */
+  --signal-purple: #8b5cf6;
+  --signal-purple-light: #a78bfa;
+  --signal-subtle: rgba(139, 92, 246, 0.12);
+
+  /* Neutral amber — 10b5-1 planned sales */
+  --amber-primary: #f59e0b;
+  --amber-subtle: rgba(245, 158, 11, 0.12);
+
+  /* Background layers */
+  --bg-canvas: #08090a;
+  --bg-surface: #0f1011;
+  --bg-elevated: #191a1b;
+  --bg-hover: rgba(255, 255, 255, 0.04);
+  --bg-active: rgba(255, 255, 255, 0.06);
+
+  /* Text hierarchy */
+  --text-primary: #f7f8f8;
+  --text-secondary: #d0d6e0;
+  --text-tertiary: #8a8f98;
+  --text-muted: #62666d;
+
+  /* Borders */
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  /* Shadows */
+  --shadow-card: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+  --shadow-elevated: rgba(0, 0, 0, 0.4) 0px 2px 4px;
+  --shadow-modal: 0px 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* Sizing */
+  --sidebar-width: 240px;
+  --topbar-height: 56px;
+  --mobile-nav-height: 60px;
+}
+
+/* ---- Global Reset & Base ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: var(--text-primary);
+}
+
+/* ---- Focus Ring ---- */
+:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---- Links ---- */
+a {
+  color: var(--green-primary);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+a:hover {
+  color: var(--green-hover);
+}
+
+/* ---- Code / Data ---- */
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ---- Utility ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Skeleton Pulse ---- */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
