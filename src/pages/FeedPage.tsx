@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn, formatCurrency, formatDate } from '@/lib/utils';
@@ -9,7 +9,9 @@ import { Skeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useInsiderTrades, type TradeFilter } from '@/hooks/useInsiderTrades';
 import { MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
-import type { InsiderTrade } from '@/types';
+import { getResonanceSignals, getInstitutionOrders } from '@/lib/data-layer';
+import type { InsiderTrade, ResonanceSignal } from '@/types';
+import type { InstitutionOrder } from '@/lib/mock-data';
 
 const FILTERS: { key: TradeFilter; labelKey: string }[] = [
   { key: 'all', labelKey: 'feed.filters.all' },
@@ -18,10 +20,10 @@ const FILTERS: { key: TradeFilter; labelKey: string }[] = [
   { key: 'cluster', labelKey: 'feed.filters.cluster' },
 ];
 
-function SummaryBar() {
+function SummaryBar({ signals }: { signals: ResonanceSignal[] }) {
   const { t } = useTranslation();
-  const signalCount = MOCK_RESONANCE_SIGNALS.length;
-  const totalCapital = MOCK_RESONANCE_SIGNALS.reduce((s, r) => s + r.total_institutional_buy, 0);
+  const signalCount = signals.length;
+  const totalCapital = signals.reduce((s, r) => s + r.total_institutional_buy, 0);
 
   return (
     <div className="flex items-center gap-4 text-xs text-text-tertiary mb-5 px-1">
@@ -40,6 +42,14 @@ export default function FeedPage() {
   const { t } = useTranslation();
   const [filter, setFilter] = useState<TradeFilter>('all');
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInsiderTrades(filter);
+  const [signals, setSignals] = useState<ResonanceSignal[]>(MOCK_RESONANCE_SIGNALS);
+  const [instOrders, setInstOrders] = useState<InstitutionOrder[]>(MOCK_INSTITUTION_ORDERS);
+
+  useEffect(() => {
+    // 非同步載入取代 mock
+    getResonanceSignals().then(setSignals).catch(() => {});
+    getInstitutionOrders().then(setInstOrders).catch(() => {});
+  }, []);
 
   const trades = data?.pages.flatMap((p) => p.data) ?? [];
   const recentTrades = trades.slice(0, 8);
@@ -75,7 +85,7 @@ export default function FeedPage() {
       <div className="mb-1">
         <h1 className="text-heading-2 text-text-primary">{t('feed.title')}</h1>
       </div>
-      <SummaryBar />
+      <SummaryBar signals={signals} />
 
       {/* 鯨魚共振訊號 */}
       <section className="mb-8">
@@ -84,11 +94,11 @@ export default function FeedPage() {
             {t('feed.section_signals')}
           </h2>
           <span className="text-[10px] text-text-muted">
-            {t('feed.total_signals', { count: MOCK_RESONANCE_SIGNALS.length })}
+            {t('feed.total_signals', { count: signals.length })}
           </span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {MOCK_RESONANCE_SIGNALS.map((signal, i) => (
+          {signals.map((signal, i) => (
             <Link key={signal.ticker} to={`/stocks/${signal.ticker}`} className="block">
               <ResonanceCard signal={signal} index={i} />
             </Link>
@@ -105,7 +115,7 @@ export default function FeedPage() {
           <span className="text-[10px] text-text-muted">{t('feed.min_order')}</span>
         </div>
         <div className="rounded-card border border-border-subtle bg-bg-surface overflow-hidden">
-          <CompactDataTable data={MOCK_INSTITUTION_ORDERS} columns={INSTITUTION_COLUMNS} compact />
+          <CompactDataTable data={instOrders} columns={INSTITUTION_COLUMNS} compact />
         </div>
       </section>
 
