@@ -216,3 +216,102 @@ export function getPaginatedTrades(
     has_more: start + data.length < filtered.length,
   };
 }
+
+// ============================================================
+// 鯨魚共振訊號 Mock Data
+// ============================================================
+
+import type { ResonanceSignal } from '@/types';
+
+const INSTITUTIONS = [
+  'Vanguard Group', 'BlackRock', 'State Street', 'Fidelity',
+  'Capital Group', 'T. Rowe Price', 'Goldman Sachs', 'Morgan Stanley',
+  'JPMorgan Chase', 'Citadel', 'Renaissance Technologies', 'Baillie Gifford',
+];
+
+export const MOCK_RESONANCE_SIGNALS: ResonanceSignal[] = [
+  {
+    ticker: 'NVDA', company_name: 'NVIDIA Corporation',
+    signal_date: '2026-05-15',
+    total_institutional_buy: 2_800_000_000,
+    institution_count: 3,
+    institutions: [
+      { name: 'Vanguard Group', amount: 1_500_000_000 },
+      { name: 'BlackRock', amount: 900_000_000 },
+      { name: 'Fidelity', amount: 400_000_000 },
+    ],
+    insider_buy_count: 4,
+    insider_names: ['Jensen Huang', 'Colette Kress', 'Mark Stevens', 'John Dabiri'],
+    signal_strength: 82,
+    sector: '半導體',
+  },
+  {
+    ticker: 'AAPL', company_name: 'Apple Inc.',
+    signal_date: '2026-05-14',
+    total_institutional_buy: 1_200_000_000,
+    institution_count: 2,
+    institutions: [
+      { name: 'Berkshire Hathaway', amount: 800_000_000 },
+      { name: 'T. Rowe Price', amount: 400_000_000 },
+    ],
+    insider_buy_count: 2,
+    insider_names: ['Tim Cook', 'Luca Maestri'],
+    signal_strength: 65,
+    sector: '科技',
+  },
+  {
+    ticker: 'MSFT', company_name: 'Microsoft Corporation',
+    signal_date: '2026-05-13',
+    total_institutional_buy: 1_850_000_000,
+    institution_count: 4,
+    institutions: [
+      { name: 'Capital Group', amount: 700_000_000 },
+      { name: 'State Street', amount: 600_000_000 },
+      { name: 'Goldman Sachs', amount: 350_000_000 },
+      { name: 'Morgan Stanley', amount: 200_000_000 },
+    ],
+    insider_buy_count: 3,
+    insider_names: ['Satya Nadella', 'Amy Hood', 'Brad Smith'],
+    signal_strength: 74,
+    sector: '科技',
+  },
+  {
+    ticker: 'JPM', company_name: 'JPMorgan Chase & Co.',
+    signal_date: '2026-05-16',
+    total_institutional_buy: 980_000_000,
+    institution_count: 3,
+    institutions: [
+      { name: 'Vanguard Group', amount: 500_000_000 },
+      { name: 'BlackRock', amount: 300_000_000 },
+      { name: 'Citadel', amount: 180_000_000 },
+    ],
+    insider_buy_count: 2,
+    insider_names: ['Jamie Dimon', 'Daniel Pinto'],
+    signal_strength: 58,
+    sector: '金融',
+  },
+];
+
+// ============================================================
+// 機構大單 Mock Data
+// ============================================================
+
+export interface InstitutionOrder {
+  institution: string;
+  ticker: string;
+  company_name: string;
+  amount: number;
+  change_pct: number;
+  direction: 'NEW' | 'INCREASED' | 'DECREASED';
+}
+
+export const MOCK_INSTITUTION_ORDERS: InstitutionOrder[] = [
+  { institution: 'Vanguard Group', ticker: 'MSFT', company_name: 'Microsoft', amount: 2_100_000_000, change_pct: 12, direction: 'INCREASED' },
+  { institution: 'BlackRock', ticker: 'AMZN', company_name: 'Amazon', amount: 1_800_000_000, change_pct: 0, direction: 'NEW' },
+  { institution: 'State Street', ticker: 'NVDA', company_name: 'NVIDIA', amount: 1_500_000_000, change_pct: 8, direction: 'INCREASED' },
+  { institution: 'Fidelity', ticker: 'META', company_name: 'Meta', amount: 1_200_000_000, change_pct: 15, direction: 'INCREASED' },
+  { institution: 'T. Rowe Price', ticker: 'GOOGL', company_name: 'Alphabet', amount: 950_000_000, change_pct: -3, direction: 'DECREASED' },
+  { institution: 'Goldman Sachs', ticker: 'AAPL', company_name: 'Apple', amount: 880_000_000, change_pct: 22, direction: 'INCREASED' },
+  { institution: 'Morgan Stanley', ticker: 'JPM', company_name: 'JPMorgan', amount: 750_000_000, change_pct: 5, direction: 'INCREASED' },
+  { institution: 'Renaissance Tech', ticker: 'TSLA', company_name: 'Tesla', amount: 620_000_000, change_pct: 0, direction: 'NEW' },
+];

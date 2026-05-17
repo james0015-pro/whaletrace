@@ -93,7 +93,19 @@ export interface StockDetail {
   institutional_holdings: InstitutionalHolding[];
 }
 
-/** Paginated API response */
+/** Whale resonance signal (core product) */
+export interface ResonanceSignal {
+  ticker: string;
+  company_name: string;
+  signal_date: string;
+  total_institutional_buy: number;     // 機構合計買入金額
+  institution_count: number;           // 參與機構數
+  institutions: { name: string; amount: number }[];
+  insider_buy_count: number;           // 內部人買入人數
+  insider_names: string[];
+  signal_strength: number;            // 0-100
+  sector?: string;
+}
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;
