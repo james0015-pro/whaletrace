@@ -210,7 +210,7 @@ export default function FeedPage() {
                 <Cell w={CW.T} color="#555" bold>TICKER</Cell>
                 <Cell w={CW.I} color="#555" bold>INSIDER</Cell>
                 <Cell w={CW.CT} color="#555" bold>COMPANY / TITLE</Cell>
-                <R w={CW.D} c="#555" b>DIR</R>
+                <R w={CW.D} c={f==='buy'?'#0c6':f==='sell'?'#f33':'#555'} b onClick={()=>{setF(f==='all'?'buy':f==='buy'?'sell':'all');}}>DIR ▾</R>
                 <R w={CW.S} c="#555" b>SHARES</R>
                 <R w={CW.P} c="#555" b>PRICE</R>
                 <R w={CW.V} c="#555" b>VALUE</R>
