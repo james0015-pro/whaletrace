@@ -211,16 +211,17 @@ export default function FeedPage() {
           <div style={{borderRight:'1px solid #1f1f1f',borderBottom:'1px solid #1f1f1f',display:'flex',flexDirection:'column',overflow:'hidden'}}>
             <Hdr title={t('feed.section_insider_trades')||'INSIDER TRADES'} detail="tap to drill" />
             <div style={{flex:1,overflow:'auto'}}>
-              <Row><Cell w={52} color="#555" bold>TICKER</Cell><Cell w={108} color="#555" bold>INSIDER</Cell><R w={38} c="#555" b>DIR</R><R w={55} c="#555" b>SHARES</R><R w={55} c="#555" b>PRICE</R><R w={65} c="#555" b>VALUE</R><R w={52} c="#555" b>DATE</R></Row>
+              <Row><Cell w={52} color="#555" bold>TICKER</Cell><Cell w={100} color="#555" bold>INSIDER</Cell><Cell w={90} color="#555" bold>COMPANY/TITLE</Cell><R w={38} c="#555" b>DIR</R><R w={50} c="#555" b>SHARES</R><R w={50} c="#555" b>PRICE</R><R w={60} c="#555" b>VALUE</R><R w={48} c="#555" b>DATE</R></Row>
               {filtered.map((t,i)=>(
                 <Row key={t.id} h={i%2===0}>
                   <Cell w={52} color="#ff8c00" bold underline onClick={()=>setDetail({mode:'ticker',label:t.ticker,subtitle:t.company_name})}>{t.ticker}</Cell>
-                  <Cell w={108} color="#e6e6e6" onClick={()=>setDetail({mode:'insider',label:t.insider_name,subtitle:t.title})}>{S(t.insider_name,14)}</Cell>
+                  <Cell w={100} color="#e6e6e6" onClick={()=>setDetail({mode:'insider',label:t.insider_name,subtitle:t.title})}>{S(t.insider_name,13)}</Cell>
+                  <Cell w={90} color="#888" onClick={()=>setDetail({mode:'ticker',label:t.ticker,subtitle:t.company_name})}>{S(`${t.ticker} ${t.title}`, 14)}</Cell>
                   <R w={38} c={t.transaction_type==='BUY'?'#0c6':'#f33'} b>{t.transaction_type==='BUY'?'BUY':'SEL'}</R>
-                  <R w={55} c="#e6e6e6">{F(t.shares)}</R>
-                  <R w={55} c="#e6e6e6">{(t.price??0).toFixed(2)}</R>
-                  <R w={65} c={t.transaction_type==='BUY'?'#0c6':'#f33'}>{F(t.total_value)}</R>
-                  <R w={52} c="#888">{t.trade_date.slice(5)}</R>
+                  <R w={50} c="#e6e6e6">{F(t.shares)}</R>
+                  <R w={50} c="#e6e6e6">{(t.price??0).toFixed(2)}</R>
+                  <R w={60} c={t.transaction_type==='BUY'?'#0c6':'#f33'}>{F(t.total_value)}</R>
+                  <R w={48} c="#888">{t.trade_date.slice(5)}</R>
                 </Row>
               ))}
             </div>
