@@ -1,0 +1,144 @@
+{
+  "name": "WhaleTrace Data API",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "whaletrace-snapshot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-snapshot",
+      "name": "📥 GET /whaletrace-snapshot",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// WhaleTrace API — 回傳全部股票籌碼快照\n// GET /whaletrace-snapshot?ticker=AAPL  → 單檔\n// GET /whaletrace-snapshot               → 全部\n// ============================================================\n\n// 從 workflow staticData 讀取最新爬蟲資料\nconst staticData = $getWorkflowStaticData('global');\nlet snapshots = [];\ntry {\n  if (staticData.snapshots) {\n    snapshots = JSON.parse(staticData.snapshots);\n  }\n} catch (e) {}\n\n// 支援 query param: ?ticker=AAPL\nconst query = $input.first().json.query || {};\nconst ticker = query.ticker;\n\nlet result;\nif (ticker) {\n  result = snapshots.filter(s => s.ticker.toUpperCase() === ticker.toUpperCase());\n  if (result.length === 0) {\n    result = { error: `Ticker ${ticker} not found`, available: snapshots.map(s => s.ticker) };\n  } else {\n    result = result[0];\n  }\n} else {\n  result = {\n    data: snapshots,\n    total: snapshots.length,\n    generated_at: staticData.generated_at || new Date().toISOString()\n  };\n}\n\nreturn [{ json: result }];"
+      },
+      "id": "code-snapshot",
+      "name": "🔍 查詢快照",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-snapshot",
+      "name": "📤 Respond JSON",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "whaletrace-institutional",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-inst",
+      "name": "📥 GET /whaletrace-institutional",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// WhaleTrace API — 機構持股明細\n// GET /whaletrace-institutional?ticker=NVDA&page=1&page_size=20\n// ============================================================\n\nconst staticData = $getWorkflowStaticData('global');\nlet holdings = [];\ntry {\n  if (staticData.holdings) {\n    holdings = JSON.parse(staticData.holdings);\n  }\n} catch (e) {}\n\nconst query = $input.first().json.query || {};\nconst ticker = query.ticker;\nconst page = parseInt(query.page) || 1;\nconst pageSize = parseInt(query.page_size) || 20;\n\nlet result;\nif (ticker) {\n  let filtered = holdings.filter(h => h.ticker.toUpperCase() === ticker.toUpperCase());\n  const total = filtered.length;\n  const start = (page - 1) * pageSize;\n  filtered = filtered.slice(start, start + pageSize);\n  result = {\n    data: filtered,\n    total: total,\n    page: page,\n    page_size: pageSize,\n    has_more: start + filtered.length < total\n  };\n} else {\n  const total = holdings.length;\n  const start = (page - 1) * pageSize;\n  const data = holdings.slice(start, start + pageSize);\n  result = {\n    data: data,\n    total: total,\n    page: page,\n    page_size: pageSize,\n    has_more: start + data.length < total\n  };\n}\n\nreturn [{ json: result }];"
+      },
+      "id": "code-inst",
+      "name": "🔍 查詢機構持股",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-inst",
+      "name": "📤 Respond JSON",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [650, 500]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whaletrace-update",
+        "options": {}
+      },
+      "id": "webhook-update",
+      "name": "📥 POST /whaletrace-update",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 700]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// 接收爬蟲 POST 資料，更新 workflow staticData\n// Body: { snapshots: [...], holdings: [...] }\n// ============================================================\n\nconst body = $input.first().json;\nconst staticData = $getWorkflowStaticData('global');\n\nif (body.snapshots && Array.isArray(body.snapshots)) {\n  staticData.snapshots = JSON.stringify(body.snapshots);\n  staticData.generated_at = body.generated_at || new Date().toISOString();\n}\n\nif (body.holdings && Array.isArray(body.holdings)) {\n  staticData.holdings = JSON.stringify(body.holdings);\n}\n\nreturn [{\n  json: {\n    success: true,\n    message: `Updated: ${body.snapshots?.length || 0} snapshots, ${body.holdings?.length || 0} holdings`,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "code-update",
+      "name": "💾 儲存資料",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 700]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-update",
+      "name": "📤 Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [650, 700]
+    },
+    {
+      "parameters": {
+        "content": "## 🐋 WhaleTrace Data API\n\n三個端點：\n\n**GET /whaletrace-snapshot**\n→ 全部股票籌碼快照\n→ ?ticker=AAPL 查單檔\n\n**GET /whaletrace-institutional**\n→ 機構持股明細（分頁）\n→ ?ticker=NVDA&page=1&page_size=20\n\n**POST /whaletrace-update**\n→ 爬蟲推送最新資料\n→ Body: { snapshots: [...], holdings: [...] }\n\n---\n\n### WhaleTrace 前端接法\n將 api.ts 中的 BASE_URL 指向此 n8n：\n```\nVITE_API_URL=https://n8n-james0015.zeabur.app/webhook\n```\n然後 endpoints 對應：\n- /institutional → /whaletrace-snapshot\n- /institutional-holdings → /whaletrace-institutional\n\n內部人交易繼續用現有的 SEC Proxy webhook。"
+      },
+      "id": "sticky-info",
+      "name": "📋 API 使用說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [50, 150]
+    }
+  ],
+  "connections": {
+    "📥 GET /whaletrace-snapshot": {
+      "main": [[{"node": "🔍 查詢快照", "type": "main", "index": 0}]]
+    },
+    "🔍 查詢快照": {
+      "main": [[{"node": "📤 Respond JSON", "type": "main", "index": 0}]]
+    },
+    "📥 GET /whaletrace-institutional": {
+      "main": [[{"node": "🔍 查詢機構持股", "type": "main", "index": 0}]]
+    },
+    "🔍 查詢機構持股": {
+      "main": [[{"node": "📤 Respond JSON", "type": "main", "index": 0}]]
+    },
+    "📥 POST /whaletrace-update": {
+      "main": [[{"node": "💾 儲存資料", "type": "main", "index": 0}]]
+    },
+    "💾 儲存資料": {
+      "main": [[{"node": "📤 Respond OK", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [{"name": "whaletrace"}, {"name": "api"}],
+  "staticData": null
+}
