@@ -95,9 +95,18 @@ function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget;
   let sub = active.subtitle || '';
   let col2 = 'ENTITY';
 
+  // Lookup insider company & title
+  let insiderInfo = '';
+  if (active.mode === 'insider') {
+    const t = ALL.find(t => t.insider_name === active.label);
+    if (t) {
+      insiderInfo = `${t.ticker} · ${t.title}`;
+    }
+  }
+
   if (active.mode === 'insider') {
     rows = buildInsiderHistory(active.label);
-    sub = `Insider history`;
+    sub = insiderInfo;
     col2 = 'TICKER';
   } else if (active.mode === 'ticker') {
     rows = buildTickerHistory(active.label);
