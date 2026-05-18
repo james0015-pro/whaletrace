@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
 import type { InsiderTrade, ResonanceSignal } from '@/types';
@@ -18,14 +18,50 @@ const S = (s: string, n: number): string => (s.length > n ? s.slice(0, n) : s);
 
 type Timeframe = '1D' | '5D' | '30D' | '6M' | '1Y' | 'ALL';
 
+const WATCHLIST_KEY = 'whaletrace_watchlist';
+
+function loadWatchlist(): Set<string> {
+  try {
+    const raw = localStorage.getItem(WATCHLIST_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+function saveWatchlist(set: Set<string>) {
+  localStorage.setItem(WATCHLIST_KEY, JSON.stringify([...set]));
+}
+
 /* ============================================================
-   Price Generator (deterministic-ish per ticker+timeframe)
+   Mock Confidence History Generator
    ============================================================ */
 function seedFrom(s: string): number {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
   return Math.abs(h);
 }
+function generateConfidenceHistory(ticker: string): { month: string; score: number }[] {
+  const seed = seedFrom(ticker + '_conf');
+  const rng = (i: number) => {
+    const x = Math.sin(seed + i * 271.8 + 419.3) * 43758.5453;
+    return x - Math.floor(x);
+  };
+  const base = 30 + rng(0) * 50;
+  const months = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+  const now = new Date();
+  const history: { month: string; score: number }[] = [];
+  let score = base;
+  for (let i = 11; i >= 0; i--) {
+    score = Math.min(100, Math.max(0, +(score + (rng(i) - 0.45) * 15).toFixed(0)));
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    history.push({ month: months[d.getMonth()], score });
+  }
+  return history;
+}
+
+/* ============================================================
+   Price Generator (deterministic-ish per ticker+timeframe)
+   ============================================================ */
 function generatePrices(
   ticker: string,
   tf: Timeframe,
@@ -67,7 +103,20 @@ export default function StockDetailPage() {
   const navigate = useNavigate();
   const ticker = rawTicker?.toUpperCase() || '';
   const [tf, setTf] = useState<Timeframe>('30D');
-  const [watch, setWatch] = useState(false);
+  const [insiderFilter, setInsiderFilter] = useState<'ALL' | 'BUY'>('ALL');
+
+  // Watchlist with localStorage persistence
+  const [watchSet, setWatchSet] = useState<Set<string>>(loadWatchlist);
+  const watch = watchSet.has(ticker);
+  const toggleWatch = useCallback(() => {
+    setWatchSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(ticker)) next.delete(ticker);
+      else next.add(ticker);
+      saveWatchlist(next);
+      return next;
+    });
+  }, [ticker]);
 
   const trades = useMemo(
     () =>
@@ -91,6 +140,8 @@ export default function StockDetailPage() {
     100,
   );
 
+  const confHistory = useMemo(() => generateConfidenceHistory(ticker), [ticker]);
+
   const resonance = MOCK_RESONANCE_SIGNALS.find((r) => r.ticker === ticker);
   const instOrders = MOCK_INSTITUTION_ORDERS.filter((o) => o.ticker === ticker);
 
@@ -103,9 +154,10 @@ export default function StockDetailPage() {
   const pMin = Math.min(...prices);
   const pMax = Math.max(...prices);
   const pRange = pMax - pMin || 1;
-  const change = prices.length >= 2
-    ? (((prices[prices.length - 1] - prices[0]) / prices[0]) * 100)
-    : 0;
+  const pFirst = prices[0];
+  const pLast = prices[prices.length - 1];
+  const changePct = pFirst ? ((pLast - pFirst) / pFirst) * 100 : 0;
+  const changeAbs = pLast - pFirst;
 
   const TIMEFRAMES: Timeframe[] = ['1D', '5D', '30D', '6M', '1Y', 'ALL'];
 
@@ -116,6 +168,11 @@ export default function StockDetailPage() {
     { label: 'BUY/SELL',    value: Math.min(Math.round((buyCount / (sellCount || 1)) * 15), 100) },
     { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round(Math.random() * 30) },
   ];
+
+  // Insider trades with optional filter
+  const displayTrades = insiderFilter === 'BUY'
+    ? trades.filter(t => t.transaction_type === 'BUY')
+    : trades;
 
   return (
     <div
@@ -165,13 +222,13 @@ export default function StockDetailPage() {
             {totalTrades} trades / 2YR
           </span>
           <button
-            onClick={() => setWatch((w) => !w)}
+            onClick={toggleWatch}
             style={{
               background: 'transparent',
               border: watch ? '1px solid #ff8c00' : '1px solid #333',
               color: watch ? '#ff8c00' : '#555',
               cursor: 'pointer',
-              fontSize: 16,
+              fontSize: 11,
               padding: '2px 8px',
               borderRadius: 2,
               fontFamily: 'JetBrains Mono, monospace',
@@ -195,91 +252,150 @@ export default function StockDetailPage() {
           gap: 10,
         }}
       >
-        {/* ========== CONFIDENCE SCORE ========== */}
+        {/* ========== CONFIDENCE SCORE + HISTORY SPARKLINE ========== */}
         <div
           style={{
-            padding: 10,
-            background: '#0a0a0a',
-            border: '1px solid #1f1f1f',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 10,
           }}
         >
+          {/* Left: Score */}
           <div
             style={{
-              fontSize: 9,
-              color: '#555',
-              marginBottom: 6,
-              fontFamily: 'JetBrains Mono, monospace',
-              textTransform: 'uppercase',
-              letterSpacing: 1,
+              padding: 10,
+              background: '#0a0a0a',
+              border: '1px solid #1f1f1f',
             }}
           >
-            CONFIDENCE SCORE
-          </div>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <div style={{ flex: 1, height: 10, background: '#1f1f1f' }}>
+            <div
+              style={{
+                fontSize: 9,
+                color: '#555',
+                marginBottom: 6,
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+              }}
+            >
+              CONFIDENCE SCORE
+            </div>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <div style={{ flex: 1, height: 10, background: '#1f1f1f' }}>
+                <div
+                  style={{
+                    width: `${confidence}%`,
+                    height: '100%',
+                    background:
+                      confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
+                    transition: 'width 0.6s',
+                  }}
+                />
+              </div>
               <div
                 style={{
-                  width: `${confidence}%`,
-                  height: '100%',
-                  background:
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color:
                     confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
-                  transition: 'width 0.6s',
+                  fontFamily: 'JetBrains Mono, monospace',
                 }}
-              />
+              >
+                {confidence}
+              </div>
+              <div style={{ fontSize: 9, color: '#555' }}>/100</div>
+            </div>
+          </div>
+
+          {/* Right: Confidence History Sparkline */}
+          <div
+            style={{
+              padding: 10,
+              background: '#0a0a0a',
+              border: '1px solid #1f1f1f',
+            }}
+          >
+            <div
+              style={{
+                fontSize: 9,
+                color: '#555',
+                marginBottom: 6,
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+              }}
+            >
+              CONFIDENCE TREND (12M)
+            </div>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 50 }}>
+              {confHistory.map((h, i) => {
+                const barH = Math.max(8, (h.score / 100) * 100);
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      flex: 1,
+                      height: `${barH}%`,
+                      background: h.score > 60 ? '#0c6' : h.score > 30 ? '#ff8c00' : '#f33',
+                      opacity: 0.8,
+                      minWidth: 4,
+                    }}
+                    title={`${h.month}: ${h.score}`}
+                  />
+                );
+              })}
             </div>
             <div
               style={{
-                fontSize: 22,
-                fontWeight: 700,
-                color:
-                  confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
-                fontFamily: 'JetBrains Mono, monospace',
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontSize: 8,
+                color: '#555',
+                marginTop: 2,
               }}
             >
-              {confidence}
+              {confHistory.map((h, i) => (
+                <span key={i} style={{ flex: 1, textAlign: 'center' }}>{h.month}</span>
+              ))}
             </div>
-            <div style={{ fontSize: 9, color: '#555' }}>/100</div>
-          </div>
-
-          {/* Sub-scores */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              gap: 8,
-              marginTop: 10,
-            }}
-          >
-            {subScores.map((s) => (
-              <div
-                key={s.label}
-                style={{
-                  padding: 8,
-                  background: '#000',
-                  border: '1px solid #1f1f1f',
-                  textAlign: 'center',
-                }}
-              >
-                <div style={{ fontSize: 8, color: '#555', marginBottom: 2 }}>
-                  {s.label}
-                </div>
-                <div
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color:
-                      s.value > 60 ? '#0c6' : s.value > 30 ? '#ff8c00' : '#f33',
-                    fontFamily: 'JetBrains Mono, monospace',
-                  }}
-                >
-                  {s.value}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
-        {/* ========== PRICE CHART ========== */}
+        {/* Sub-scores */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+            gap: 8,
+          }}
+        >
+          {subScores.map((s) => (
+            <div
+              key={s.label}
+              style={{
+                padding: 8,
+                background: '#0a0a0a',
+                border: '1px solid #1f1f1f',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ fontSize: 8, color: '#555', marginBottom: 2 }}>
+                {s.label}
+              </div>
+              <div
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color:
+                    s.value > 60 ? '#0c6' : s.value > 30 ? '#ff8c00' : '#f33',
+                  fontFamily: 'JetBrains Mono, monospace',
+                }}
+              >
+                {s.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ========== PRICE CHART (green/red bars) ========== */}
         <div
           style={{
             padding: 10,
@@ -293,6 +409,8 @@ export default function StockDetailPage() {
               justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: 8,
+              flexWrap: 'wrap',
+              gap: 6,
             }}
           >
             <div
@@ -304,6 +422,18 @@ export default function StockDetailPage() {
               }}
             >
               PRICE CHART
+            </div>
+            {/* Change summary */}
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center', fontSize: 10 }}>
+              <span style={{ color: '#888' }}>
+                {tf}{' '}
+                <span style={{ color: changePct >= 0 ? '#0c6' : '#f33', fontWeight: 700 }}>
+                  {changePct >= 0 ? '+' : ''}{changePct.toFixed(2)}%
+                </span>
+              </span>
+              <span style={{ color: changeAbs >= 0 ? '#0c6' : '#f33', fontWeight: 600 }}>
+                {changeAbs >= 0 ? '+' : ''}${Math.abs(changeAbs).toFixed(2)}
+              </span>
             </div>
             {/* Timeframe tabs */}
             <div style={{ display: 'flex', gap: 2 }}>
@@ -328,7 +458,7 @@ export default function StockDetailPage() {
             </div>
           </div>
 
-          {/* Price bar chart */}
+          {/* Price bar chart — green/red per bar */}
           <div
             style={{
               display: 'flex',
@@ -340,23 +470,25 @@ export default function StockDetailPage() {
           >
             {prices.map((p, i) => {
               const h = ((p - pMin) / pRange) * 100;
+              const prevP = i > 0 ? prices[i - 1] : p;
+              const isUp = p >= prevP;
               return (
                 <div
                   key={i}
                   style={{
                     flex: 1,
                     height: `${Math.max(h, 3)}%`,
-                    background: change >= 0 ? '#ff8c00' : '#f33',
+                    background: isUp ? '#0c6' : '#f33',
                     opacity: 0.75,
                     minWidth: 2,
                   }}
-                  title={`${labels[i]}: $${p.toFixed(2)}`}
+                  title={`${labels[i]}: $${p.toFixed(2)} ${isUp ? '▲' : '▼'}`}
                 />
               );
             })}
           </div>
 
-          {/* Price range + change */}
+          {/* Price range + last */}
           <div
             style={{
               display: 'flex',
@@ -366,15 +498,15 @@ export default function StockDetailPage() {
           >
             <div style={{ display: 'flex', gap: 12 }}>
               <span style={{ fontSize: 10, color: '#888' }}>
-                L: <span style={{ color: '#e6e6e6' }}>${pMin.toFixed(2)}</span>
+                L: <span style={{ color: '#f33' }}>${pMin.toFixed(2)}</span>
               </span>
               <span style={{ fontSize: 10, color: '#888' }}>
-                H: <span style={{ color: '#e6e6e6' }}>${pMax.toFixed(2)}</span>
+                H: <span style={{ color: '#0c6' }}>${pMax.toFixed(2)}</span>
               </span>
               <span style={{ fontSize: 10, color: '#888' }}>
                 LAST:{' '}
                 <span style={{ color: '#ff8c00', fontWeight: 700 }}>
-                  ${prices[prices.length - 1].toFixed(2)}
+                  ${pLast.toFixed(2)}
                 </span>
               </span>
             </div>
@@ -382,11 +514,11 @@ export default function StockDetailPage() {
               style={{
                 fontSize: 12,
                 fontWeight: 700,
-                color: change >= 0 ? '#0c6' : '#f33',
+                color: changePct >= 0 ? '#0c6' : '#f33',
               }}
             >
-              {change >= 0 ? '+' : ''}
-              {change.toFixed(2)}%
+              {changePct >= 0 ? '+' : ''}
+              {changePct.toFixed(2)}%
             </span>
           </div>
         </div>
@@ -557,7 +689,7 @@ export default function StockDetailPage() {
           )}
         </div>
 
-        {/* ========== INSIDER TRADES TIMELINE ========== */}
+        {/* ========== INSIDER TRADES TIMELINE (with filter) ========== */}
         <div
           style={{
             padding: 10,
@@ -567,16 +699,58 @@ export default function StockDetailPage() {
         >
           <div
             style={{
-              fontSize: 9,
-              color: '#555',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               marginBottom: 8,
-              textTransform: 'uppercase',
-              letterSpacing: 1,
             }}
           >
-            INSIDER TRADES TIMELINE
+            <div
+              style={{
+                fontSize: 9,
+                color: '#555',
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+              }}
+            >
+              INSIDER TRADES TIMELINE
+            </div>
+            {/* Filter toggle */}
+            <div style={{ display: 'flex', gap: 2 }}>
+              <button
+                onClick={() => setInsiderFilter('ALL')}
+                style={{
+                  background: insiderFilter === 'ALL' ? '#1a1a1a' : 'transparent',
+                  border: `1px solid ${insiderFilter === 'ALL' ? '#ff8c00' : '#333'}`,
+                  color: insiderFilter === 'ALL' ? '#ff8c00' : '#888',
+                  cursor: 'pointer',
+                  fontSize: 9,
+                  padding: '2px 8px',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  borderRadius: 2,
+                }}
+              >
+                ALL ({totalTrades})
+              </button>
+              <button
+                onClick={() => setInsiderFilter('BUY')}
+                style={{
+                  background: insiderFilter === 'BUY' ? '#1a1a1a' : 'transparent',
+                  border: `1px solid ${insiderFilter === 'BUY' ? '#0c6' : '#333'}`,
+                  color: insiderFilter === 'BUY' ? '#0c6' : '#888',
+                  cursor: 'pointer',
+                  fontSize: 9,
+                  padding: '2px 8px',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  borderRadius: 2,
+                }}
+              >
+                🟢 BUY ({buyCount})
+              </button>
+            </div>
           </div>
-          {trades.length > 0 ? (
+
+          {displayTrades.length > 0 ? (
             <>
               {/* Column headers */}
               <div
@@ -598,7 +772,7 @@ export default function StockDetailPage() {
                 <span style={{ width: 55, textAlign: 'right' }}>PRICE</span>
                 <span style={{ width: 65, textAlign: 'right' }}>VALUE</span>
               </div>
-              {trades.slice(0, 20).map((t, i) => (
+              {displayTrades.slice(0, 20).map((t, i) => (
                 <div
                   key={t.id}
                   style={{
@@ -607,7 +781,7 @@ export default function StockDetailPage() {
                     fontSize: 10,
                     padding: '3px 0',
                     borderBottom:
-                      i < Math.min(trades.length, 20) - 1
+                      i < Math.min(displayTrades.length, 20) - 1
                         ? '1px solid #1a1a1a'
                         : 'none',
                     background:
@@ -668,7 +842,7 @@ export default function StockDetailPage() {
                   </span>
                 </div>
               ))}
-              {trades.length > 20 && (
+              {displayTrades.length > 20 && (
                 <div
                   style={{
                     textAlign: 'center',
@@ -677,13 +851,15 @@ export default function StockDetailPage() {
                     color: '#555',
                   }}
                 >
-                  ... and {trades.length - 20} more trades
+                  ... and {displayTrades.length - 20} more trades
                 </div>
               )}
             </>
           ) : (
             <div style={{ fontSize: 10, color: '#555' }}>
-              No insider trades found for {ticker}
+              {insiderFilter === 'BUY'
+                ? `No buy trades found for ${ticker}`
+                : `No insider trades found for ${ticker}`}
             </div>
           )}
         </div>
