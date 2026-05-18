@@ -5,6 +5,7 @@ import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
 import { TopNavBar } from '@/components/layout/TopNavBar';
 import FeedPage from '@/pages/FeedPage';
+import DashboardPage from '@/pages/DashboardPage';
 import SignalsPage from '@/pages/SignalsPage';
 import InstitutionsPage from '@/pages/InstitutionsPage';
 import StockDetailPage from '@/pages/StockDetailPage';
@@ -34,6 +35,7 @@ export default function App() {
               <div style={{ flex: 1, overflow: 'hidden' }}>
                 <Routes>
                   <Route path="/" element={<FeedPage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
                   <Route path="/signals" element={<SignalsPage />} />
                   <Route path="/institutions" element={<InstitutionsPage />} />
                   <Route path="/stocks/:ticker" element={<StockDetailPage />} />
