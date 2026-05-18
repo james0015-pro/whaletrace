@@ -249,7 +249,7 @@ export default function FeedPage() {
               {filtered.map((t,i)=>(
                 <Row key={t.id} h={i%2===0}>
                   <span onClick={(e)=>{e.stopPropagation();setDetail({mode:'ticker',label:t.ticker,subtitle:t.company_name});}}
-                    style={{width:50,color:'#ff8c00',fontWeight:600,cursor:'pointer',textDecoration:'underline'}}>{t.ticker}</span>
+                    style={{width:50,color:'#ff8c00',fontWeight:600,cursor:'pointer',textDecoration:'underline',display:'inline-block',height:ROW_H,lineHeight:`${ROW_H}px`,verticalAlign:'middle'}}>{t.ticker}</span>
                   <span onClick={()=>setDetail({mode:'insider',label:t.insider_name,subtitle:t.title})}
                     style={{width:110,color:'#e6e6e6',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',cursor:'pointer'}}>{S(t.insider_name,14)}</span>
                   <span style={{width:38,textAlign:'right',color:t.transaction_type==='BUY'?'#0c6':'#f33',fontWeight:600}}>{t.transaction_type==='BUY'?'BUY':'SEL'}</span>
