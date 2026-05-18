@@ -74,7 +74,7 @@ export function TopNavBar() {
           fontFamily: 'JetBrains Mono, monospace', marginRight: 8,
           height: 20, borderRadius: 2,
         }}>
-        {lang.startsWith('zh') ? 'EN' : '中文'}
+        {lang.startsWith('zh') ? '中文' : 'EN'}
       </button>
 
       {/* Login */}
