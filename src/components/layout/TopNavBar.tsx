@@ -67,6 +67,16 @@ export function TopNavBar() {
       </div>
 
       {/* Language switch */}
+      <button onClick={()=>{window.location.hash='#/dashboard';window.location.reload();}}
+        style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        DASH
+      </button>
+      <button onClick={()=>{window.location.hash='#/';window.location.reload();}}
+        style={{background:'transparent',border:'1px solid #333',color:!window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        TERM
+      </button>
+
+      {/* Language switch */}
       <button onClick={toggleLang}
         style={{
           background: 'transparent', border: '1px solid #333', color: '#888',
