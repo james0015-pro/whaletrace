@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
@@ -28,7 +28,7 @@ export default function App() {
     <I18nextProvider i18n={i18n}>
       <Suspense fallback={<LoadingFallback />}>
         <QueryProvider>
-          <BrowserRouter basename="/whaletrace">
+          <HashRouter>
             <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#000' }}>
               <TopNavBar />
               <div style={{ flex: 1, overflow: 'hidden' }}>
@@ -42,7 +42,7 @@ export default function App() {
                 </Routes>
               </div>
             </div>
-          </BrowserRouter>
+          </HashRouter>
         </QueryProvider>
       </Suspense>
     </I18nextProvider>
