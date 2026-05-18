@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useInsiderTrades, type TradeFilter } from '@/hooks/useInsiderTrades';
+import { useState, useEffect, useRef } from 'react';
+import { getInsiderTrades } from '@/lib/data-layer';
 import { MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
-import { getResonanceSignals, getInstitutionOrders } from '@/lib/data-layer';
 import type { InsiderTrade, ResonanceSignal } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 
@@ -48,36 +46,74 @@ function fmt(v: number | null | undefined): string {
   return `${v}`;
 }
 
-function s(s: string, n: number): string {
-  return s.length > n ? s.slice(0, n) : s.padEnd(n);
+function s(str: string, n: number): string {
+  return str.length > n ? str.slice(0, n) : str.padEnd(n);
 }
 
+type FilterMode = 'all' | 'buy' | 'sell' | 'cluster';
+
 export default function FeedPage() {
-  const { t } = useTranslation();
-  const [filter, setFilter] = useState<TradeFilter>('all');
-  const { data, isLoading } = useInsiderTrades(filter);
+  const [filter, setFilter] = useState<FilterMode>('all');
+  const [trades, setTrades] = useState<InsiderTrade[]>([]);
+  const [loading, setLoading] = useState(true);
   const [signals] = useState<ResonanceSignal[]>(MOCK_RESONANCE_SIGNALS);
   const [instOrders] = useState<InstitutionOrder[]>(MOCK_INSTITUTION_ORDERS);
+  const [cmd, setCmd] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load trades
   useEffect(() => {
-    getResonanceSignals().catch(() => {});
-    getInstitutionOrders().catch(() => {});
-  }, []);
+    setLoading(true);
+    getInsiderTrades(filter, 1, 50)
+      .then((res) => setTrades(res.data))
+      .catch(() => setTrades([]))
+      .finally(() => setLoading(false));
+  }, [filter]);
 
-  const trades = data?.pages.flatMap((p) => p.data) ?? [];
-
-  // Keyboard: 1-4 filter
+  // Keyboard: 1-4 filter, / focus cmd
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      // Don't intercept when typing in input
+      if (e.target instanceof HTMLInputElement && e.key !== 'Escape') return;
+
       if (e.key === '1') setFilter('all');
       if (e.key === '2') setFilter('buy');
       if (e.key === '3') setFilter('sell');
       if (e.key === '4') setFilter('cluster');
+      if (e.key === '/' || e.key === '`') {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+      if (e.key === 'Escape') {
+        inputRef.current?.blur();
+        setCmd('');
+      }
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
   }, []);
+
+  // Handle command input
+  const handleCmdKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const v = cmd.trim().toUpperCase();
+      if (v === '1' || v === 'ALL') setFilter('all');
+      else if (v === '2' || v === 'BUY') setFilter('buy');
+      else if (v === '3' || v === 'SELL') setFilter('sell');
+      else if (v === '4' || v === 'CLUSTER') setFilter('cluster');
+      else if (v.startsWith('/')) {
+        const ticker = v.slice(1);
+        // future: navigate to stock detail
+        console.log('Search:', ticker);
+      }
+      setCmd('');
+      inputRef.current?.blur();
+    }
+  };
+
+  // Filter trades for display
+  const displayTrades = trades;
 
   return (
     <div style={{
@@ -90,10 +126,12 @@ export default function FeedPage() {
         fontSize: 9, color: 'var(--bl-gray)', background: 'var(--bl-bg-panel)',
         borderBottom: '1px solid var(--bl-border)', gap: 12,
       }}>
-        <span>FILTER: {filter.toUpperCase()}</span>
+        <span style={{ color: filter === 'buy' ? 'var(--bl-green)' : filter === 'sell' ? 'var(--bl-red)' : filter === 'cluster' ? 'var(--bl-amber)' : 'var(--bl-white)' }}>
+          FILTER: {filter.toUpperCase()}
+        </span>
         <span>{trades.length} trades</span>
-        <span style={{ color: 'var(--bl-green)' }}>● SEC EDGAR LIVE</span>
-        <span style={{ marginLeft: 'auto', color: 'var(--bl-amber)' }}>1-4: filter  /=search</span>
+        <span style={{ color: 'var(--bl-green)' }}>● LIVE</span>
+        <span style={{ marginLeft: 'auto', color: 'var(--bl-amber)' }}>1-4 filter  /=cmd  ESC=exit</span>
       </div>
 
       {/* 2x2 Grid */}
@@ -114,13 +152,17 @@ export default function FeedPage() {
               <span style={{ width: 70, color: 'var(--bl-gray)', textAlign: 'right' }}>VALUE</span>
               <span style={{ width: 55, color: 'var(--bl-gray)', textAlign: 'right' }}>DATE</span>
             </Row>
-            {isLoading ? (
-              [1,2,3,4,5,6,7,8].map(i => <Row key={i}><span style={{color:'var(--bl-gray)'}}>Loading...</span></Row>)
-            ) : trades.slice(0, 30).map((t, i) => (
+            {loading ? (
+              [1,2,3,4,5,6,7,8,9,10].map(i => <Row key={i}><span style={{color:'var(--bl-gray)'}}>Loading...</span></Row>)
+            ) : displayTrades.length === 0 ? (
+              <Row><span style={{color:'var(--bl-gray)'}}>No trades found for filter: {filter}</span></Row>
+            ) : displayTrades.slice(0, 30).map((t, i) => (
               <Row key={t.id || i} highlight={i % 2 === 0}>
                 <span style={{ width: 50, color: 'var(--bl-amber)', fontWeight: 600 }}>{t.ticker}</span>
                 <span style={{ width: 100, color: 'var(--bl-white)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s(t.insider_name, 12)}</span>
-                <span style={{ width: 40, textAlign: 'right', color: t.transaction_type === 'BUY' ? 'var(--bl-green)' : 'var(--bl-red)', fontWeight: 600 }}>{t.transaction_type === 'BUY' ? 'BUY' : 'SEL'}</span>
+                <span style={{ width: 40, textAlign: 'right', color: t.transaction_type === 'BUY' ? 'var(--bl-green)' : 'var(--bl-red)', fontWeight: 600 }}>
+                  {t.transaction_type === 'BUY' ? 'BUY' : 'SEL'}
+                </span>
                 <span style={{ width: 60, textAlign: 'right', color: 'var(--bl-white)' }}>{fmt(t.shares)}</span>
                 <span style={{ width: 60, textAlign: 'right', color: 'var(--bl-white)' }}>{(t.price ?? 0).toFixed(2)}</span>
                 <span style={{ width: 70, textAlign: 'right', color: t.transaction_type === 'BUY' ? 'var(--bl-green)' : 'var(--bl-red)' }}>{fmt(t.total_value)}</span>
@@ -184,21 +226,44 @@ export default function FeedPage() {
           </div>
         </div>
 
-        {/* Q4: Commands */}
+        {/* Q4: Command Input */}
         <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <PanelHeader title="COMMANDS" />
-          <div style={{ flex: 1, padding: 6, fontSize: 11, fontFamily: 'JetBrains Mono, monospace', color: 'var(--bl-gray)', overflow: 'auto' }}>
-            <div style={{ color: 'var(--bl-amber)', fontWeight: 600, marginBottom: 4 }}>KEYBOARD</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>1</span>  ALL trades</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>2</span>  BUY only</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>3</span>  SELL only</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>4</span>  CLUSTER</div>
-            <div style={{ marginTop: 6, color: 'var(--bl-amber)', fontWeight: 600 }}>SEARCH</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>/AAPL</span>  stock detail</div>
-            <div><span style={{ color: 'var(--bl-white)' }}>/buy 10M</span>  filter &gt;10M</div>
-            <div style={{ marginTop: 8, padding: '4px 6px', border: '1px solid var(--bl-border)' }}>
-              <span style={{ color: 'var(--bl-green)' }}>&gt;</span>
-              <span style={{ color: 'var(--bl-amber)', marginLeft: 4 }}>_</span>
+          <PanelHeader title="COMMAND INPUT" />
+          <div style={{ flex: 1, padding: 8, fontFamily: 'JetBrains Mono, monospace', overflow: 'auto' }}>
+            <div style={{ color: 'var(--bl-amber)', fontWeight: 600, fontSize: 10, marginBottom: 6 }}>KEYBOARD SHORTCUTS</div>
+            <div style={{ fontSize: 10, color: 'var(--bl-gray)' }}>
+              <div><span style={{ color: 'var(--bl-white)' }}>1</span> = ALL trades</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>2</span> = BUY only</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>3</span> = SELL only</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>4</span> = CLUSTER signals</div>
+              <div style={{ marginTop: 2 }}><span style={{ color: 'var(--bl-white)' }}>/</span> = activate command line</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>ESC</span> = exit command line</div>
+            </div>
+            <div style={{ color: 'var(--bl-amber)', fontWeight: 600, fontSize: 10, marginTop: 8, marginBottom: 4 }}>COMMANDS</div>
+            <div style={{ fontSize: 10, color: 'var(--bl-gray)' }}>
+              <div><span style={{ color: 'var(--bl-white)' }}>/AAPL</span> — search by ticker</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>buy</span> / <span style={{ color: 'var(--bl-white)' }}>sell</span> / <span style={{ color: 'var(--bl-white)' }}>all</span> / <span style={{ color: 'var(--bl-white)' }}>cluster</span> — set filter</div>
+              <div><span style={{ color: 'var(--bl-white)' }}>1-4</span> — filter shortcut</div>
+            </div>
+            {/* Command input */}
+            <div style={{
+              marginTop: 10, display: 'flex', alignItems: 'center',
+              border: '1px solid var(--bl-border)', padding: '4px 8px',
+            }}>
+              <span style={{ color: 'var(--bl-green)', fontSize: 12, marginRight: 6 }}>&gt;</span>
+              <input
+                ref={inputRef}
+                value={cmd}
+                onChange={(e) => setCmd(e.target.value)}
+                onKeyDown={handleCmdKey}
+                placeholder="type /ticker or filter..."
+                style={{
+                  flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                  color: 'var(--bl-amber)', fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 12, caretColor: 'var(--bl-amber)',
+                }}
+              />
+              <span style={{ color: 'var(--bl-gray-dim)', fontSize: 9 }}>ENTER ↵</span>
             </div>
           </div>
         </div>
@@ -210,8 +275,8 @@ export default function FeedPage() {
         fontSize: 9, color: 'var(--bl-gray-dim)', background: 'var(--bl-bg-panel)',
         borderTop: '1px solid var(--bl-border)', gap: 12,
       }}>
-        <span>SEC EDGAR via n8n</span>
-        <span style={{ marginLeft: 'auto' }}>🐋 WhaleTrace v2</span>
+        <span>DATA: SEC EDGAR via n8n | mock fallback active</span>
+        <span style={{ marginLeft: 'auto' }}>🐋 WhaleTrace v2 | BLOOMBERG MODE</span>
       </div>
     </div>
   );
