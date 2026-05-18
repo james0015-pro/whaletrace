@@ -1,82 +1,120 @@
-import { Search, Bell, Menu } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { cn } from '@/lib/utils';
-import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
-interface TopNavBarProps {
-  onMenuClick: () => void;
-}
+const TAPE = [
+  { t: 'AAPL', p: '196.34', c: '+2.15', up: true },
+  { t: 'NVDA', p: '1,036.80', c: '+24.50', up: true },
+  { t: 'MSFT', p: '412.11', c: '-3.22', up: false },
+  { t: 'TSLA', p: '248.90', c: '+8.40', up: true },
+  { t: 'META', p: '585.21', c: '-5.10', up: false },
+  { t: 'AMZN', p: '197.82', c: '+1.33', up: true },
+  { t: 'GOOGL', p: '175.44', c: '-0.88', up: false },
+  { t: 'JPM', p: '224.67', c: '+3.01', up: true },
+  { t: 'V', p: '310.92', c: '+1.45', up: true },
+  { t: 'WMT', p: '78.56', c: '-0.32', up: false },
+];
 
-export function TopNavBar({ onMenuClick }: TopNavBarProps) {
-  const { t } = useTranslation();
+export function TopNavBar() {
+  const { t, i18n } = useTranslation();
+  const [time, setTime] = useState('');
+  const [lang, setLang] = useState(i18n.language);
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      setTime(d.toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/New_York' }) + ' ET');
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const toggleLang = () => {
+    const next = lang.startsWith('zh') ? 'en' : 'zh-TW';
+    i18n.changeLanguage(next);
+    setLang(next);
+  };
 
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-40 flex items-center gap-3 px-4 sm:px-6',
-        'h-14 sm:h-[56px]',
-        'bg-canvas/80 backdrop-blur-md',
-        'border-b border-border-subtle'
-      )}
-    >
-      {/* Mobile menu trigger */}
-      <button
-        onClick={onMenuClick}
-        className="sm:hidden p-2 -ml-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label={t('topBar.openMenu')}
-      >
-        <Menu size={20} />
-      </button>
-
+    <header style={{
+      height: 'var(--bl-topbar-h)', background: '#0a0a0a',
+      borderBottom: '1px solid #1f1f1f', display: 'flex',
+      alignItems: 'center', overflow: 'hidden', whiteSpace: 'nowrap',
+    }}>
       {/* Logo */}
-      <a href="/" className="flex items-center gap-2 flex-shrink-0">
-        <span className="text-xl" role="img" aria-label="whale">
-          🐋
-        </span>
-        <span className="font-semibold text-text-primary text-base hidden xs:inline">
-          WhaleTrace
-        </span>
-      </a>
-
-      {/* Spacer */}
-      <div className="flex-1" />
-
-      {/* Language switcher */}
-      <LanguageSwitcher />
-
-      {/* Quick search */}
-      <div className="relative hidden md:block">
-        <Search
-          size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-        />
-        <input
-          type="text"
-          placeholder={t('topBar.search')}
-          className={cn(
-            'w-56 lg:w-72 h-9 pl-9 pr-3',
-            'bg-surface border border-border-default rounded-input',
-            'text-sm text-text-primary placeholder:text-text-muted',
-            'focus:outline-none focus:border-green-primary focus:ring-1 focus:ring-green-primary/20',
-            'transition-colors'
-          )}
-        />
+      <div style={{
+        padding: '0 10px', color: '#ff8c00', fontWeight: 700,
+        fontSize: '12px', borderRight: '1px solid #1f1f1f',
+        height: '100%', display: 'flex', alignItems: 'center', letterSpacing: 1,
+      }}>
+        🐋 WHALETRACE
       </div>
 
-      {/* Notification bell */}
-      <button
-        className="relative p-2 text-text-tertiary hover:text-text-primary transition-colors"
-        aria-label={t('topBar.notifications')}
-      >
-        <Bell size={18} />
-        {/* Notification dot */}
-        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-primary rounded-full" />
+      {/* Ticker tape */}
+      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+        <div style={{
+          display: 'flex', gap: 24, padding: '0 12px',
+          animation: 'scroll-tape 60s linear infinite', width: 'max-content',
+        }}>
+          {[...TAPE, ...TAPE].map((q, i) => (
+            <span key={i} style={{ fontSize: 11, fontFamily: 'JetBrains Mono, monospace', display: 'flex', gap: 6, alignItems: 'center' }}>
+              <span style={{ color: '#e6e6e6', fontWeight: 500 }}>{q.t}</span>
+              <span style={{ color: '#e6e6e6' }}>{q.p}</span>
+              <span style={{ color: q.up ? '#0c6' : '#f33', fontWeight: 600 }}>{q.c}%</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Language switch */}
+      <button onClick={()=>{window.location.hash='#/dashboard';window.location.reload();}}
+        style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        DASH
+      </button>
+      <button onClick={()=>{window.location.hash='#/';window.location.reload();}}
+        style={{background:'transparent',border:'1px solid #333',color:!window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        TERM
       </button>
 
-      {/* User avatar placeholder */}
-      <div className="w-8 h-8 rounded-full bg-elevated border border-border-default flex items-center justify-center text-sm text-text-tertiary">
-        ?
+      {/* Language switch */}
+      <button onClick={toggleLang}
+        style={{
+          background: 'transparent', border: '1px solid #333', color: '#888',
+          cursor: 'pointer', padding: '2px 8px', fontSize: 10,
+          fontFamily: 'JetBrains Mono, monospace', marginRight: 8,
+          height: 20, borderRadius: 2,
+        }}>
+        {lang.startsWith('zh') ? '中文' : 'EN'}
+      </button>
+
+      {/* Login */}
+      <button
+        style={{
+          background: 'transparent', border: '1px solid #333', color: '#888',
+          cursor: 'pointer', padding: '2px 8px', fontSize: 10,
+          fontFamily: 'JetBrains Mono, monospace', marginRight: 8,
+          height: 20, borderRadius: 2,
+        }}
+        onClick={() => alert('Login (NYI)')}>
+        LOGIN
+      </button>
+
+      {/* Clock */}
+      <div style={{
+        padding: '0 10px', color: '#e6e6e6', fontSize: 11,
+        borderLeft: '1px solid #1f1f1f', fontFamily: 'JetBrains Mono, monospace',
+        height: '100%', display: 'flex', alignItems: 'center', gap: 6,
+      }}>
+        <span style={{ color: '#0c6' }}>●</span>
+        <span>{time}</span>
       </div>
+
+      <style>{`
+        @keyframes scroll-tape {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </header>
   );
 }

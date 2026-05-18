@@ -1,42 +1,52 @@
 import { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
-import { AppShell } from '@/components/layout/AppShell';
+import { TopNavBar } from '@/components/layout/TopNavBar';
 import FeedPage from '@/pages/FeedPage';
+import DashboardPage from '@/pages/DashboardPage';
 import SignalsPage from '@/pages/SignalsPage';
 import InstitutionsPage from '@/pages/InstitutionsPage';
 import StockDetailPage from '@/pages/StockDetailPage';
 import WatchlistPage from '@/pages/WatchlistPage';
 import SettingsPage from '@/pages/SettingsPage';
 
-// i18n — must be imported before any useTranslation() call
-import '@/i18n';
-
 function LoadingFallback() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-canvas">
-      <div className="text-text-muted text-sm animate-pulse">Loading...</div>
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      height: '100vh', background: '#000', color: '#888',
+      fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
+    }}>
+      <span style={{ animation: 'bl-shimmer 1.5s infinite' }}>WHALETRACE LOADING...</span>
     </div>
   );
 }
 
 export default function App() {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <QueryProvider>
-        <BrowserRouter>
-          <AppShell>
-            <Routes>
-              <Route path="/" element={<FeedPage />} />
-              <Route path="/signals" element={<SignalsPage />} />
-              <Route path="/institutions" element={<InstitutionsPage />} />
-              <Route path="/stocks/:ticker" element={<StockDetailPage />} />
-              <Route path="/watchlist" element={<WatchlistPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-            </Routes>
-          </AppShell>
-        </BrowserRouter>
-      </QueryProvider>
-    </Suspense>
+    <I18nextProvider i18n={i18n}>
+      <Suspense fallback={<LoadingFallback />}>
+        <QueryProvider>
+          <HashRouter>
+            <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#000' }}>
+              <TopNavBar />
+              <div style={{ flex: 1, overflow: 'hidden' }}>
+                <Routes>
+                  <Route path="/" element={<FeedPage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/signals" element={<SignalsPage />} />
+                  <Route path="/institutions" element={<InstitutionsPage />} />
+                  <Route path="/stocks/:ticker" element={<StockDetailPage />} />
+                  <Route path="/watchlist" element={<WatchlistPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                </Routes>
+              </div>
+            </div>
+          </HashRouter>
+        </QueryProvider>
+      </Suspense>
+    </I18nextProvider>
   );
 }

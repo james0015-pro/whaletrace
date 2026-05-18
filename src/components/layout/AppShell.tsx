@@ -43,7 +43,7 @@ export function AppShell({ children }: AppShellProps) {
 
       {/* Main area */}
       <div className="flex flex-col flex-1 min-w-0">
-        <TopNavBar onMenuClick={() => setSidebarOpen(true)} />
+        <TopNavBar />
         <main className="flex-1 overflow-y-auto pb-16 sm:pb-0">
           {children}
         </main>

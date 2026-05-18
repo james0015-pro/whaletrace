@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 
-const NAV_ICONS = {
+const NAV_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
   '/': LayoutDashboard,
   '/signals': Zap,
   '/institutions': Building2,

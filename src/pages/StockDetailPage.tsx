@@ -1,40 +1,713 @@
-import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useState, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
+import type { InsiderTrade, ResonanceSignal } from '@/types';
+import type { InstitutionOrder } from '@/lib/mock-data';
 
+/* ============================================================
+   Helpers
+   ============================================================ */
+const F = (v: number | null | undefined): string => {
+  if (v == null) return '—';
+  if (v >= 1e9) return (v / 1e9).toFixed(2) + 'B';
+  if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
+  return String(v);
+};
+const S = (s: string, n: number): string => (s.length > n ? s.slice(0, n) : s);
+
+type Timeframe = '1D' | '5D' | '30D' | '6M' | '1Y' | 'ALL';
+
+/* ============================================================
+   Price Generator (deterministic-ish per ticker+timeframe)
+   ============================================================ */
+function seedFrom(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+function generatePrices(
+  ticker: string,
+  tf: Timeframe,
+): { prices: number[]; labels: string[] } {
+  const seed = seedFrom(ticker + tf);
+  const rng = (i: number) => {
+    const x = Math.sin(seed + i * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  };
+
+  const basePrice = 80 + rng(0) * 220;
+  let count: number;
+  const labels: string[] = [];
+  switch (tf) {
+    case '1D':  count = 8;   for (let i = count; i > 0; i--) labels.push(`${10 + i}:00`); break;
+    case '5D':  count = 5;   for (let i = count; i > 0; i--) labels.push(`D-${i}`); break;
+    case '30D': count = 30;  for (let i = count; i > 0; i--) labels.push(`D-${i}`); break;
+    case '6M':  count = 26;  for (let i = count; i > 0; i--) labels.push(`W-${i}`); break;
+    case '1Y':  count = 12;  for (let i = count; i > 0; i--) labels.push(`${['J','F','M','A','M','J','J','A','S','O','N','D'][(12-i)%12]}`); break;
+    case 'ALL': count = 20;  for (let i = count; i > 0; i--) labels.push(`Q${((count-i)%4)+1}-${26-count+i}`); break;
+    default: count = 30;
+  }
+
+  const drift = rng(1) > 0.5 ? 1.003 : 0.997;
+  const prices: number[] = [];
+  let p = basePrice;
+  for (let i = 0; i < count; i++) {
+    p = +(p * drift * (0.97 + rng(i * 3) * 0.06)).toFixed(2);
+    prices.push(p);
+  }
+  return { prices, labels };
+}
+
+/* ============================================================
+   StockDetailPage
+   ============================================================ */
 export default function StockDetailPage() {
-  const { ticker } = useParams<{ ticker: string }>();
-  const { t } = useTranslation();
+  const { ticker: rawTicker } = useParams<{ ticker: string }>();
+  const navigate = useNavigate();
+  const ticker = rawTicker?.toUpperCase() || '';
+  const [tf, setTf] = useState<Timeframe>('30D');
+  const [watch, setWatch] = useState(false);
 
-  const metrics = [
-    { key: 'confidence', label: t('stockDetail.metrics.confidence') },
-    { key: 'buy12m', label: t('stockDetail.metrics.buy12m') },
-    { key: 'sell12m', label: t('stockDetail.metrics.sell12m') },
-    { key: 'cluster', label: t('stockDetail.metrics.cluster') },
+  const trades = useMemo(
+    () =>
+      MOCK_TRADES
+        .filter((t) => t.ticker === ticker)
+        .sort((a, b) => b.trade_date.localeCompare(a.trade_date)),
+    [ticker],
+  );
+  const buys = trades.filter((t) => t.transaction_type === 'BUY');
+  const sells = trades.filter((t) => t.transaction_type === 'SELL');
+  const tB = buys.reduce((s, t) => s + t.total_value, 0);
+  const tS = sells.reduce((s, t) => s + t.total_value, 0);
+  const buyCount = buys.length;
+  const sellCount = sells.length;
+  const totalTrades = buyCount + sellCount;
+
+  const confidence = Math.min(
+    Math.round(
+      (buyCount / (totalTrades || 1)) * 50 + (tB / (tB + tS || 1)) * 50,
+    ),
+    100,
+  );
+
+  const resonance = MOCK_RESONANCE_SIGNALS.find((r) => r.ticker === ticker);
+  const instOrders = MOCK_INSTITUTION_ORDERS.filter((o) => o.ticker === ticker);
+
+  const company = trades[0]?.company_name || resonance?.company_name || ticker;
+
+  const { prices, labels } = useMemo(
+    () => generatePrices(ticker, tf),
+    [ticker, tf],
+  );
+  const pMin = Math.min(...prices);
+  const pMax = Math.max(...prices);
+  const pRange = pMax - pMin || 1;
+  const change = prices.length >= 2
+    ? (((prices[prices.length - 1] - prices[0]) / prices[0]) * 100)
+    : 0;
+
+  const TIMEFRAMES: Timeframe[] = ['1D', '5D', '30D', '6M', '1Y', 'ALL'];
+
+  /* ---- sub-scores ---- */
+  const subScores = [
+    { label: 'BUY SCALE',  value: Math.min(Math.round((tB / 5e8) * 100), 100) },
+    { label: 'BUYER COUNT', value: Math.min(buyCount * 8, 100) },
+    { label: 'BUY/SELL',    value: Math.min(Math.round((buyCount / (sellCount || 1)) * 15), 100) },
+    { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round(Math.random() * 30) },
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
-      <div className="mb-6">
-        <h1 className="text-heading-2 text-text-primary mb-1">
-          {ticker?.toUpperCase() || '???'}
-        </h1>
-        <p className="text-text-tertiary text-sm">{t('stockDetail.description')}</p>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        {metrics.map((m) => (
-          <div
-            key={m.key}
-            className="p-4 rounded-card bg-surface border border-border-subtle text-center"
+    <div
+      style={{
+        height: '100%',
+        background: '#000',
+        color: '#e6e6e6',
+        fontFamily: 'JetBrains Mono, monospace',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
+      {/* ========== HEADER ========== */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '6px 10px',
+          background: '#0a0a0a',
+          borderBottom: '1px solid #1f1f1f',
+          gap: 12,
+          flexShrink: 0,
+        }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            background: 'transparent',
+            border: '1px solid #333',
+            color: '#ff8c00',
+            cursor: 'pointer',
+            padding: '3px 10px',
+            fontSize: 10,
+            fontFamily: 'JetBrains Mono, monospace',
+            borderRadius: 2,
+          }}
+        >
+          ← BACK
+        </button>
+        <span style={{ color: '#ff8c00', fontWeight: 700, fontSize: 16, letterSpacing: 1 }}>
+          {ticker}
+        </span>
+        <span style={{ color: '#888', fontSize: 11 }}>{company}</span>
+        <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 9, color: '#555' }}>
+            {totalTrades} trades / 2YR
+          </span>
+          <button
+            onClick={() => setWatch((w) => !w)}
+            style={{
+              background: 'transparent',
+              border: watch ? '1px solid #ff8c00' : '1px solid #333',
+              color: watch ? '#ff8c00' : '#555',
+              cursor: 'pointer',
+              fontSize: 16,
+              padding: '2px 8px',
+              borderRadius: 2,
+              fontFamily: 'JetBrains Mono, monospace',
+              lineHeight: 1,
+            }}
+            title={watch ? 'Remove from watchlist' : 'Add to watchlist'}
           >
-            <p className="text-2xl font-semibold text-text-primary">—</p>
-            <p className="text-text-muted text-xs mt-1">{m.label}</p>
-          </div>
-        ))}
+            {watch ? '★' : '☆'} WATCH
+          </button>
+        </span>
       </div>
 
-      <div className="p-16 rounded-card bg-surface border border-border-subtle text-center text-text-muted text-sm">
-        {t('stockDetail.chart_placeholder')}
+      {/* ========== SCROLLABLE BODY ========== */}
+      <div
+        style={{
+          flex: 1,
+          overflow: 'auto',
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+        }}
+      >
+        {/* ========== CONFIDENCE SCORE ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 9,
+              color: '#555',
+              marginBottom: 6,
+              fontFamily: 'JetBrains Mono, monospace',
+              textTransform: 'uppercase',
+              letterSpacing: 1,
+            }}
+          >
+            CONFIDENCE SCORE
+          </div>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <div style={{ flex: 1, height: 10, background: '#1f1f1f' }}>
+              <div
+                style={{
+                  width: `${confidence}%`,
+                  height: '100%',
+                  background:
+                    confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
+                  transition: 'width 0.6s',
+                }}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: 22,
+                fontWeight: 700,
+                color:
+                  confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
+                fontFamily: 'JetBrains Mono, monospace',
+              }}
+            >
+              {confidence}
+            </div>
+            <div style={{ fontSize: 9, color: '#555' }}>/100</div>
+          </div>
+
+          {/* Sub-scores */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr 1fr 1fr',
+              gap: 8,
+              marginTop: 10,
+            }}
+          >
+            {subScores.map((s) => (
+              <div
+                key={s.label}
+                style={{
+                  padding: 8,
+                  background: '#000',
+                  border: '1px solid #1f1f1f',
+                  textAlign: 'center',
+                }}
+              >
+                <div style={{ fontSize: 8, color: '#555', marginBottom: 2 }}>
+                  {s.label}
+                </div>
+                <div
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color:
+                      s.value > 60 ? '#0c6' : s.value > 30 ? '#ff8c00' : '#f33',
+                    fontFamily: 'JetBrains Mono, monospace',
+                  }}
+                >
+                  {s.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ========== PRICE CHART ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 9,
+                color: '#555',
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+              }}
+            >
+              PRICE CHART
+            </div>
+            {/* Timeframe tabs */}
+            <div style={{ display: 'flex', gap: 2 }}>
+              {TIMEFRAMES.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTf(t)}
+                  style={{
+                    background: tf === t ? '#1a1a1a' : 'transparent',
+                    border: `1px solid ${tf === t ? '#ff8c00' : '#333'}`,
+                    color: tf === t ? '#ff8c00' : '#888',
+                    cursor: 'pointer',
+                    fontSize: 9,
+                    padding: '2px 7px',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    borderRadius: 2,
+                  }}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Price bar chart */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: prices.length > 20 ? 1 : 3,
+              height: 80,
+              marginBottom: 4,
+            }}
+          >
+            {prices.map((p, i) => {
+              const h = ((p - pMin) / pRange) * 100;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    flex: 1,
+                    height: `${Math.max(h, 3)}%`,
+                    background: change >= 0 ? '#ff8c00' : '#f33',
+                    opacity: 0.75,
+                    minWidth: 2,
+                  }}
+                  title={`${labels[i]}: $${p.toFixed(2)}`}
+                />
+              );
+            })}
+          </div>
+
+          {/* Price range + change */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ display: 'flex', gap: 12 }}>
+              <span style={{ fontSize: 10, color: '#888' }}>
+                L: <span style={{ color: '#e6e6e6' }}>${pMin.toFixed(2)}</span>
+              </span>
+              <span style={{ fontSize: 10, color: '#888' }}>
+                H: <span style={{ color: '#e6e6e6' }}>${pMax.toFixed(2)}</span>
+              </span>
+              <span style={{ fontSize: 10, color: '#888' }}>
+                LAST:{' '}
+                <span style={{ color: '#ff8c00', fontWeight: 700 }}>
+                  ${prices[prices.length - 1].toFixed(2)}
+                </span>
+              </span>
+            </div>
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: change >= 0 ? '#0c6' : '#f33',
+              }}
+            >
+              {change >= 0 ? '+' : ''}
+              {change.toFixed(2)}%
+            </span>
+          </div>
+        </div>
+
+        {/* ========== RESONANCE HISTORY ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 9,
+              color: '#555',
+              marginBottom: 6,
+              textTransform: 'uppercase',
+              letterSpacing: 1,
+            }}
+          >
+            RESONANCE HISTORY
+          </div>
+          {resonance ? (
+            <div style={{ fontSize: 10, color: '#e6e6e6', lineHeight: 1.8 }}>
+              <div>
+                📅 Signal Date:{' '}
+                <span style={{ color: '#ff8c00' }}>{resonance.signal_date}</span>
+              </div>
+              <div>
+                🏦 Institutional Buy:{' '}
+                <span style={{ color: '#0c6' }}>
+                  {F(resonance.total_institutional_buy)}
+                </span>{' '}
+                from {resonance.institution_count} institutions
+              </div>
+              <div>
+                👤 Insider Buyers:{' '}
+                <span style={{ color: '#0c6' }}>
+                  {resonance.insider_buy_count}
+                </span>{' '}
+                — {resonance.insider_names.join(', ')}
+              </div>
+              <div>
+                📊 Signal Strength:{' '}
+                <span
+                  style={{
+                    color:
+                      resonance.signal_strength > 60
+                        ? '#0c6'
+                        : resonance.signal_strength > 30
+                          ? '#ff8c00'
+                          : '#f33',
+                    fontWeight: 700,
+                  }}
+                >
+                  {resonance.signal_strength}/100
+                </span>
+              </div>
+              <div style={{ marginTop: 6, fontSize: 10, color: '#888' }}>
+                Overall: {buyCount + sellCount} trades in 2YR | 🟢 {buyCount} buys | 🔴{' '}
+                {sellCount} sells | Net:{' '}
+                <span style={{ color: tB > tS ? '#0c6' : '#f33', fontWeight: 600 }}>
+                  {F(tB - tS)}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div style={{ fontSize: 10, color: '#555' }}>
+              No resonance signal detected for {ticker}
+            </div>
+          )}
+        </div>
+
+        {/* ========== INSTITUTION HOLDINGS ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 9,
+              color: '#555',
+              marginBottom: 8,
+              textTransform: 'uppercase',
+              letterSpacing: 1,
+            }}
+          >
+            INSTITUTION HOLDINGS
+          </div>
+          {instOrders.length > 0 ? (
+            <>
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: 9,
+                  color: '#555',
+                  borderBottom: '1px solid #1f1f1f',
+                  paddingBottom: 5,
+                  marginBottom: 2,
+                }}
+              >
+                <span style={{ width: '35%' }}>INSTITUTION</span>
+                <span style={{ width: '22%', textAlign: 'right' }}>AMOUNT</span>
+                <span style={{ width: '22%', textAlign: 'right' }}>COMPANY</span>
+                <span style={{ width: '21%', textAlign: 'right' }}>CHANGE</span>
+              </div>
+              {instOrders.map((o, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    fontSize: 10,
+                    padding: '3px 0',
+                    borderBottom:
+                      i < instOrders.length - 1
+                        ? '1px solid #1a1a1a'
+                        : 'none',
+                    alignItems: 'center',
+                    background:
+                      i % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent',
+                  }}
+                >
+                  <span
+                    style={{
+                      width: '35%',
+                      color: '#e6e6e6',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {S(o.institution, 18)}
+                  </span>
+                  <span style={{ width: '22%', textAlign: 'right', color: '#e6e6e6' }}>
+                    {F(o.amount)}
+                  </span>
+                  <span style={{ width: '22%', textAlign: 'right', color: '#888' }}>
+                    {S(o.company_name, 12)}
+                  </span>
+                  <span
+                    style={{
+                      width: '21%',
+                      textAlign: 'right',
+                      color:
+                        o.direction === 'NEW'
+                          ? '#8b5cf6'
+                          : o.change_pct > 0
+                            ? '#0c6'
+                            : '#f33',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {o.direction === 'NEW'
+                      ? 'NEW'
+                      : `${o.change_pct > 0 ? '+' : ''}${o.change_pct}%`}
+                  </span>
+                </div>
+              ))}
+            </>
+          ) : (
+            <div style={{ fontSize: 10, color: '#555' }}>
+              No institution data for {ticker}
+            </div>
+          )}
+        </div>
+
+        {/* ========== INSIDER TRADES TIMELINE ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 9,
+              color: '#555',
+              marginBottom: 8,
+              textTransform: 'uppercase',
+              letterSpacing: 1,
+            }}
+          >
+            INSIDER TRADES TIMELINE
+          </div>
+          {trades.length > 0 ? (
+            <>
+              {/* Column headers */}
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: 9,
+                  color: '#555',
+                  borderBottom: '1px solid #1f1f1f',
+                  paddingBottom: 4,
+                  marginBottom: 2,
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ width: 55 }}>DATE</span>
+                <span style={{ width: 105 }}>INSIDER</span>
+                <span style={{ width: 95 }}>TITLE</span>
+                <span style={{ width: 38, textAlign: 'right' }}>DIR</span>
+                <span style={{ width: 55, textAlign: 'right' }}>SHARES</span>
+                <span style={{ width: 55, textAlign: 'right' }}>PRICE</span>
+                <span style={{ width: 65, textAlign: 'right' }}>VALUE</span>
+              </div>
+              {trades.slice(0, 20).map((t, i) => (
+                <div
+                  key={t.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: 10,
+                    padding: '3px 0',
+                    borderBottom:
+                      i < Math.min(trades.length, 20) - 1
+                        ? '1px solid #1a1a1a'
+                        : 'none',
+                    background:
+                      i % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent',
+                  }}
+                >
+                  <span style={{ width: 55, color: '#888' }}>
+                    {t.trade_date.slice(5)}
+                  </span>
+                  <span
+                    style={{
+                      width: 105,
+                      color: '#e6e6e6',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {S(t.insider_name, 15)}
+                  </span>
+                  <span
+                    style={{
+                      width: 95,
+                      color: '#888',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {S(t.title, 14)}
+                  </span>
+                  <span
+                    style={{
+                      width: 38,
+                      textAlign: 'right',
+                      color: t.transaction_type === 'BUY' ? '#0c6' : '#f33',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {t.transaction_type === 'BUY' ? 'BUY' : 'SEL'}
+                  </span>
+                  <span style={{ width: 55, textAlign: 'right', color: '#e6e6e6' }}>
+                    {F(t.shares)}
+                  </span>
+                  <span style={{ width: 55, textAlign: 'right', color: '#e6e6e6' }}>
+                    {(t.price ?? 0).toFixed(2)}
+                  </span>
+                  <span
+                    style={{
+                      width: 65,
+                      textAlign: 'right',
+                      color:
+                        t.transaction_type === 'BUY' ? '#0c6' : '#f33',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {F(t.total_value)}
+                  </span>
+                </div>
+              ))}
+              {trades.length > 20 && (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    padding: '6px 0',
+                    fontSize: 10,
+                    color: '#555',
+                  }}
+                >
+                  ... and {trades.length - 20} more trades
+                </div>
+              )}
+            </>
+          ) : (
+            <div style={{ fontSize: 10, color: '#555' }}>
+              No insider trades found for {ticker}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ========== FOOTER STATUS ========== */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '4px 10px',
+          background: '#0a0a0a',
+          borderTop: '1px solid #1f1f1f',
+          fontSize: 9,
+          color: '#555',
+          flexShrink: 0,
+        }}
+      >
+        <span>
+          STOCK/{ticker} | {company}
+        </span>
+        <span>
+          {buyCount + sellCount} trades | CONF {confidence} | {new Date().toISOString().slice(0, 10)}
+        </span>
       </div>
     </div>
   );
