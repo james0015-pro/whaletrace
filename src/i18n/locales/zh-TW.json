@@ -3,6 +3,7 @@
     "home": "交易動態",
     "signals": "群組信號",
     "institutions": "機構 13F",
+    "treemap": "流向樹狀圖",
     "watchlist": "我的關注",
     "settings": "設定"
   },
@@ -10,7 +11,10 @@
     "search": "搜尋股票代號或公司...",
     "notifications": "通知",
     "openMenu": "開啟選單",
-    "closeMenu": "關閉選單"
+    "closeMenu": "關閉選單",
+    "dash": "儀表",
+    "term": "終端",
+    "tree": "樹圖"
   },
   "feed": {
     "title": "🐋 WhaleTrace",
@@ -41,18 +45,130 @@
   },
   "institutions": {
     "title": "🏛️ 機構 13F 持股追蹤",
-    "description": "追蹤巴菲特、Burry、Dalio 等 25 位超級投資人的每季持股變動。Phase 3 實作。",
+    "description": "追蹤巴菲特、Burry、Dalio 等 25 位超級投資人的每季持股變動。",
     "loading": "載入中..."
+  },
+  "treemap": {
+    "title": "🌳 全市場流向樹狀圖",
+    "mode_inst": "機構流向",
+    "mode_insider": "內部人",
+    "mode_short": "放空風險",
+    "legend_size": "方塊大小=市值",
+    "legend_color": "顏色=",
+    "legend_buy": "🟢 買入",
+    "legend_sell": "🔴 賣出",
+    "legend_low_risk": "🟢 低風險",
+    "legend_high_risk": "🔴 高風險",
+    "legend_click": "點擊→查看詳情",
+    "header_label": "全市場流向樹狀圖"
+  },
+  "stockDetail": {
+    "back": "← 返回",
+    "trades_2yr": "筆交易 / 2年",
+    "watch_add": "加入關注",
+    "watch_remove": "移除關注",
+    "whalescore": {
+      "label": "🐋 鯨力計",
+      "strong": "強勢鯨訊",
+      "positive": "積極流入",
+      "neutral": "中性觀望",
+      "negative": "偏向流出",
+      "weak": "鯨群撤離",
+      "unit": "/100"
+    },
+    "confidenceTrend": "鯨力走勢 (12月)",
+    "factorGrades": {
+      "insiderFlow": "內部人流動",
+      "insiderFlowEn": "INSIDER FLOW",
+      "instConsensus": "機構共識",
+      "instConsensusEn": "INST CONSENSUS",
+      "shortRisk": "放空風險",
+      "shortRiskEn": "SHORT RISK",
+      "whalescore": "鯨力綜合",
+      "whalescoreEn": "WHALESCORE",
+      "desc": {
+        "extremeBuy": "極度強勢",
+        "strongBuy": "強勢信號",
+        "moderateBuy": "偏多信號",
+        "slightBuy": "中性偏多",
+        "slightSell": "中性偏弱",
+        "weakSell": "弱勢信號",
+        "pureBuy": "純買入",
+        "highConsensus": "高度共識",
+        "adding": "持續加倉",
+        "moderateAdd": "溫和加倉",
+        "unclear": "方向未明",
+        "noConsensus": "缺乏共識",
+        "veryLowShort": "極低放空",
+        "lowShort": "低放空",
+        "moderateShort": "中等放空",
+        "highShort": "高放空壓力",
+        "extremeSignal": "極強信號",
+        "weakSignal": "微弱信號",
+        "noSignal": "無信號"
+      }
+    },
+    "ownership": {
+      "title": "持有人結構",
+      "institution": "機構法人",
+      "insider": "內部人",
+      "retail": "散戶/其他"
+    },
+    "priceChart": {
+      "title": "股價走勢",
+      "low": "低",
+      "high": "高",
+      "last": "收"
+    },
+    "resonance": {
+      "title": "鯨群共振記錄",
+      "noSignal": "尚無共振訊號",
+      "signalDate": "📅 訊號日期",
+      "instBuy": "🏦 機構買入",
+      "fromInstitutions": "家機構",
+      "insiderBuyers": "👤 內部人買入",
+      "signalStrength": "📊 訊號強度",
+      "overall": "總結"
+    },
+    "institutionHoldings": {
+      "title": "機構持股",
+      "noData": "尚無機構資料",
+      "columns": {
+        "institution": "機構",
+        "amount": "金額",
+        "company": "公司",
+        "change": "變動"
+      }
+    },
+    "insiderTrades": {
+      "title": "內部人交易時間軸",
+      "noTrades": "無內部人交易記錄",
+      "noBuyTrades": "無買入交易記錄",
+      "moreTrades": "... 還有 {{count}} 筆交易",
+      "columns": {
+        "date": "日期",
+        "insider": "內部人",
+        "title": "職位",
+        "dir": "方向",
+        "shares": "股數",
+        "price": "價格",
+        "value": "金額",
+        "postTrade": "後續走勢"
+      },
+      "filterAll": "全部",
+      "filterBuy": "🟢 買入"
+    },
+    "footer": "股票"
   },
   "watchlist": {
     "title": "⭐ 我的關注",
-    "description": "追蹤最多 20 檔股票，任何變動優先推送。Phase 4 實作（需登入）。",
+    "description": "追蹤最多 20 檔股票，任何變動優先推送。",
     "not_logged_in": "尚未登入",
-    "login_prompt": "Phase 4 將整合 Supabase Auth，登入後即可建立關注清單"
+    "login_prompt": "登入後即可建立關注清單"
   },
   "settings": {
     "title": "⚙️ 設定",
-    "description": "Telegram 綁定、Email 通知、帳號管理。Phase 4 實作。",
+    "description": "Telegram 綁定、Email 通知、帳號管理。",
     "telegram": {
       "label": "Telegram 綁定",
       "desc": "接收即時警報與每日摘要",
@@ -68,16 +184,6 @@
       "desc": "登入/登出/密碼修改",
       "status": "未登入"
     }
-  },
-  "stockDetail": {
-    "description": "股票詳情頁 — 信心分數、內部人時間軸、機構持股。Phase 2 實作。",
-    "metrics": {
-      "confidence": "信心分數",
-      "buy12m": "12月買入",
-      "sell12m": "12月賣出",
-      "cluster": "群組信號"
-    },
-    "chart_placeholder": "📈 時間軸圖表將在 Phase 2 實作"
   },
   "tradeCard": {
     "volume": "交易量",
@@ -114,7 +220,7 @@
     "error": "錯誤",
     "retry": "重試",
     "no_data": "無資料",
-    "version": "WhaleTrace v0.2.0"
+    "version": "🐋 WhaleTrace v2.0"
   },
   "language": {
     "switch": "中 / EN",
