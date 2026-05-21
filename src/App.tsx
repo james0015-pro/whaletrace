@@ -3,23 +3,20 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
-import { TopNavBar } from '@/components/layout/TopNavBar';
-import FeedPage from '@/pages/FeedPage';
-import DashboardPage from '@/pages/DashboardPage';
-import SignalsPage from '@/pages/SignalsPage';
-import InstitutionsPage from '@/pages/InstitutionsPage';
+import { FinvizNav } from '@/components/layout/FinvizNav';
+import ScreenerPage from '@/pages/ScreenerPage';
+import HeatmapPage from '@/pages/HeatmapPage';
 import StockDetailPage from '@/pages/StockDetailPage';
 import WatchlistPage from '@/pages/WatchlistPage';
-import SettingsPage from '@/pages/SettingsPage';
 
 function LoadingFallback() {
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      height: '100vh', background: '#000', color: '#888',
-      fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
+      height: '100vh', background: '#f6f8fa', color: '#7a8088',
+      fontFamily: 'Inter, system-ui, sans-serif', fontSize: 14,
     }}>
-      <span style={{ animation: 'bl-shimmer 1.5s infinite' }}>WHALETRACE LOADING...</span>
+      WHALETRACE LOADING...
     </div>
   );
 }
@@ -30,17 +27,14 @@ export default function App() {
       <Suspense fallback={<LoadingFallback />}>
         <QueryProvider>
           <HashRouter>
-            <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#000' }}>
-              <TopNavBar />
-              <div style={{ flex: 1, overflow: 'hidden' }}>
+            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f6f8fa' }}>
+              <FinvizNav />
+              <div style={{ flex: 1 }}>
                 <Routes>
-                  <Route path="/" element={<FeedPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/signals" element={<SignalsPage />} />
-                  <Route path="/institutions" element={<InstitutionsPage />} />
+                  <Route path="/" element={<ScreenerPage />} />
+                  <Route path="/heatmap" element={<HeatmapPage />} />
                   <Route path="/stocks/:ticker" element={<StockDetailPage />} />
                   <Route path="/watchlist" element={<WatchlistPage />} />
-                  <Route path="/settings" element={<SettingsPage />} />
                 </Routes>
               </div>
             </div>
