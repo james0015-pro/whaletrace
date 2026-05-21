@@ -1,0 +1,86 @@
+{
+  "name": "🐋 WhaleTrace 自動爬蟲推播",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "minutes", "minutesInterval": 30 }
+          ]
+        }
+      },
+      "id": "schedule-1",
+      "name": "⏰ 每30分鐘",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== WhaleTrace 自動爬蟲推播 =====\n// 每 30 分鐘從 OpenInsider + Finviz 抓最新數據，比對上一輪，推播新信號\n\nconst TRACKERS = ['AAPL','MSFT','NVDA','GOOGL','META','AMZN','TSLA','JPM','V','WMT'];\n\n// ===== 1. 抓 Finviz 快照 =====\nconst finvizCache = {};\nfor (const t of TRACKERS) {\n  try {\n    const html = await this.helpers.httpRequest({\n      method: 'GET',\n      url: `https://finviz.com/quote.ashx?t=${t}`,\n      headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' },\n      timeout: 10000,\n      returnFullResponse: false\n    });\n    const instMatch = html.match(/Institutional Ownership<\\/div><\\/td>\\s*<td[^>]*>\\s*<div[^>]*>\\s*<b>\\s*([\\d.]+%)/);\n    const shortMatch = html.match(/Short Float<\\/div><\\/td>\\s*<td[^>]*>\\s*<div[^>]*>\\s*<b>\\s*([\\d.]+%)/);\n    const rsiMatch = html.match(/RSI \\(14\\)<\\/div><\\/td>\\s*<td[^>]*>\\s*<div[^>]*>\\s*<b>\\s*([\\d.]+)/);\n    finvizCache[t] = {\n      instOwn: instMatch ? instMatch[1] : 'N/A',\n      shortFloat: shortMatch ? shortMatch[1] : 'N/A',\n      rsi: rsiMatch ? rsiMatch[1] : 'N/A',\n    };\n  } catch (e) { finvizCache[t] = { instOwn: 'ERR', shortFloat: 'ERR', rsi: 'ERR' }; }\n}\n\n// ===== 2. 抓 OpenInsider 內部人交易 =====\nlet allTrades = [];\ntry {\n  const url = 'http://openinsider.com/screener?s=&o=&pl=&ph=&ll=&lh=&fd=7&fdr=&td=0&tdr=&fdlyl=&fdlyh=&daysago=&xp=1&xs=1&vl=&vh=&ocl=&och=&sic1=-1&sicl=100&sich=9999&grp=0&nfl=&nfh=&nil=&nih=&nol=&noh=&v2l=&v2h=&oc2l=&oc2h=&sortcol=0&cnt=30&page=1';\n  const html = await this.helpers.httpRequest({\n    method: 'GET', url: url,\n    headers: { 'User-Agent': 'Mozilla/5.0' },\n    timeout: 15000, returnFullResponse: false\n  });\n  // Simple table row extraction\n  const rows = html.match(/<tr[^>]*>(.*?)<\\/tr>/gs) || [];\n  for (const row of rows) {\n    const cells = row.match(/<td[^>]*>(.*?)<\\/td>/gs) || [];\n    if (cells.length < 10) continue;\n    const clean = cells.map(c => c.replace(/<[^>]+>/g, '').trim());\n    const ticker = clean[2] || '';\n    if (!TRACKERS.includes(ticker.toUpperCase())) continue;\n    allTrades.push({\n      ticker: ticker.toUpperCase(),\n      insider: clean[4] || '',\n      title: clean[5] || '',\n      type: clean[6] || '',\n      price: clean[7] || '',\n      qty: clean[8] || '',\n      value: clean[11] || '',\n      date: clean[1] || clean[0] || '',\n    });\n  }\n} catch (e) { allTrades = []; }\n\n// ===== 3. 讀取上一輪快取 =====\nconst prevCache = $getWorkflowStaticData('global');\nconst prevIds = prevCache.lastTradeIds || [];\nconst prevShort = prevCache.shortAlerts || {};\n\n// ===== 4. 偵測新內部人交易 =====\nconst newTrades = allTrades.filter(t => {\n  const id = `${t.ticker}_${t.insider}_${t.date}`;\n  return !prevIds.includes(id);\n});\n\n// 偵測新放空警報 (>5% short float)\nconst newShortAlerts = [];\nfor (const t of TRACKERS) {\n  const sf = parseFloat(finvizCache[t]?.shortFloat || '0');\n  const prev = prevShort[t] || 0;\n  if (sf > 5 && sf !== prev) {\n    newShortAlerts.push({ ticker: t, shortFloat: sf, prevShort: prev });\n  }\n}\n\n// ===== 5. 更新快取 =====\nprevCache.lastTradeIds = allTrades.map(t => `${t.ticker}_${t.insider}_${t.date}`);\nfor (const t of TRACKERS) {\n  prevCache.shortAlerts[t] = parseFloat(finvizCache[t]?.shortFloat || '0');\n}\n\n// ===== 6. 組裝 Telegram 訊息 =====\nconst now = new Date();\nconst timeStr = now.toISOString().replace('T',' ').slice(0,19);\n\nlet message = `🐋 *WhaleTrace v2.0 自動推播*\\n`;\nmessage += `⏰ ${timeStr} UTC\\n\\n`;\n\nif (newTrades.length > 0) {\n  message += `🆕 *新內部人交易 (${newTrades.length}筆)*\\n`;\n  for (const t of newTrades.slice(0, 5)) {\n    const emoji = t.type.includes('Purchase') ? '🟢' : t.type.includes('Sale') ? '🔴' : '⚪';\n    message += `${emoji} *${t.ticker}* ${t.insider} (${t.title})\\n`;\n    message += `  ${t.type} ${t.qty}股 @ $${t.price} = ${t.value}\\n`;\n  }\n  if (newTrades.length > 5) message += `  ...還有 ${newTrades.length-5} 筆\\n`;\n  message += '\\n';\n}\n\nif (newShortAlerts.length > 0) {\n  message += `⚠️ *放空警報*\\n`;\n  for (const s of newShortAlerts) {\n    message += `🔴 *${s.ticker}* 放空比例 ${s.shortFloat}%\\n`;\n  }\n  message += '\\n';\n}\n\nif (newTrades.length === 0 && newShortAlerts.length === 0) {\n  message += `✅ 無新信號\\n`;\n}\n\n// 快照摘要\nmessage += `📊 *追蹤摘要*\\n`;\nfor (const t of TRACKERS.slice(0, 5)) {\n  const d = finvizCache[t];\n  if (d && d.instOwn !== 'ERR') {\n    message += `${t}: 機構${d.instOwn} | 放空${d.shortFloat} | RSI ${d.rsi}\\n`;\n  }\n}\nmessage += `\\n🔗 [查看詳情](https://james0015-pro.github.io/whaletrace/)`;\n\nreturn [{ json: { message, hasSignal: newTrades.length > 0 || newShortAlerts.length > 0 } }];"
+      },
+      "id": "code-scraper",
+      "name": "🔍 爬蟲 + 比對",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": [
+          {
+            "leftValue": "={{ $json.hasSignal }}",
+            "rightValue": "true",
+            "operator": { "type": "boolean", "operation": "equals" }
+          }
+        ]
+      },
+      "id": "if-signal",
+      "name": "🔔 有新信號？",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "465295228",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram-push",
+      "name": "📨 Telegram 推播",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [850, 250]
+    },
+    {
+      "parameters": {
+        "content": "## 🐋 WhaleTrace v2.0 自動爬蟲推播\n\n⏰ 每 30 分鐘執行一次\n🔍 從 OpenInsider 抓內部人交易\n📊 從 Finviz 抓機構持股/放空/RSI\n🆕 比對上一輪，只推播新信號\n📨 Telegram 推播到 Home channel\n\n⚠️ 放空 >5% 自動警報\n🔗 附帶網站連結查看詳情"
+      },
+      "id": "note-1",
+      "name": "📋 說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [250, 100]
+    }
+  ],
+  "connections": {
+    "⏰ 每30分鐘": {
+      "main": [[{ "node": "🔍 爬蟲 + 比對", "type": "main", "index": 0 }]]
+    },
+    "🔍 爬蟲 + 比對": {
+      "main": [[{ "node": "🔔 有新信號？", "type": "main", "index": 0 }]]
+    },
+    "🔔 有新信號？": {
+      "main": [
+        [{ "node": "📨 Telegram 推播", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "🐋 WhaleTrace" }, { "name": "自動化" }],
+  "staticData": null
+}
