@@ -1,7 +1,7 @@
 {
   "service": "WhaleTrace API",
   "version": "0.1.0",
-  "generated_at": "2026-05-18T14:29:47.042841",
+  "generated_at": "2026-05-20T07:01:13.348975",
   "endpoints": {
     "/api/v1/institutional": "Stock snapshots with positioning data (paginated)",
     "/api/v1/institutional-holdings": "Institutional holdings detail (paginated)",
