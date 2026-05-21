@@ -124,15 +124,12 @@ function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget;
   const push = (t: DetailTarget) => setStack(prev => [...prev, t]);
   const pop = () => { if (stack.length > 1) setStack(prev => prev.slice(0, -1)); else onClose(); };
 
-  let rows: ReturnType<typeof buildInsiderHistory> = [];
-  let title = active.label; let sub = active.subtitle || ''; let col2 = 'ENTITY';
+  let rows: ReturnType<typeof buildInsiderHistory>;
+  let col2: string;
 
-  let insiderInfo = '';
-  if (active.mode === 'insider') { const t = ALL.find(t => t.insider_name === active.label); if (t) insiderInfo = `${t.ticker} · ${t.title}`; }
-
-  if (active.mode === 'insider') { rows = buildInsiderHistory(active.label); sub = insiderInfo; col2 = 'TICKER'; }
-  else if (active.mode === 'ticker') { rows = buildTickerHistory(active.label); sub = `Stock trades`; col2 = 'INSIDER'; }
-  else { rows = buildInstitutionHistory(active.label); sub = `Institution 2YR flow`; col2 = 'TYPE'; }
+  if (active.mode === 'insider') { rows = buildInsiderHistory(active.label); col2 = 'TICKER'; }
+  else if (active.mode === 'ticker') { rows = buildTickerHistory(active.label); col2 = 'INSIDER'; }
+  else { rows = buildInstitutionHistory(active.label); col2 = 'TYPE'; }
 
   const tB=rows.filter(r=>r.dir==='BUY').reduce((s,r)=>s+r.value,0);
   const tS=rows.filter(r=>r.dir==='SELL').reduce((s,r)=>s+r.value,0);

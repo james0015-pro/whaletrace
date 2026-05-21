@@ -1,8 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
-import type { InsiderTrade, ResonanceSignal } from '@/types';
-import type { InstitutionOrder } from '@/lib/mock-data';
 
 /* ============================================================
    Helpers
@@ -108,6 +106,7 @@ export default function StockDetailPage() {
   // Watchlist with localStorage persistence
   const [watchSet, setWatchSet] = useState<Set<string>>(loadWatchlist);
   const watch = watchSet.has(ticker);
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const toggleWatch = useCallback(() => {
     setWatchSet((prev) => {
       const next = new Set(prev);
@@ -166,7 +165,7 @@ export default function StockDetailPage() {
     { label: 'BUY SCALE',  value: Math.min(Math.round((tB / 5e8) * 100), 100) },
     { label: 'BUYER COUNT', value: Math.min(buyCount * 8, 100) },
     { label: 'BUY/SELL',    value: Math.min(Math.round((buyCount / (sellCount || 1)) * 15), 100) },
-    { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round(Math.random() * 30) },
+    { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round((seedFrom(ticker + '_cluster') % 100) * 0.3) },
   ];
 
   // Insider trades with optional filter

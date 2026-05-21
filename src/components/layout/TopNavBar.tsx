@@ -15,7 +15,7 @@ const TAPE = [
 ];
 
 export function TopNavBar() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [time, setTime] = useState('');
   const [lang, setLang] = useState(i18n.language);
 

@@ -7,7 +7,6 @@
 import type { InsiderTrade, PaginatedResponse, ResonanceSignal } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 import {
-  MOCK_TRADES,
   MOCK_RESONANCE_SIGNALS,
   MOCK_INSTITUTION_ORDERS,
   getPaginatedTrades,
