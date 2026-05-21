@@ -60,6 +60,27 @@ function generateConfidenceHistory(ticker: string): { month: string; score: numb
 }
 
 /* ============================================================
+   Post-Trade Return Generator
+   ============================================================ */
+function generatePostTradeReturns(
+  ticker: string,
+  tradeDate: string,
+): { returns: number[]; summary: number } {
+  const seed = seedFrom(ticker + tradeDate + '_post');
+  const rng = (i: number) => {
+    const x = Math.sin(seed + i * 317.5 + 219.7) * 43758.5453;
+    return x - Math.floor(x);
+  };
+  const returns: number[] = [];
+  for (let i = 0; i < 5; i++) {
+    const r = +((rng(i) - 0.48) * 8).toFixed(1);
+    returns.push(r);
+  }
+  const summary = +((returns.reduce((a, b) => a + b, 0) / 5)).toFixed(1);
+  return { returns, summary };
+}
+
+/* ============================================================
    Price Generator (deterministic-ish per ticker+timeframe)
    ============================================================ */
 function generatePrices(
@@ -169,6 +190,88 @@ export default function StockDetailPage() {
     { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round(Math.random() * 30) },
   ];
 
+  /* ---- ownership data (deterministic per ticker) ---- */
+  const ownershipData = useMemo(() => {
+    const instPct = 60 + (seedFrom(ticker + '_inst') % 16);
+    const insiderPct = seedFrom(ticker + '_ins') % 16;
+    const retailPct = 100 - instPct - insiderPct;
+    return { instPct, insiderPct, retailPct };
+  }, [ticker]);
+
+  /* ---- short float (deterministic per ticker) ---- */
+  const shortFloat = useMemo(() => seedFrom(ticker + '_short') % 10, [ticker]);
+
+  /* ---- factor grades ---- */
+  const buySellRatio = buyCount / (sellCount || 1);
+
+  const gradeColors = ['#0c6', '#0c6', '#0c6', '#ff8c00', '#ff8c00', '#b36800', '#f33'];
+
+  function letterGrade(
+    value: number,
+    ascending: boolean,
+    thresholds: number[],
+    labels: string[],
+    descs: string[],
+  ): { grade: string; color: string; desc: string } {
+    for (let i = 0; i < thresholds.length; i++) {
+      if (ascending ? value > thresholds[i] : value < thresholds[i]) {
+        return { grade: labels[i], color: gradeColors[i], desc: descs[i] };
+      }
+    }
+    const last = thresholds.length - 1;
+    return { grade: labels[last], color: gradeColors[last], desc: descs[last] };
+  }
+
+  const factorGrades = useMemo(() => {
+    // INSIDER FLOW: buy/sell ratio (ascending = true, higher is better)
+    const insiderGrade = letterGrade(
+      buySellRatio, true,
+      [3, 2, 1.5, 1, 0.5, 0],
+      ['A+', 'A', 'B+', 'B', 'C', 'D'],
+      ['強勢買入', '明顯買入', '中小買入', '輕微買入', '賣壓浮現', '強勢賣出'],
+    );
+
+    // INSTITUTION CONSENSUS: from resonance signal_strength
+    const consensusGrade = letterGrade(
+      resonance ? resonance.signal_strength : 30, true,
+      [75, 65, 50, 35, 20, 0],
+      ['A', 'B+', 'B', 'C', 'D', 'D'],
+      ['高度共識', '持續加倉', '溫和加倉', '方向未明', '缺乏共識', '缺乏共識'],
+    );
+
+    // SHORT RISK: inverse of short float (ascending = false, lower is better)
+    const shortGrade = letterGrade(
+      shortFloat, false,
+      [0, 1, 3, 5, 8, 100],
+      ['A+', 'A', 'B', 'C', 'D', 'D'],
+      ['極低放空', '極低放空', '低放空', '中等放空', '高放空', '高放空'],
+    );
+
+    // WHALESCORE: same as confidence
+    const whaleGrade = letterGrade(
+      confidence, true,
+      [80, 65, 50, 35, 20, 0],
+      ['A+', 'A', 'B+', 'B', 'C', 'D'],
+      ['極強信號', '強勢信號', '明顯信號', '溫和信號', '微弱信號', '無信號'],
+    );
+
+    return [
+      { label: '內部人流動', ...insiderGrade },
+      { label: '機構共識', ...consensusGrade },
+      { label: '放空風險', ...shortGrade },
+      { label: '鯨力綜合', ...whaleGrade },
+    ];
+  }, [buySellRatio, resonance, shortFloat, confidence]);
+
+  /* ---- post-trade return cache ---- */
+  const postTradeCache = useMemo(() => {
+    const cache = new Map<number, { returns: number[]; summary: number }>();
+    trades.forEach((t) => {
+      cache.set(t.id, generatePostTradeReturns(ticker, t.trade_date));
+    });
+    return cache;
+  }, [ticker, trades]);
+
   // Insider trades with optional filter
   const displayTrades = insiderFilter === 'BUY'
     ? trades.filter(t => t.transaction_type === 'BUY')
@@ -260,50 +363,110 @@ export default function StockDetailPage() {
             gap: 10,
           }}
         >
-          {/* Left: Score */}
+          {/* Left: WhaleScore Semi-Circular Gauge */}
           <div
             style={{
               padding: 10,
               background: '#0a0a0a',
               border: '1px solid #1f1f1f',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <div
               style={{
                 fontSize: 9,
                 color: '#555',
-                marginBottom: 6,
+                marginBottom: 2,
                 textTransform: 'uppercase',
                 letterSpacing: 1,
               }}
             >
-              CONFIDENCE SCORE
+              WHALESCORE
             </div>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              <div style={{ flex: 1, height: 10, background: '#1f1f1f' }}>
-                <div
-                  style={{
-                    width: `${confidence}%`,
-                    height: '100%',
-                    background:
-                      confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
-                    transition: 'width 0.6s',
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  fontSize: 22,
-                  fontWeight: 700,
-                  color:
-                    confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33',
-                  fontFamily: 'JetBrains Mono, monospace',
-                }}
+            <svg width="180" height="110" viewBox="0 0 180 110">
+              {/* Background arc */}
+              <path
+                d="M 30 95 A 60 60 0 0 1 150 95"
+                fill="none"
+                stroke="#333"
+                strokeWidth="12"
+                strokeLinecap="round"
+              />
+              {/* Foreground arc */}
+              {(() => {
+                const scoreColor =
+                  confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33';
+                const angle = Math.PI * (1 - confidence / 100);
+                const endX = 90 + 60 * Math.cos(angle);
+                const endY = 95 - 60 * Math.sin(angle);
+                return (
+                  <path
+                    d={`M 30 95 A 60 60 0 0 1 ${endX.toFixed(1)} ${endY.toFixed(1)}`}
+                    fill="none"
+                    stroke={scoreColor}
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                  />
+                );
+              })()}
+              {/* Center text: score */}
+              <text
+                x="90"
+                y="82"
+                textAnchor="middle"
+                fill={
+                  confidence > 60 ? '#0c6' : confidence > 30 ? '#ff8c00' : '#f33'
+                }
+                fontSize="28"
+                fontWeight="700"
+                fontFamily="JetBrains Mono, monospace"
               >
                 {confidence}
-              </div>
-              <div style={{ fontSize: 9, color: '#555' }}>/100</div>
-            </div>
+              </text>
+              <text
+                x="90"
+                y="98"
+                textAnchor="middle"
+                fill="#555"
+                fontSize="9"
+                fontFamily="JetBrains Mono, monospace"
+              >
+                /100
+              </text>
+              {/* Labels */}
+              <text
+                x="22"
+                y="100"
+                textAnchor="middle"
+                fill="#555"
+                fontSize="8"
+                fontFamily="JetBrains Mono, monospace"
+              >
+                0
+              </text>
+              <text
+                x="90"
+                y="16"
+                textAnchor="middle"
+                fill="#555"
+                fontSize="8"
+                fontFamily="JetBrains Mono, monospace"
+              >
+                50
+              </text>
+              <text
+                x="158"
+                y="100"
+                textAnchor="middle"
+                fill="#555"
+                fontSize="8"
+                fontFamily="JetBrains Mono, monospace"
+              >
+                100
+              </text>
+            </svg>
           </div>
 
           {/* Right: Confidence History Sparkline */}
@@ -359,7 +522,7 @@ export default function StockDetailPage() {
           </div>
         </div>
 
-        {/* Sub-scores */}
+        {/* Factor Grade Cards (Seeking Alpha style) */}
         <div
           style={{
             display: 'grid',
@@ -367,35 +530,138 @@ export default function StockDetailPage() {
             gap: 8,
           }}
         >
-          {subScores.map((s) => (
+          {factorGrades.map((fg) => (
             <div
-              key={s.label}
+              key={fg.label}
               style={{
-                padding: 8,
+                padding: '8px 4px',
                 background: '#0a0a0a',
-                border: '1px solid #1f1f1f',
+                border: `1px solid ${fg.color}33`,
                 textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2,
               }}
             >
-              <div style={{ fontSize: 8, color: '#555', marginBottom: 2 }}>
-                {s.label}
+              <div style={{ fontSize: 8, color: '#555', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                {fg.label}
               </div>
               <div
                 style={{
-                  fontSize: 16,
+                  fontSize: 24,
                   fontWeight: 700,
-                  color:
-                    s.value > 60 ? '#0c6' : s.value > 30 ? '#ff8c00' : '#f33',
+                  color: fg.color,
                   fontFamily: 'JetBrains Mono, monospace',
+                  lineHeight: 1.1,
                 }}
               >
-                {s.value}
+                {fg.grade}
+              </div>
+              <div style={{ fontSize: 8, color: '#888' }}>
+                {fg.desc}
               </div>
             </div>
           ))}
         </div>
 
-        {/* ========== PRICE CHART (green/red bars) ========== */}
+        {/* ========== OWNERSHIP DONUT CHART ========== */}
+        <div
+          style={{
+            padding: 10,
+            background: '#0a0a0a',
+            border: '1px solid #1f1f1f',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
+          }}
+        >
+          {/* Donut */}
+          {(() => {
+            const circ = 2 * Math.PI * 40; // ~251.33
+            const instDash = (ownershipData.instPct / 100) * circ;
+            const insiderDash = (ownershipData.insiderPct / 100) * circ;
+            const instOffset = 0;
+            const insiderOffset = -instDash;
+            return (
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                {/* Background ring */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="40"
+                  fill="none"
+                  stroke="#1f1f1f"
+                  strokeWidth="16"
+                />
+                {/* Institutional slice */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="40"
+                  fill="none"
+                  stroke="#0c6"
+                  strokeWidth="16"
+                  strokeDasharray={`${instDash.toFixed(1)} ${(circ - instDash).toFixed(1)}`}
+                  strokeDashoffset="0"
+                  transform="rotate(-90 60 60)"
+                />
+                {/* Insider slice */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="40"
+                  fill="none"
+                  stroke="#ff8c00"
+                  strokeWidth="16"
+                  strokeDasharray={`${insiderDash.toFixed(1)} ${(circ - insiderDash).toFixed(1)}`}
+                  strokeDashoffset={insiderOffset.toFixed(1)}
+                  transform="rotate(-90 60 60)"
+                />
+                {/* Center text */}
+                <text
+                  x="60"
+                  y="57"
+                  textAnchor="middle"
+                  fill="#ff8c00"
+                  fontSize="14"
+                  fontWeight="700"
+                  fontFamily="JetBrains Mono, monospace"
+                >
+                  {ticker}
+                </text>
+                <text
+                  x="60"
+                  y="72"
+                  textAnchor="middle"
+                  fill="#888"
+                  fontSize="8"
+                  fontFamily="JetBrains Mono, monospace"
+                >
+                  OWNERSHIP
+                </text>
+              </svg>
+            );
+          })()}
+          {/* Legend */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 8, height: 8, background: '#0c6', display: 'inline-block' }} />
+              <span style={{ color: '#e6e6e6' }}>機構</span>
+              <span style={{ color: '#0c6', fontWeight: 600 }}>{ownershipData.instPct}%</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 8, height: 8, background: '#ff8c00', display: 'inline-block' }} />
+              <span style={{ color: '#e6e6e6' }}>內部人</span>
+              <span style={{ color: '#ff8c00', fontWeight: 600 }}>{ownershipData.insiderPct}%</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 8, height: 8, background: '#333', display: 'inline-block' }} />
+              <span style={{ color: '#e6e6e6' }}>其他</span>
+              <span style={{ color: '#888', fontWeight: 600 }}>{ownershipData.retailPct}%</span>
+            </div>
+          </div>
+        </div>
         <div
           style={{
             padding: 10,
@@ -771,6 +1037,7 @@ export default function StockDetailPage() {
                 <span style={{ width: 55, textAlign: 'right' }}>SHARES</span>
                 <span style={{ width: 55, textAlign: 'right' }}>PRICE</span>
                 <span style={{ width: 65, textAlign: 'right' }}>VALUE</span>
+                <span style={{ width: 80, textAlign: 'center' }}>POST-TRADE</span>
               </div>
               {displayTrades.slice(0, 20).map((t, i) => (
                 <div
@@ -840,6 +1107,39 @@ export default function StockDetailPage() {
                   >
                     {F(t.total_value)}
                   </span>
+                  {/* Post-Trade Sparkline */}
+                  {(() => {
+                    const pt = postTradeCache.get(t.id);
+                    if (!pt) return <span style={{ width: 80, textAlign: 'center', color: '#555', fontSize: 9 }}>—</span>;
+                    const maxAbs = Math.max(...pt.returns.map(Math.abs), 1);
+                    const summaryColor = pt.summary >= 0 ? '#0c6' : '#f33';
+                    const summarySign = pt.summary >= 0 ? '+' : '';
+                    return (
+                      <span style={{ width: 80, display: 'flex', alignItems: 'center', gap: 3, justifyContent: 'center' }}>
+                        {pt.returns.map((r, ri) => {
+                          const barH = Math.max(2, (Math.abs(r) / maxAbs) * 16);
+                          const barColor = r >= 0 ? '#0c6' : '#f33';
+                          return (
+                            <span
+                              key={ri}
+                              style={{
+                                display: 'inline-block',
+                                width: 6,
+                                height: barH,
+                                background: barColor,
+                                verticalAlign: 'middle',
+                                borderRadius: 1,
+                              }}
+                              title={`${['1D','3D','5D','7D','14D'][ri]}: ${summarySign}${r}%`}
+                            />
+                          );
+                        })}
+                        <span style={{ fontSize: 8, color: summaryColor, fontWeight: 600, marginLeft: 2 }}>
+                          {summarySign}{pt.summary}%
+                        </span>
+                      </span>
+                    );
+                  })()}
                 </div>
               ))}
               {displayTrades.length > 20 && (

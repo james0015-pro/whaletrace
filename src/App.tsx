@@ -9,6 +9,7 @@ import DashboardPage from '@/pages/DashboardPage';
 import SignalsPage from '@/pages/SignalsPage';
 import InstitutionsPage from '@/pages/InstitutionsPage';
 import StockDetailPage from '@/pages/StockDetailPage';
+import TreemapPage from '@/pages/TreemapPage';
 import WatchlistPage from '@/pages/WatchlistPage';
 import SettingsPage from '@/pages/SettingsPage';
 
@@ -39,6 +40,7 @@ export default function App() {
                   <Route path="/signals" element={<SignalsPage />} />
                   <Route path="/institutions" element={<InstitutionsPage />} />
                   <Route path="/stocks/:ticker" element={<StockDetailPage />} />
+                  <Route path="/treemap" element={<TreemapPage />} />
                   <Route path="/watchlist" element={<WatchlistPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                 </Routes>
