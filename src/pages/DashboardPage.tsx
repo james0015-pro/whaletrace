@@ -126,6 +126,17 @@ export default function DashboardPage() {
                 <div style={{color:'#888',fontSize:8}}>Harvard Business Review also warns of AI overinvestment cycle. Fund managers brace for AI/semi correction</div>
               </div>
             </div>
+            {/* Arm vs Cathie Wood */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Arm / Cathie Wood</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#ff8c00',fontWeight:600}}>Arm +15% on AGI CPU narrative — Cathie Wood cuts semi exposure (contradictory signals)</div>
+                <div style={{color:'#888',fontSize:8}}>NVDA Q1 $81.6B (+85%) record but stock fell — Investopedia: "Lost Its Edge", Fortune: "forecasts disappoint". AI valuation ceiling still in question</div>
+              </div>
+            </div>
           </div>
         </div>
 
