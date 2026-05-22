@@ -4,19 +4,20 @@
 
 ## 最後更新
 
-**2026-05-22** — Night Shift 2: 實作 WatchlistPage（Bloomberg 終端機風格關注清單，localStorage 與 StockDetailPage 同步）
+**2026-05-22** — Night Shift 3: feat-014 效能優化 — React.lazy code splitting，主 bundle 326KB + 8 page chunks
 
 ## 專案狀態
 
 | 子系統 | 狀態 | 說明 |
 |--------|------|------|
-| 前端 (React) | ✅ v3 就緒 | Bloomberg/Finviz 混合風格，四象限儀表板 |
+| 前端 (React) | ✅ v3 就緒 | Bloomberg/Finviz 混合風格，四象限儀表板，code-split |
 | 資料層 | ✅ 已接入 | n8n SEC EDGAR Proxy + WhaleTrace API + Mock fallback |
 | 雙語 (i18n) | ✅ 就緒 | zh-TW + en，react-i18next |
 | Telegram 推播 | ✅ 就緒 | n8n 定時共振警報推送 |
 | 部署 | ✅ 就緒 | GitHub Pages (gh-pages branch) |
 | 認證 | ⬜ 未實作 | Phase 4 需要 Supabase |
 | 關注清單 (後端) | ⬜ 未實作 | 有 localStorage 前端版，無後端持久化 |
+| 效能 | ✅ code-split | React.lazy 8 page chunks，initial load 326KB main + 20KB page |
 
 ## 已完成功能
 
@@ -35,13 +36,13 @@
 - [x] 價格圖表 per-bar directional coloring
 - [x] localStorage watchlist (StockDetailPage)
 - [x] WatchlistPage — Bloomberg 終端機風格，10 欄位表格，與 StockDetailPage 同步 localStorage
+- [x] feat-014 效能優化 — React.lazy code splitting, 主 bundle 326KB + 8 page chunks
 
 ## 下一步 (優先順序)
 
-1. **完善 WatchlistPage** — 接入 localStorage 同步 + Bloomberg 終端機風格
-2. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化
-3. **數據刷新自動化** — 定時 SEC/Finviz 爬蟲 + 自動部署
-4. **效能優化** — code splitting, lazy loading pages
+1. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化
+2. **數據刷新自動化** — 定時 SEC/Finviz 爬蟲 + 自動部署
+3. **無障礙與測試** — WCAG 2.1 + Vitest + Playwright smoke tests
 
 ## Session Log
 
@@ -49,3 +50,4 @@
 |------|---------|---------|
 | 2026-05-22 | Night Shift 1 | 建立 progress.md + feature_list.json |
 | 2026-05-22 | Night Shift 2 | 實作 WatchlistPage：Bloomberg 終端機風格 10 欄位表格 (TICK/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，localStorage 與 StockDetailPage 同步，含摘要列、空狀態、共鳴信號指示器 |
+| 2026-05-22 | Night Shift 3 | feat-014 效能優化：App.tsx 所有 page imports 改 React.lazy → 8 個獨立 page chunks，主 bundle 326KB (↓12% initial load)，首次載入只下載 FeedPage chunk (20KB)，後續導航按需載入 |

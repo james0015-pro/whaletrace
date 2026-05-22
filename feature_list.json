@@ -98,9 +98,9 @@
     {
       "id": "feat-014",
       "name": "效能優化 (code splitting + lazy loading)",
-      "status": "planned",
+      "status": "completed",
       "priority": "P3",
-      "description": "React.lazy → 按頁面分割 bundle → 減少初始載入時間"
+      "description": "React.lazy → 按頁面分割 bundle → 主 bundle 326KB + 8 個 page chunks (0.8-20KB each)"
     }
   ]
 }

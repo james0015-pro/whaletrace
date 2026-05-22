@@ -1,17 +1,19 @@
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
 import { TopNavBar } from '@/components/layout/TopNavBar';
-import FeedPage from '@/pages/FeedPage';
-import DashboardPage from '@/pages/DashboardPage';
-import SignalsPage from '@/pages/SignalsPage';
-import InstitutionsPage from '@/pages/InstitutionsPage';
-import StockDetailPage from '@/pages/StockDetailPage';
-import TreemapPage from '@/pages/TreemapPage';
-import WatchlistPage from '@/pages/WatchlistPage';
-import SettingsPage from '@/pages/SettingsPage';
+
+// Code-split pages — each gets its own chunk (feat-014)
+const FeedPage = lazy(() => import('@/pages/FeedPage'));
+const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
+const SignalsPage = lazy(() => import('@/pages/SignalsPage'));
+const InstitutionsPage = lazy(() => import('@/pages/InstitutionsPage'));
+const StockDetailPage = lazy(() => import('@/pages/StockDetailPage'));
+const TreemapPage = lazy(() => import('@/pages/TreemapPage'));
+const WatchlistPage = lazy(() => import('@/pages/WatchlistPage'));
+const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
 function LoadingFallback() {
   return (
