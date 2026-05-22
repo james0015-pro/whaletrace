@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-22** — Night Shift: 建立 Harness 基礎（progress.md + feature_list.json）
+**2026-05-22** — Night Shift 2: 實作 WatchlistPage（Bloomberg 終端機風格關注清單，localStorage 與 StockDetailPage 同步）
 
 ## 專案狀態
 
@@ -34,6 +34,7 @@
 - [x] 信心分數 12 月趨勢圖
 - [x] 價格圖表 per-bar directional coloring
 - [x] localStorage watchlist (StockDetailPage)
+- [x] WatchlistPage — Bloomberg 終端機風格，10 欄位表格，與 StockDetailPage 同步 localStorage
 
 ## 下一步 (優先順序)
 
@@ -46,4 +47,5 @@
 
 | Date | Session | Changes |
 |------|---------|---------|
-| 2026-05-22 | Night Shift 1 | 建立 progress.md + feature_list.json；實作真實 WatchlistPage (localStorage + Bloomberg 風格) |
+| 2026-05-22 | Night Shift 1 | 建立 progress.md + feature_list.json |
+| 2026-05-22 | Night Shift 2 | 實作 WatchlistPage：Bloomberg 終端機風格 10 欄位表格 (TICK/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，localStorage 與 StockDetailPage 同步，含摘要列、空狀態、共鳴信號指示器 |

@@ -70,9 +70,9 @@
     {
       "id": "feat-010",
       "name": "關注清單頁面 (localStorage 前端版)",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P1",
-      "description": "Bloomberg 終端機風格 WatchlistPage — localStorage 持久化，與 StockDetailPage watchlist 同步"
+      "description": "Bloomberg 終端機風格 WatchlistPage — localStorage 持久化，與 StockDetailPage watchlist 同步，10 欄位表格 (#/TICK/COMPANY/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，含摘要列、空狀態、共鳴信號指示器"
     },
     {
       "id": "feat-011",
