@@ -115,6 +115,17 @@ export default function DashboardPage() {
                 <div style={{color:'#888',fontSize:8}}>Stalemate reshapes AI chip supply chain. AMD $10B Taiwan investment (2026/5/21) strengthens AMD position</div>
               </div>
             </div>
+            {/* SOX / AI Bubble */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #f33',borderLeft:'3px solid #f33'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#f33'}}>SOX / AI Bubble</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#f33',fontWeight:600}}>Philly SOX at 2-week low — Morningstar draws 1999 dot-com parallel</div>
+                <div style={{color:'#888',fontSize:8}}>Harvard Business Review also warns of AI overinvestment cycle. Fund managers brace for AI/semi correction</div>
+              </div>
+            </div>
           </div>
         </div>
 
