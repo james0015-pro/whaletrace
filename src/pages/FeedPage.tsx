@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
+import { formatCompactNumber, truncate } from '@/lib/utils';
 import type { InsiderTrade, ResonanceSignal, TradeType } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 
@@ -12,6 +13,9 @@ const INSTS: InstitutionOrder[] = MOCK_INSTITUTION_ORDERS;
 type FM = 'all'|'buy'|'sell'|'cluster';
 type DetailMode = 'insider'|'ticker'|'institution';
 type DetailTarget = { mode: DetailMode; label: string; subtitle?: string };
+
+const F = formatCompactNumber;
+const S = truncate;
 
 /* ============================================================
    Reusable components
@@ -25,14 +29,6 @@ function Row({ children, h }: { children: React.ReactNode; h?: boolean }) {
 function Hdr({ title, detail }: { title: string; detail?: string }) {
   return <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',height:22,padding:'0 8px',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',fontSize:10,fontWeight:700,color:'#ff8c00',letterSpacing:1,textTransform:'uppercase'}}><span>{title}</span>{detail&&<span style={{color:'#555',fontWeight:400,fontSize:9}}>{detail}</span>}</div>;
 }
-const F = (v: number | null | undefined): string => {
-  if (v == null) return '—';
-  if (v >= 1e9) return (v/1e9).toFixed(2)+'B';
-  if (v >= 1e6) return (v/1e6).toFixed(1)+'M';
-  if (v >= 1e3) return (v/1e3).toFixed(0)+'K';
-  return String(v);
-};
-const S = (s: string, n: number): string => s.length > n ? s.slice(0, n) : s;
 function R({ w, c, b, onClick, children }: { w: number; c: string; b?: boolean; onClick?: () => void; children: React.ReactNode }) {
   return <span onClick={onClick} style={{display:'inline-block',width:w,height:ROW_H,lineHeight:`${ROW_H}px`,color:c,fontWeight:b?600:400,fontSize:11,fontFamily:'JetBrains Mono,monospace',textAlign:'right',padding:'0 3px',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',cursor:onClick?'pointer':'default',textDecoration:onClick?'underline':'none'}}>{children}</span>;
 }

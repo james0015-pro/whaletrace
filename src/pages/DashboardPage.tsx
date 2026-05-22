@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
+import { formatCompactNumber, truncate } from '@/lib/utils';
 import type { InsiderTrade, ResonanceSignal } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 
@@ -7,14 +8,8 @@ const ALL: InsiderTrade[] = MOCK_TRADES;
 const SIGS: ResonanceSignal[] = MOCK_RESONANCE_SIGNALS;
 const INSTS: InstitutionOrder[] = MOCK_INSTITUTION_ORDERS;
 
-const F = (v: number | null | undefined): string => {
-  if (v == null) return '—';
-  if (v >= 1e9) return (v/1e9).toFixed(2)+'B';
-  if (v >= 1e6) return (v/1e6).toFixed(1)+'M';
-  if (v >= 1e3) return (v/1e3).toFixed(0)+'K';
-  return String(v);
-};
-const S = (s: string, n: number): string => s.length > n ? s.slice(0, n) : s;
+const F = formatCompactNumber;
+const S = truncate;
 
 /* ============================================================
    Dashboard Page
