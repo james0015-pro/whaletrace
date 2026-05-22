@@ -84,25 +84,6 @@ function Cell({
   );
 }
 
-function Row({ children, h }: { children: React.ReactNode; h?: boolean }) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        height: ROW_H,
-        padding: 0,
-        fontSize: 11,
-        fontFamily: 'JetBrains Mono, monospace',
-        background: h ? 'rgba(255,255,255,0.03)' : 'transparent',
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
 /* ---- Per-ticker aggregate ---- */
 interface WatchItem {
   ticker: string;

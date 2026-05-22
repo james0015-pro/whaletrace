@@ -11,6 +11,7 @@ import {
   MOCK_INSTITUTION_ORDERS,
   getPaginatedTrades,
 } from '@/lib/mock-data';
+import { loadSecTrades } from '@/lib/sec-converter';
 
 // ============================================================
 // n8n Webhook URLs
@@ -209,6 +210,9 @@ export async function fetchRealInsiderTrades(
   return allTrades;
 }
 
+// Local SEC EDGAR fallback (302 real trades from sec_insider_trades.json)
+let _secFallbackCache: InsiderTrade[] | null = null;
+
 export async function getInsiderTrades(
   filter: 'all' | 'buy' | 'sell' | 'cluster',
   page: number,
@@ -234,6 +238,45 @@ export async function getInsiderTrades(
         break;
       default:
         filtered = [..._realTradesCache];
+    }
+
+    filtered.sort((a, b) => b.filing_date.localeCompare(a.filing_date));
+
+    const start = (page - 1) * pageSize;
+    const data = filtered.slice(start, start + pageSize);
+
+    return {
+      data,
+      total: filtered.length,
+      page,
+      page_size: pageSize,
+      has_more: start + data.length < filtered.length,
+    };
+  }
+
+  // Fallback 2: local SEC EDGAR data (302 real Form 4 trades)
+  if (!_secFallbackCache) {
+    try {
+      _secFallbackCache = await loadSecTrades();
+    } catch {
+      // SEC file unavailable — fall through to mock
+    }
+  }
+
+  if (_secFallbackCache && _secFallbackCache.length > 0) {
+    let filtered: InsiderTrade[];
+    switch (filter) {
+      case 'buy':
+        filtered = _secFallbackCache.filter((t) => t.transaction_type === 'BUY' && t.signal_category !== 'CLUSTER');
+        break;
+      case 'sell':
+        filtered = _secFallbackCache.filter((t) => t.transaction_type === 'SELL');
+        break;
+      case 'cluster':
+        filtered = _secFallbackCache.filter((t) => t.signal_category === 'CLUSTER');
+        break;
+      default:
+        filtered = [..._secFallbackCache];
     }
 
     filtered.sort((a, b) => b.filing_date.localeCompare(a.filing_date));
@@ -373,6 +416,7 @@ export async function getResonanceSignals(): Promise<ResonanceSignal[]> {
 
 export function clearDataCache(): void {
   _realTradesCache = null;
+  _secFallbackCache = null;
   _snapshotCache = null;
   _holdingsCache = new Map();
 }
