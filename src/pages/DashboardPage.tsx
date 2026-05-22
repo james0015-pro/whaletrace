@@ -78,6 +78,46 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* SECTION 2.5: Market Intelligence - NVDA Competition */}
+        <div style={{marginBottom:20}}>
+          <h2 style={{fontSize:12,color:'#e6e6e6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>MARKET INTELLIGENCE</h2>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:10}}>
+            {/* NVDA China */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #f33',borderLeft:'3px solid #f33'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>NVDA</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-21 CNBC</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#f33',fontWeight:600}}>Jensen Huang admits: "Effectively abandoned China market to Huawei"</div>
+                <div style={{color:'#888',fontSize:8}}>Q1 FY2027 revenue $81.6B (+85%) but stock fell 2% — market questions AI valuation ceiling</div>
+              </div>
+            </div>
+            {/* Broadcom ASIC */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#8b5cf6'}}>Broadcom ASIC</span>
+                <span style={{fontSize:9,color:'#555'}}>Custom AI Chips</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div>Google TPU / Meta MTIA / Anthropic — custom ASIC threat to NVDA general-purpose GPU dominance</div>
+                <div style={{color:'#888',fontSize:8}}>Broadcom AI revenue growing rapidly as hyperscalers diversify away from NVDA GPU dependency</div>
+              </div>
+            </div>
+            {/* Trump / AMD chip deal */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Geopolitics</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-21</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div>Trump pushes NVDA China chip export deal — Beijing counters: wants AMD chips instead</div>
+                <div style={{color:'#888',fontSize:8}}>Stalemate reshapes AI chip supply chain. AMD $10B Taiwan investment (2026/5/21) strengthens AMD position</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* SECTION 3: Latest Insider Trades */}
         <div>
           <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>👤 Latest Insider Trades</h2>
