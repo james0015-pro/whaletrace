@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
 import { formatCompactNumber, truncate, seedFrom } from '@/lib/utils';
-import { generateConfidenceHistory, generatePrices } from '@/lib/price-utils';
+import { generateConfidenceHistory, generatePrices, generatePostTradeReturns } from '@/lib/price-utils';
 import type { Timeframe } from '@/lib/price-utils';
 
 const F = formatCompactNumber;

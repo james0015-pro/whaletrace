@@ -55,3 +55,22 @@ export function generatePrices(
   }
   return { prices, labels };
 }
+
+/** Generate mock post-trade returns (5 periods) for insider trade tracking */
+export function generatePostTradeReturns(
+  ticker: string,
+  tradeDate: string,
+): { returns: number[]; summary: number } {
+  const seed = seedFrom(ticker + tradeDate + '_post');
+  const rng = (i: number) => {
+    const x = Math.sin(seed + i * 317.5 + 219.7) * 43758.5453;
+    return x - Math.floor(x);
+  };
+  const returns: number[] = [];
+  for (let i = 0; i < 5; i++) {
+    const r = +((rng(i) - 0.48) * 8).toFixed(1);
+    returns.push(r);
+  }
+  const summary = +((returns.reduce((a, b) => a + b, 0) / 5)).toFixed(1);
+  return { returns, summary };
+}
