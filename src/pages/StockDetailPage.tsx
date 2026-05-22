@@ -9,6 +9,7 @@ const F = formatCompactNumber;
 const S = truncate;
 
 const WATCHLIST_KEY = 'whaletrace_watchlist';
+const GRADE_COLORS = ['#0c6', '#0c6', '#0c6', '#ff8c00', '#ff8c00', '#b36800', '#f33'];
 
 function loadWatchlist(): Set<string> {
   try {
@@ -89,14 +90,6 @@ export default function StockDetailPage() {
 
   const TIMEFRAMES: Timeframe[] = ['1D', '5D', '30D', '6M', '1Y', 'ALL'];
 
-  /* ---- sub-scores ---- */
-  const subScores = [
-    { label: 'BUY SCALE',  value: Math.min(Math.round((tB / 5e8) * 100), 100) },
-    { label: 'BUYER COUNT', value: Math.min(buyCount * 8, 100) },
-    { label: 'BUY/SELL',    value: Math.min(Math.round((buyCount / (sellCount || 1)) * 15), 100) },
-    { label: 'CLUSTER',     value: resonance ? resonance.signal_strength : Math.round((seedFrom(ticker + '_cluster') % 100) * 0.3) },
-  ];
-
   /* ---- ownership data (deterministic per ticker) ---- */
   const ownershipData = useMemo(() => {
     const instPct = 60 + (seedFrom(ticker + '_inst') % 16);
@@ -111,25 +104,23 @@ export default function StockDetailPage() {
   /* ---- factor grades ---- */
   const buySellRatio = buyCount / (sellCount || 1);
 
-  const gradeColors = ['#0c6', '#0c6', '#0c6', '#ff8c00', '#ff8c00', '#b36800', '#f33'];
-
-  function letterGrade(
-    value: number,
-    ascending: boolean,
-    thresholds: number[],
-    labels: string[],
-    descs: string[],
-  ): { grade: string; color: string; desc: string } {
-    for (let i = 0; i < thresholds.length; i++) {
-      if (ascending ? value > thresholds[i] : value < thresholds[i]) {
-        return { grade: labels[i], color: gradeColors[i], desc: descs[i] };
-      }
-    }
-    const last = thresholds.length - 1;
-    return { grade: labels[last], color: gradeColors[last], desc: descs[last] };
-  }
-
   const factorGrades = useMemo(() => {
+    function letterGrade(
+      value: number,
+      ascending: boolean,
+      thresholds: number[],
+      labels: string[],
+      descs: string[],
+    ): { grade: string; color: string; desc: string } {
+      for (let i = 0; i < thresholds.length; i++) {
+        if (ascending ? value > thresholds[i] : value < thresholds[i]) {
+          return { grade: labels[i], color: GRADE_COLORS[i], desc: descs[i] };
+        }
+      }
+      const last = thresholds.length - 1;
+      return { grade: labels[last], color: GRADE_COLORS[last], desc: descs[last] };
+    }
+
     // INSIDER FLOW: buy/sell ratio (ascending = true, higher is better)
     const insiderGrade = letterGrade(
       buySellRatio, true,
@@ -488,7 +479,7 @@ export default function StockDetailPage() {
             const circ = 2 * Math.PI * 40; // ~251.33
             const instDash = (ownershipData.instPct / 100) * circ;
             const insiderDash = (ownershipData.insiderPct / 100) * circ;
-            const instOffset = 0;
+            // instOffset unused, using 0 inline
             const insiderOffset = -instDash;
             return (
               <svg width="120" height="120" viewBox="0 0 120 120">

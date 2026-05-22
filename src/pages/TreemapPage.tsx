@@ -1,14 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_TRADES } from '@/lib/mock-data';
-
-/* ============ Helpers ============ */
-const F = (v: number): string => {
-  if (v >= 1e9) return (v / 1e9).toFixed(2) + 'B';
-  if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
-  if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
-  return String(v);
-};
+/* MOCK_TRADES + F helper removed: unused (grid-based layout replaced squarify) */
 
 function seedFrom(s: string): number {
   let h = 0;
@@ -70,22 +62,10 @@ interface Tile extends Rect { cell: FlowCell; }
 function treemapLayout(cells: FlowCell[], width: number, height: number): Tile[] {
   // Sort by market cap descending
   const sorted = [...cells].sort((a, b) => b.marketCap - a.marketCap);
-  const totalCap = sorted.reduce((s, c) => s + c.marketCap, 0);
   
   const tiles: Tile[] = [];
-  let x = 8, y = 8; // padding
   
-  // Simple row-based treemap: left-to-right, top-to-bottom
-  // Each row fills width, height proportional to total
-  const area = (width - 16) * (height - 16);
-  
-  let currentY = 8;
-  let currentX = 8;
-  let rowHeight = 0;
-  let rowWidth = 0;
-  const rowCap = totalCap * 0.33; // 3 rows
-  
-  // Simpler approach: grid-based proportional sizing
+  // Grid-based proportional sizing (simpler than squarify)
   const cols = 5;
   const rows = Math.ceil(sorted.length / cols);
   const cellW = (width - 16) / cols;
