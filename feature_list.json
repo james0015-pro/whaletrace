@@ -84,9 +84,9 @@
     {
       "id": "feat-012",
       "name": "市場情報自動化",
-      "status": "planned",
+      "status": "in_progress",
       "priority": "P2",
-      "description": "定時爬取 CNBC/Investopedia/Fortune → 自動更新 Dashboard 市場情報區塊"
+      "description": "定時爬取 CNBC/Investopedia/Fortune → 自動更新 Dashboard 市場情報區塊。已完成 SEC EDGAR + Finviz + yfinance 數據刷新管線"
     },
     {
       "id": "feat-013",

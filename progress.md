@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-22** — Night Shift 3: feat-014 效能優化 — React.lazy code splitting，主 bundle 326KB + 8 page chunks
+**2026-05-22** — Night Shift 4: 數據刷新自動化 — 爬取 334 筆真實 SEC EDGAR 內部人交易 (BUY:108 / SELL:226)，20 檔 Finviz 快照，200 筆 yfinance 機構持股
 
 ## 專案狀態
 
@@ -51,3 +51,4 @@
 | 2026-05-22 | Night Shift 1 | 建立 progress.md + feature_list.json |
 | 2026-05-22 | Night Shift 2 | 實作 WatchlistPage：Bloomberg 終端機風格 10 欄位表格 (TICK/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，localStorage 與 StockDetailPage 同步，含摘要列、空狀態、共鳴信號指示器 |
 | 2026-05-22 | Night Shift 3 | feat-014 效能優化：App.tsx 所有 page imports 改 React.lazy → 8 個獨立 page chunks，主 bundle 326KB (↓12% initial load)，首次載入只下載 FeedPage chunk (20KB)，後續導航按需載入 |
+| 2026-05-22 | Night Shift 4 | 數據刷新自動化：執行 whaletrace_scraper.py quick mode (Finviz + yfinance) → 20 檔快照 + 200 筆機構持股；執行 SEC EDGAR 爬蟲 (零依賴 urllib+re) → 334 筆真實 Form 4 內部人交易 (BUY:108 / SELL:226)，日期範圍 2025-11-11 ~ 2026-05-21，涵蓋 25 檔美股。資料複製到 public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (334 trades on live site) |
