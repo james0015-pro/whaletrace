@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T07:18:34.327001",
+  "generated_at": "2026-05-22T12:55:50.090078",
   "tickers_scraped": [
     "AAPL",
     "MSFT",
@@ -46,7 +46,7 @@
       "analyst_target": 308.6465,
       "recommendation": "buy",
       "sma50": 269.2920397949219,
-      "sma200": 260.6065563964844
+      "sma200": 260.6065564727783
     },
     {
       "ticker": "MSFT",
@@ -71,7 +71,7 @@
       "analyst_target": 560.6302,
       "recommendation": "strong_buy",
       "sma50": 399.26020263671876,
-      "sma200": 458.78531600952147
+      "sma200": 458.78531677246093
     },
     {
       "ticker": "NVDA",
@@ -79,7 +79,7 @@
       "market_cap": 5312140000000.0,
       "price": 219.51,
       "pe_trailing": 33.62,
-      "pe_forward": 17.92,
+      "pe_forward": 17.8,
       "peg": 0.41,
       "inst_own_pct": 69.22,
       "insider_own_pct": 3.88,
@@ -87,7 +87,7 @@
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "roe": 114.29,
-      "beta": 2.25,
+      "beta": 2.24,
       "rsi14": 66.6613872554369,
       "debt_equity": 0.07,
       "profit_margin": 62.97,
@@ -96,7 +96,7 @@
       "analyst_target": 278.0251,
       "recommendation": "strong_buy",
       "sma50": 196.16399993896485,
-      "sma200": 186.83991455078126
+      "sma200": 186.83991493225096
     },
     {
       "ticker": "GOOGL",
@@ -221,7 +221,7 @@
       "analyst_target": 342.31818,
       "recommendation": "buy",
       "sma50": 300.71674865722656,
-      "sma200": 303.1625967407227
+      "sma200": 303.16259613037107
     },
     {
       "ticker": "V",
@@ -246,7 +246,7 @@
       "analyst_target": 398.74313,
       "recommendation": "strong_buy",
       "sma50": 312.66581665039064,
-      "sma200": 329.6616487121582
+      "sma200": 329.6616488647461
     },
     {
       "ticker": "WMT",
@@ -254,15 +254,15 @@
       "market_cap": 967200000000.0,
       "price": 121.34,
       "pe_trailing": 42.74,
-      "pe_forward": 36.99,
-      "peg": 3.12,
+      "pe_forward": 37.09,
+      "peg": 3.16,
       "inst_own_pct": 36.22,
       "insider_own_pct": 45.08,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "roe": 25.53,
-      "beta": 0.65,
+      "beta": 0.63,
       "rsi14": 31.710151522248765,
       "debt_equity": 0.79,
       "profit_margin": 3.13,
@@ -270,8 +270,8 @@
       "revenue_growth": 7.3,
       "analyst_target": 137.78049,
       "recommendation": "strong_buy",
-      "sma50": 126.86528228759765,
-      "sma200": 114.21135860443115
+      "sma50": 126.86528213500976,
+      "sma200": 114.21135856628418
     },
     {
       "ticker": "JNJ",
@@ -321,7 +321,7 @@
       "analyst_target": 163.77274,
       "recommendation": "buy",
       "sma50": 144.33508087158202,
-      "sma200": 147.97879447937012
+      "sma200": 147.97879486083986
     },
     {
       "ticker": "MA",
@@ -346,7 +346,7 @@
       "analyst_target": 646.9722,
       "recommendation": "strong_buy",
       "sma50": 501.4922540283203,
-      "sma200": 542.3327081298828
+      "sma200": 542.3327075195313
     },
     {
       "ticker": "UNH",
@@ -371,7 +371,7 @@
       "analyst_target": 390.34616,
       "recommendation": "buy",
       "sma50": 328.41699951171876,
-      "sma200": 320.30267295837405
+      "sma200": 320.30267333984375
     },
     {
       "ticker": "HD",
@@ -421,7 +421,7 @@
       "analyst_target": 62.97826,
       "recommendation": "strong_buy",
       "sma50": 50.74319999694824,
-      "sma200": 51.35185298919678
+      "sma200": 51.351852855682374
     },
     {
       "ticker": "DIS",
@@ -462,7 +462,7 @@
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "roe": 58.77,
-      "beta": 1.42,
+      "beta": 1.41,
       "rsi14": 45.15750762771944,
       "debt_equity": 0.58,
       "profit_margin": 29.48,

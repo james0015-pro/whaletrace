@@ -29,7 +29,7 @@ export default function WatchlistPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [watchSet, setWatchSet] = useState<Set<string>>(loadWatchlist);
-  const tickers = [...watchSet];
+  const tickers = useMemo(() => [...watchSet], [watchSet]);
 
   // Build summary per ticker
   const summaries = useMemo(() => {
