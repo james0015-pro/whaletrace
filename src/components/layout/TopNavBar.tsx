@@ -79,6 +79,10 @@ export function TopNavBar() {
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('treemap')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         TREE
       </button>
+      <button onClick={()=>{window.location.hash='#/watchlist';window.location.reload();}}
+        style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('watchlist')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        ⭐ WATCH
+      </button>
 
       {/* Language switch */}
       <button onClick={toggleLang}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
+  "project": "WhaleTrace — 鯨魚共振訊號雷達",
+  "version": "3.0.0",
+  "last_updated": "2026-05-22",
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Bloomberg 四象限終端機主頁",
+      "status": "completed",
+      "priority": "P0",
+      "description": "黑底琥珀 JetBrains Mono 四象限：內部人交易(Q1) + 共振訊號(Q2) + 機構流向(Q3) + 指令面板(Q4)"
+    },
+    {
+      "id": "feat-002",
+      "name": "股票詳情頁 (Bloomberg 風格)",
+      "status": "completed",
+      "priority": "P0",
+      "description": "/stocks/:ticker — 信心分數 + 趨勢圖 + 價格圖表 + 機構持股表 + 內部人時間軸 + localStorage watchlist"
+    },
+    {
+      "id": "feat-003",
+      "name": "Dashboard 儀表板頁面",
+      "status": "completed",
+      "priority": "P0",
+      "description": "/dashboard — 共振訊號卡片 + 機構大單表 + 市場情報 (NVDA/SOX/AI泡沫/Arm)"
+    },
+    {
+      "id": "feat-004",
+      "name": "Treemap 市場熱力圖",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/treemap — Finviz 風格 SVG treemap，3 模式切換 (機構/內部人/放空風險)"
+    },
+    {
+      "id": "feat-005",
+      "name": "SEC EDGAR 真實資料接入",
+      "status": "completed",
+      "priority": "P0",
+      "description": "n8n proxy → SEC Form 4 → data-layer.ts → 自動 fallback mock data"
+    },
+    {
+      "id": "feat-006",
+      "name": "Finviz/OpenInsider 爬蟲資料接入",
+      "status": "completed",
+      "priority": "P0",
+      "description": "Python 爬蟲 (server/scrapers/) → JSON 輸出 → data/ → 前端直接 import"
+    },
+    {
+      "id": "feat-007",
+      "name": "Telegram 共振警報推播",
+      "status": "completed",
+      "priority": "P1",
+      "description": "n8n workflow: 每 30 分鐘掃描 20 檔 → 檢測共振訊號 → Telegram Markdown 推送"
+    },
+    {
+      "id": "feat-008",
+      "name": "i18n 中英雙語切換",
+      "status": "completed",
+      "priority": "P1",
+      "description": "react-i18next + zh-TW/en locales + TopNavBar 語言按鈕"
+    },
+    {
+      "id": "feat-009",
+      "name": "GitHub Pages 部署",
+      "status": "completed",
+      "priority": "P0",
+      "description": "Vite build → gh-pages branch → GitHub Pages (james0015-pro.github.io/whaletrace)"
+    },
+    {
+      "id": "feat-010",
+      "name": "關注清單頁面 (localStorage 前端版)",
+      "status": "in_progress",
+      "priority": "P1",
+      "description": "Bloomberg 終端機風格 WatchlistPage — localStorage 持久化，與 StockDetailPage watchlist 同步"
+    },
+    {
+      "id": "feat-011",
+      "name": "Supabase 認證 + 後端關注清單",
+      "status": "planned",
+      "priority": "P2",
+      "description": "Phase 4: Supabase auth (email/password) + 關注清單後端持久化 + 個人設定"
+    },
+    {
+      "id": "feat-012",
+      "name": "市場情報自動化",
+      "status": "planned",
+      "priority": "P2",
+      "description": "定時爬取 CNBC/Investopedia/Fortune → 自動更新 Dashboard 市場情報區塊"
+    },
+    {
+      "id": "feat-013",
+      "name": "機構 13F 季度真實資料",
+      "status": "planned",
+      "priority": "P2",
+      "description": "等 SEC 13F 季度週期 → 自動替換 MOCK_INSTITUTION_ORDERS"
+    },
+    {
+      "id": "feat-014",
+      "name": "效能優化 (code splitting + lazy loading)",
+      "status": "planned",
+      "priority": "P3",
+      "description": "React.lazy → 按頁面分割 bundle → 減少初始載入時間"
+    }
+  ]
+}

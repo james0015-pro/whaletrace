@@ -45,10 +45,18 @@
     "loading": "Loading..."
   },
   "watchlist": {
-    "title": "⭐ My Watchlist",
-    "description": "Track up to 20 stocks with priority alerts. Phase 4 (login required).",
+    "title": "WATCHLIST",
+    "description": "Track up to 20 stocks with priority alerts.",
     "not_logged_in": "Not logged in",
-    "login_prompt": "Phase 4 will integrate Supabase Auth for watchlist creation"
+    "login_prompt": "Login to sync your watchlist across devices",
+    "empty_title": "NO TICKERS WATCHED",
+    "empty_desc": "Click the ★ button on any stock detail page to add it here.",
+    "empty_hint": "Watchlist syncs via localStorage — data stays on your device.",
+    "back_to_terminal": "BACK TO TERMINAL",
+    "tickers": "tickers",
+    "sorted_by_net": "Sorted by net buy value",
+    "remove": "Remove from watchlist",
+    "click_for_detail": "Click row → stock detail  |  ✕ to remove"
   },
   "settings": {
     "title": "⚙️ Settings",

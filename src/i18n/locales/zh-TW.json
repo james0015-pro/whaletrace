@@ -161,10 +161,18 @@
     "footer": "股票"
   },
   "watchlist": {
-    "title": "⭐ 我的關注",
+    "title": "⭐ 關注清單",
     "description": "追蹤最多 20 檔股票，任何變動優先推送。",
     "not_logged_in": "尚未登入",
-    "login_prompt": "登入後即可建立關注清單"
+    "login_prompt": "登入後即可跨裝置同步關注清單",
+    "empty_title": "尚未關注任何股票",
+    "empty_desc": "在股票詳情頁點擊 ★ 按鈕即可加入關注。",
+    "empty_hint": "關注清單透過 localStorage 同步 — 資料儲存在您的裝置上。",
+    "back_to_terminal": "← 回到終端機",
+    "tickers": "檔",
+    "sorted_by_net": "依淨買入金額排序",
+    "remove": "取消關注",
+    "click_for_detail": "點擊行 → 股票詳情  |  ✕ 移除"
   },
   "settings": {
     "title": "⚙️ 設定",
