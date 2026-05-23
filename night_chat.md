@@ -1,71 +1,79 @@
 # WhaleTrace 內線 Night Shift Report
-## 2026-05-23 04:51–05:10 UTC
+## 2026-05-23 09:33–09:42 UTC
 
 ---
 
-### 1. 程式碼品質 ✅
+### 1. Camofox 瀏覽器 ❌
 
-| 項目 | 狀態 | 詳情 |
-|------|------|------|
-| `npm run lint` | ✅ PASS | 遠端已合併 lint 修復（7 個檔案，17 個錯誤全部修正） |
-| `npm run build` | ✅ PASS | vite build 成功 (1.80s)，120 modules，12 chunks |
-| `tsc -b` | ✅ PASS | TypeScript 型別檢查通過 |
-| git status | ✅ CLEAN | 無未提交變更 |
+| 項目 | 狀態 |
+|------|------|
+| Server 啟動 | ❌ FAIL |
+| 錯誤 | `libgtk-3.so.0: cannot open shared object file` |
+| 原因 | Camoufox (Firefox fork) 需要 GTK3 運行時，伺服器無 GUI 庫 |
+| 已知問題 | 前次輪班（05:28 UTC）已記錄相同問題 |
 
-**本次修復的 lint 問題（已合併至 origin/master）：**
-- CompactDataTable.tsx — react-refresh/only-export-components (2 處)
-- TopNavBar.tsx — unused `t` variable
-- data-layer.ts — unused `MOCK_TRADES` import
-- mock-data.ts — `let`→`const` + unused `INSTITUTIONS`
-- query.tsx — react-refresh/only-export-components
-- FeedPage.tsx — unused variables / useless assignments
-- StockDetailPage.tsx — unused type imports + useCallback→plain fn + Math.random→deterministic hash
+**無解。需安裝 `libgtk-3` 或改用有 GUI 的伺服器。**
 
 ---
 
-### 2. GitHub Pages 部署 ✅
+### 2. Finviz 機構持股 ✅
 
-| 項目 | 狀態 | 詳情 |
-|------|------|------|
-| Pages URL | ✅ | https://james0015-pro.github.io/whaletrace/ |
-| Source branch | gh-pages (`/` root) | 剛剛推送更新 |
-| Latest build | ✅ built | 2026-05-23T04:58:06Z |
-| Site 可訪問 | ✅ 200 | JS bundle 驗證通過 |
-| gh-pages push | ✅ | 已強制推送最新 dist |
+| 項目 | 狀態 |
+|------|------|
+| 方法 | Scrapling Fetcher.get(stealthy_headers=True) |
+| 覆蓋 | 20/20 全成功 |
+| 新鮮度 | 2026-05-23 09:35 UTC（剛剛更新） |
+| 儲存 | `data/finviz_institutions.json` + `dist/data/` |
 
----
+**Top 5 機構持股：** CRM (93.38%), UNH (84.94%), MA (82.34%), V (79.91%), BAC (77.34%)
 
-### 3. 爬蟲數據新鮮度 ✅
-
-所有活躍數據檔均在 24 小時內更新：
-
-| 檔案 | 更新時間 | 新鮮度 |
-|------|----------|--------|
-| Finviz 機構持股 | 2026-05-23 04:03 | ✅ 0.8h |
-| OpenInsider 內部人交易 | 2026-05-22 17:11 | ✅ 11.7h |
-| SEC 內部人交易 | 2026-05-23 04:04 | ✅ 0.8h |
-| 機構持股明細 | 2026-05-23 04:04 | ✅ 0.8h |
-| 數據摘要 | 2026-05-23 04:04 | ✅ 0.8h |
-| 股票快照 | 2026-05-22 23:49 | ✅ 5.1h |
-| 完整資料集 | 2026-05-22 23:49 | ✅ 5.1h |
-
-⚠️ 以下檔案為空殼（2 bytes），應補資料或移除：
-- `fintel_shorts.json` — Fintel 放空數據
-- `insider_trades.json` — 內部人交易(舊格式)
-- `sec_filings.json` — SEC 申報
+**BRK.B 修正：** Finviz 使用 `BRK-B` URL 格式（非 `BRK.B`），已修正。數據：Inst 43.24%, MktCap $1.05T
 
 ---
 
-### 4. 遠端變更偵測
+### 3. OpenInsider 內部人交易 ⚠️
 
-本輪 shift 開始時發現 origin/master 有 5 個新 commit（night-shift 6 自動化 pipeline）：
-- `3df6ad8` — night-shift 6: data refresh automation pipeline
-- `95f2e99` — chore: bump vercel 54.1.0→54.4.1
-- `8b46b1d` — feat: NVDA analysis + SEC tokenization + Akamai x Anthropic
-- `bf286c3` — Night Shift 5: 市場情報卡片外部化
-- `15574c5` — feat: Dashboard Market Intelligence 新增 Broadcom/TSLA/Google I/O
+| 項目 | 狀態 |
+|------|------|
+| 方法 | Scrapling Fetcher.get — per-ticker search pages |
+| 原始擷取 | 1,067 trades（20 tickers） |
+| 有效使用 | 99 trades（前次 2026-05-22 screener 數據） |
+| 問題 | Search page (`/search?q=TICKER`) 無 ticker 欄位，column mapping 偏移 |
+| Screener page | 100 rows/tbody，正確欄位映射（ticker 在 TD[3]） |
+| 建議 | 使用 screener page 多頁擷取，而非 per-ticker search |
 
-已 rebase 並重新部署最新 build（含新增頁面：SignalsPage, InstitutionsPage, SettingsPage, TreemapPage, WatchlistPage, DashboardPage）。
+**已知 Bug：** `/search?q=AAPL` 頁面比 screener 少一個 ticker 欄，所有欄位左移 1。前次數據（99 trades, 5/22）來自 screener，欄位正確。
+
+---
+
+### 4. SEC EDGAR 內部人交易 ✅
+
+| 項目 | 狀態 |
+|------|------|
+| 數據 | 259 trades（20 tickers） |
+| 更新時間 | 2026-05-23 05:28 UTC（4 小時前） |
+| 新鮮度 | ✅ 仍在新鮮期內 |
+| 來源 | SEC Form 4 XML 解析（re.IGNORECASE 修正後正確） |
+
+---
+
+### 5. 數據狀態總結
+
+| 檔案 | 筆數 | 時間 | 新鮮度 |
+|------|------|------|--------|
+| `finviz_institutions.json` | 20 | 09:35 | ✅ 剛更新 |
+| `sec_insider_trades.json` | 259 | 05:28 | ✅ 4h |
+| `openinsider_trades.json` | 99 | 5/22 17:11 | ⚠️ 16h |
+| `institution_holdings.json` | 190 | 05:28 | ✅ 4h |
+| `data_summary.json` | — | 09:35 | ✅ 剛更新 |
+
+---
+
+### 6. 待辦事項（給開發班）
+
+1. **OpenInsider search page parser 修正** — search page 無 ticker 欄，欄位映射需調整。Screener page 正常（有 ticker 欄在 TD[3]）。建議改用 screener multi-page fetch。
+2. **Camofox 替代方案** — 目前 `libgtk-3.so.0` 無法安裝。考慮：Docker 容器（`make up`），或切換到有 GUI 的伺服器。
+3. **BRK.B → BRK-B** — Finviz URL 中的 ticker 格式需轉換。
 
 ---
 
@@ -73,11 +81,10 @@
 
 | 指標 | 結果 |
 |------|------|
-| Build | ✅ PASS |
-| Lint | ✅ PASS (0 errors) |
-| Deploy | ✅ LIVE |
-| 數據新鮮度 | ✅ 全通過 |
-| git master | ✅ CLEAN |
-| 耗時 | ~19 分鐘 |
+| Finviz 機構持股 | ✅ 20/20 成功 |
+| SEC 內部人交易 | ✅ 259 筆有效 |
+| OpenInsider | ⚠️ 99 筆（16h 舊）+ parser bug |
+| Camofox | ❌ GTK3 缺失 |
+| 耗時 | ~9 分鐘 |
 
-🟢 **全系統健康。無需人工介入。**
+🟡 **數據大部分新鮮。OpenInsider parser 需修正，Camofox 需基礎設施修復。**
