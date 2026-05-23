@@ -2,11 +2,11 @@
   {
     "id": 1,
     "title": "NVDA",
-    "source": "2026-05-21 CNBC",
+    "source": "2026-05-23 Barron's",
     "border_color": "#f33",
-    "highlight": "Jensen Huang admits: \"Effectively abandoned China market to Huawei\"",
+    "highlight": "5 consecutive earnings beats — stock fell after ALL of them. Barron's: \"Nvidia Shares Have Fallen After Four Straight Earnings Beats\"",
     "highlight_color": "#f33",
-    "detail": "Q1 FY2027 revenue $81.6B (+85%) but stock fell 2% — market questions AI valuation ceiling"
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) record — yet -5% post-earnings. TechNews: \"Market questions AI investment sustainability\" — AI valuation ceiling signal strengthens. Jensen admits China market lost to Huawei. NVDA $5.5T market cap at risk of mean reversion as hyperscalers build custom silicon (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic)"
   },
   {
     "id": 2,
@@ -86,5 +86,23 @@
     "highlight": "100 announcements — Gemini 3.5 Flash, Antigravity 2.0, OpenClaw agentic coding",
     "highlight_color": "#8b5cf6",
     "detail": "Agentic AI era officially here: autonomous agents that can code, browse, and execute tasks independently. GOOGL positioning as AI platform leader beyond search"
+  },
+  {
+    "id": 11,
+    "title": "SEC Tokenization",
+    "source": "2026-05-23",
+    "border_color": "#0c6",
+    "highlight": "SEC pushes tokenized stock trading — CLARITY Act enters Senate: digital asset infrastructure overhaul",
+    "highlight_color": "#0c6",
+    "detail": "US capital markets infrastructure transformation: tokenized equity settlement, blockchain-native securities issuance platform. CLARITY Act defines legal framework for regulated digital assets. Traditional broker-dealers face disruption — blockchain settlement reduces T+2 to instant, cuts clearing costs ~80%"
+  },
+  {
+    "id": 12,
+    "title": "Akamai x Anthropic",
+    "source": "2026-05-23",
+    "border_color": "#8b5cf6",
+    "highlight": "Akamai leads S&P 500 on reported Anthropic AI edge computing deal",
+    "highlight_color": "#8b5cf6",
+    "detail": "AI inference at the edge — Akamai's CDN infrastructure (4,100+ PoPs globally) repurposed for low-latency AI model serving. Anthropic partnership positions Akamai as AI infrastructure play beyond traditional CDN. Edge AI market projected $27B by 2030 — Akamai + Cloudflare + Fastly competing for LLM inference workloads at the edge"
   }
 ]
