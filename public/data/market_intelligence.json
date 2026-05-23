@@ -55,11 +55,11 @@
   {
     "id": 7,
     "title": "Big Tech AI Capex",
-    "source": "2026-04-30 CNBC",
+    "source": "2026-05-23 Reuters",
     "border_color": "#8b5cf6",
-    "highlight": "$725B total AI capex (+77% YoY) — trajectory toward $1T in 2027",
+    "highlight": "Hyperscaler AI capex surges past $800B annual run-rate — trajectory toward $1T by 2027",
     "highlight_color": "#8b5cf6",
-    "detail": "MSFT/GOOGL/META/AMZN combined AI infrastructure spend dwarfs NVDA GPU revenue. Hyperscalers building custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency"
+    "detail": "MSFT/GOOGL/META/AMZN combined AI infrastructure spend accelerates despite NVDA stock weakness. Gates Foundation exits all remaining MSFT shares amid shift to AI infrastructure spending — signal or noise? Hyperscalers simultaneously build custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency"
   },
   {
     "id": 8,
@@ -195,5 +195,50 @@
     "highlight": "Google Gemini Omni (5/19) + agentic search overhaul (5/23 TODAY) — first search box redesign in 25 years under AI-first paradigm",
     "highlight_color": "#8b5cf6",
     "detail": "NYT 5/20: Google's agentic search represents the most radical search engine redesign since 1998 — AI agents autonomously browse, compare, and synthesize results before presenting answers. Gemini Omni (launched 5/19) adds multimodal reasoning (text+image+audio+video) and real-time web grounding. Google positioning Gemini as the 'AI operating system' for search, cloud, and enterprise — directly challenging MSFT/OpenAI's Copilot dominance. GOOGL stock implications: search moat reinforcement could reverse recent AI-market-share-loss narrative"
+  },
+  {
+    "id": 23,
+    "title": "Fed Hawks Return",
+    "source": "2026-05-21 Fed Minutes",
+    "border_color": "#f33",
+    "highlight": "\"Most Fed officials embraced possibility of higher rates at recent meeting\" — hawkish pivot threatens growth stocks",
+    "highlight_color": "#f33",
+    "detail": "Rising interest rates exploding debt servicing costs. Wall Street bonuses seen flat to slightly negative for 2026 — Iran war + private credit turmoil add headwinds. Higher-for-longer narrative challenges AI/semi growth stock valuations as discount rates reset upward"
+  },
+  {
+    "id": 24,
+    "title": "EU China Chip Flop",
+    "source": "2026-05-23 EU Commission",
+    "border_color": "#ff8c00",
+    "highlight": "EU reverses China chip sanctions it barred only weeks ago — proposes sanctions reprieve for Chinese chip firm",
+    "highlight_color": "#ff8c00",
+    "detail": "European Commission flip-flop signals geopolitical fragmentation of semiconductor supply chains. Short-lived sanctions expose policy incoherence — China chip firms gain breathing room. US-led tech decoupling agenda faces European resistance, potentially benefiting non-US equipment makers"
+  },
+  {
+    "id": 25,
+    "title": "Tesla FSD v14.3",
+    "source": "2026-05-22 Tesla Release",
+    "border_color": "#0c6",
+    "highlight": "FSD v14.3.3 adds intervention-free live streak counter — Robotaxi Q4 launch across 12 US states",
+    "highlight_color": "#0c6",
+    "detail": "Tesla FSD milestone: intervention-free streak counter gamifies autonomous driving progress. Robotaxi roadmap: Q4 launch → 12 states → Europe expansion. BASENOR reports regulatory approvals accelerating as Waymo and Cruise face renewed competition from FSD-equipped Tesla fleet"
+  },
+  {
+    "id": 26,
+    "title": "Gates Exits MSFT",
+    "source": "2026-05-23 CNBC",
+    "border_color": "#ff8c00",
+    "highlight": "Gates Foundation sold ALL remaining Microsoft stock — 40-year conviction position fully liquidated",
+    "highlight_color": "#ff8c00",
+    "detail": "Bill & Melinda Gates Foundation exits entire MSFT position — the stock that made Gates the world's richest man. Portfolio rebalancing toward global health + climate tech, or signal that MSFT's AI-heavy capex cycle erodes the investment thesis? Investors debate: portfolio optimization or canary in the coal mine"
+  },
+  {
+    "id": 27,
+    "title": "TI Power Chips",
+    "source": "2026-05-23 Analyst Upgrade",
+    "border_color": "#0c6",
+    "highlight": "Texas Instruments has the power chips AI data centers need — analyst upgrades to Buy",
+    "highlight_color": "#0c6",
+    "detail": "TI's analog and power management chips are critical for AI data center power delivery — every GPU rack needs 5-10x more power regulation vs traditional server racks. AI infrastructure buildout creates structural demand tailwind for TI's bread-and-butter analog business, bypassing the GPU chip war entirely"
   }
 ]

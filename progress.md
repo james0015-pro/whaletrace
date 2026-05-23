@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 9: WCAG 2.1 AA 無障礙審計 — 鍵盤導航(13 處)、ARIA 標籤/角色(8 處)、載入指示器 role="status"、跑馬燈 aria-hidden、all 互動元素支援 Enter/Space/Escape。npm run build ✅，npm test ✅ (63/63)。WCAG 報告: WCAG_AUDIT.md。feat-018 標記為完成。
+**2026-05-23** — Night Shift 8: 市場情報內容擴充 v2 — 更新 Big Tech AI Capex (id 7) + 新增 5 張卡片 (Fed Hawks/China Chip Flop/Tesla FSD/Gates Exits/TI Power Chips) → 27 張 → npm run build ✅ → 部署 GitHub Pages
 
 ## 專案狀態
 
@@ -59,6 +59,7 @@
 | 2026-05-22 | Night Shift 2 | 實作 WatchlistPage：Bloomberg 終端機風格 10 欄位表格 (TICK/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，localStorage 與 StockDetailPage 同步，含摘要列、空狀態、共鳴信號指示器 |
 | 2026-05-22 | Night Shift 3 | feat-014 效能優化：App.tsx 所有 page imports 改 React.lazy → 8 個獨立 page chunks，主 bundle 326KB (↓12% initial load)，首次載入只下載 FeedPage chunk (20KB)，後續導航按需載入 |
 | 2026-05-22 | Night Shift 4 | 數據刷新自動化：執行 whaletrace_scraper.py quick mode (Finviz + yfinance) → 20 檔快照 + 200 筆機構持股；執行 SEC EDGAR 爬蟲 (零依賴 urllib+re) → 334 筆真實 Form 4 內部人交易 (BUY:108 / SELL:226)，日期範圍 2025-11-11 ~ 2026-05-21，涵蓋 25 檔美股。資料複製到 public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (334 trades on live site) |
+| 2026-05-23 | Night Shift 8 | 市場情報內容擴充 v2：npm install 安裝 vitest/testing-library 依賴，更新 Big Tech AI Capex (id 7) 為 2026-05-23 最新數據，新增 5 張卡片 (Fed Hawks/China Chip Flop/Tesla FSD/Gates Exits/TI Power Chips)，22→27 張，npm run build ✅，GitHub Pages 部署完成 |
 | 2026-05-23 | Night Shift 5 | 市場情報卡片外部化：從 DashboardPage.tsx 提取 10 張硬編碼卡片 → public/data/market_intelligence.json + MarketIntelligenceCard 元件 + MarketIntelligenceItem type。DashboardPage 從 226 行縮減至 118 行（-48%）。npm run build ✅，資料確認內嵌於 DashboardPage chunk。後續 script 可直接更新 JSON。 |
 | 2026-05-23 | Night Shift 6 | 數據刷新自動化：重新執行 night_shift_scrape.py (Finviz 20/20 + SEC EDGAR 259 trades + yfinance 190 holdings) → 複製 data/ → public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (所有 data JSON 200 OK)。建立 scripts/refresh_and_deploy.sh 一鍵管線腳本（爬取→複製→建置→部署→觸發 Pages rebuild）。 |
 | 2026-05-23 | Night Shift 7 | Cron 自動化 + 市場情報擴充：建立 hermes cron job (job_id: 1ce55d9a7f42, 每日 06/18 UTC 自動執行 refresh_and_deploy.sh)。market_intelligence.json → 17 張卡片：去重 Broadcom ASIC (合併 #2 + #8) + 新增 3 張 (NVDA $200B Oppty, SpaceX/OpenAI IPO, Lenovo AI Surge) based on CNBC 即時頭條。npm run build ✅ → GitHub Pages 部署驗證 ✅ |
