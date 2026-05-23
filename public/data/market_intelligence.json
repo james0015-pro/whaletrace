@@ -2,11 +2,11 @@
   {
     "id": 1,
     "title": "NVDA",
-    "source": "2026-05-23 Barron's / Yahoo Finance",
+    "source": "2026-05-23 Motley Fool / Barron's / TheStreet",
     "border_color": "#f33",
-    "highlight": "5 consecutive earnings beats — stock fell after ALL of them. Barron's: \"Nvidia Shares Have Fallen After Four Straight Earnings Beats\"",
+    "highlight": "6 consecutive earnings beats — stock fell after ALL of them. Motley Fool 5/23: \"Just Crushed Earnings Estimates, but the Stock Fell\" — JPMorgan reset target, Trefis: $200B CPU TAM market isn't buying",
     "highlight_color": "#f33",
-    "detail": "Q1 FY2027 revenue $81.6B (+85%) record — yet -5% post-earnings. Yahoo Finance 5/22: \"Chip stocks hit records but NVDA isn't the driver\" — AI rotation from NVDA to Intel/AMD/Navitas/Broadcom. TechNews: \"Market questions AI investment sustainability\" — AI valuation ceiling signal strengthens. Jensen admits China market lost to Huawei. NVDA $5.5T market cap at risk of mean reversion as hyperscalers build custom silicon (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic)"
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) / net profit $58.3B (+211%) are the strongest earnings in semiconductor history — yet the stock fell for the 6th consecutive time post-earnings. Motley Fool 5/23: \"Nvidia Just Crushed Earnings Estimates, but the Stock Fell\" identifies three paradoxes: ①the market prices perfection — another beat is already expected ②custom silicon threat (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic) erodes GPU lock-in ③the beat margin is narrowing (growth rate decelerating from triple-digit to double-digit). JPMorgan reset price target (TheStreet 5/23) reflecting lower terminal growth assumptions. Trefis analysis: $200B CPU TAM opportunity (Vera CPU + Grace superchip) is real but the market views it as unproven execution risk, not yet a growth catalyst. Barron's observed the same pattern: \"Shares Have Fallen After Four Straight Earnings Beats\" — now extended to six. Wall Street's AI valuation ceiling thesis hardens: every beat just makes the stock cheaper"
   },
   {
     "id": 2,
@@ -82,11 +82,11 @@
   {
     "id": 10,
     "title": "SEC Tokenization",
-    "source": "2026-05-23",
+    "source": "2026-05-23 SEC / BitKE",
     "border_color": "#0c6",
-    "highlight": "SEC pushes tokenized stock trading — CLARITY Act enters Senate: digital asset infrastructure overhaul",
+    "highlight": "SEC Commissioner differentiates tokenized securities vs synthetic instruments — CLARITY Act regulatory definition advances today (5/23)",
     "highlight_color": "#0c6",
-    "detail": "US capital markets infrastructure transformation: tokenized equity settlement, blockchain-native securities issuance platform. CLARITY Act defines legal framework for regulated digital assets. Traditional broker-dealers face disruption — blockchain settlement reduces T+2 to instant, cuts clearing costs ~80%"
+    "detail": "BitKE 5/23: SEC Commissioner Hester Peirce publicly distinguishes 'tokenized securities' (blockchain-native representations of real equity, fully regulated) from 'synthetic instruments' (derivatives on digital assets, less regulated) — a critical legal taxonomy that will shape the entire tokenization industry. CLARITY Act enters Senate Banking Committee markup this week — defines legal framework for regulated digital asset securities. US capital markets infrastructure transformation accelerates: blockchain settlement reduces T+2 to instant, cuts clearing costs ~80%. Traditional broker-dealers face structural disruption as blockchain-native securities issuance becomes legally defined"
   },
   {
     "id": 11,
@@ -240,5 +240,14 @@
     "highlight": "Texas Instruments has the power chips AI data centers need — analyst upgrades to Buy",
     "highlight_color": "#0c6",
     "detail": "TI's analog and power management chips are critical for AI data center power delivery — every GPU rack needs 5-10x more power regulation vs traditional server racks. AI infrastructure buildout creates structural demand tailwind for TI's bread-and-butter analog business, bypassing the GPU chip war entirely"
+  },
+  {
+    "id": 28,
+    "title": "TSMC Supply Pressure",
+    "source": "2026-05-18 digitimes",
+    "border_color": "#f33",
+    "highlight": "Structural shift — Samsung/Intel/Apple simultaneously testing foundry alternatives to TSMC: not a short-term fluctuation",
+    "highlight_color": "#f33",
+    "detail": "digitimes 5/18 deep-dive: For the first time, all three major TSMC customers are simultaneously and seriously testing alternative foundry options — Samsung Foundry (3nm GAA for Apple A-series), Intel Foundry (18A for US government chips), and a potential Samsung-Apple partnership. This is NOT a short-term pricing renegotiation — it's a structural supply chain diversification play driven by: ①TSMC's $31.38B capex (5/13) cannot keep pace with AI demand ②Taiwan geopolitical risk premium rising ③TSMC's near-100% advanced node market share creates customer concentration anxiety. TSMC's CEO C.C. Wei acknowledged the pressure at COMPUTEX 2026 but emphasized technology moat depth (3nm/2nm lead time). Outcome: TSMC remains dominant but the era of unquestioned monopoly is ending — expect margin compression as customers gain credible alternatives"
   }
 ]
