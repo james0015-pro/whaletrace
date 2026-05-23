@@ -2,7 +2,7 @@
   "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
   "project": "WhaleTrace — 鯨魚共振訊號雷達",
   "version": "3.0.0",
-  "last_updated": "2026-05-22",
+  "last_updated": "2026-05-23",
   "features": [
     {
       "id": "feat-001",
@@ -84,9 +84,9 @@
     {
       "id": "feat-012",
       "name": "市場情報自動化",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P2",
-      "description": "定時爬取 CNBC/Investopedia/Fortune → 自動更新 Dashboard 市場情報區塊。已完成 SEC EDGAR + Finviz + yfinance 數據刷新管線"
+      "description": "DashboardPage 市場情報卡片 → market_intelligence.json 資料驅動 + MarketIntelligenceCard React 元件。後續透過 script 更新 JSON 即可刷新卡片內容。"
     },
     {
       "id": "feat-013",

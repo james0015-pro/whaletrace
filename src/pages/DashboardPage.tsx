@@ -3,6 +3,8 @@ import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/
 import { formatCompactNumber, truncate } from '@/lib/utils';
 import type { InsiderTrade, ResonanceSignal } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
+import MarketIntelligenceCard from '@/components/features/MarketIntelligenceCard';
+import MARKET_INTELLIGENCE from '../../public/data/market_intelligence.json';
 
 const ALL: InsiderTrade[] = MOCK_TRADES;
 const SIGS: ResonanceSignal[] = MOCK_RESONANCE_SIGNALS;
@@ -78,120 +80,13 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* SECTION 2.5: Market Intelligence - NVDA Competition */}
+        {/* SECTION 2.5: Market Intelligence */}
         <div style={{marginBottom:20}}>
           <h2 style={{fontSize:12,color:'#e6e6e6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>MARKET INTELLIGENCE</h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:10}}>
-            {/* NVDA China */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #f33',borderLeft:'3px solid #f33'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>NVDA</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-21 CNBC</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#f33',fontWeight:600}}>Jensen Huang admits: "Effectively abandoned China market to Huawei"</div>
-                <div style={{color:'#888',fontSize:8}}>Q1 FY2027 revenue $81.6B (+85%) but stock fell 2% — market questions AI valuation ceiling</div>
-              </div>
-            </div>
-            {/* Broadcom ASIC */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#8b5cf6'}}>Broadcom ASIC</span>
-                <span style={{fontSize:9,color:'#555'}}>Custom AI Chips</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div>Google TPU / Meta MTIA / Anthropic — custom ASIC threat to NVDA general-purpose GPU dominance</div>
-                <div style={{color:'#888',fontSize:8}}>Broadcom AI revenue growing rapidly as hyperscalers diversify away from NVDA GPU dependency</div>
-              </div>
-            </div>
-            {/* Trump / AMD chip deal */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Geopolitics</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-21</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div>Trump pushes NVDA China chip export deal — Beijing counters: wants AMD chips instead</div>
-                <div style={{color:'#888',fontSize:8}}>Stalemate reshapes AI chip supply chain. AMD $10B Taiwan investment (2026/5/21) strengthens AMD position</div>
-              </div>
-            </div>
-            {/* SOX / AI Bubble */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #f33',borderLeft:'3px solid #f33'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#f33'}}>SOX / AI Bubble</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#f33',fontWeight:600}}>Philly SOX at 2-week low — Morningstar draws 1999 dot-com parallel</div>
-                <div style={{color:'#888',fontSize:8}}>Harvard Business Review also warns of AI overinvestment cycle. Fund managers brace for AI/semi correction</div>
-              </div>
-            </div>
-            {/* Arm vs Cathie Wood */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Arm / Cathie Wood</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#ff8c00',fontWeight:600}}>Arm +15% on AGI CPU narrative — Cathie Wood cuts semi exposure (contradictory signals)</div>
-                <div style={{color:'#888',fontSize:8}}>NVDA Q1 $81.6B (+85%) record but stock fell — Investopedia: "Lost Its Edge", Fortune: "forecasts disappoint". AI valuation ceiling still in question</div>
-              </div>
-            </div>
-            {/* AI Rotation / Chip Recovery */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #0c6',borderLeft:'3px solid #0c6'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#0c6'}}>AI Rotation</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-20 WSJ</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#0c6',fontWeight:600}}>Intel + AMD lead chip rally — SOX +4.7%, Wall Street dubs it "AI changing of the guard"</div>
-                <div style={{color:'#888',fontSize:8}}>Arm +15% (AGI CPU) + Intel recovery + AMD $10B Taiwan investment — investors rotate from NVDA to diversified AI chip plays. SOX nears 2-week high reversal</div>
-              </div>
-            </div>
-            {/* Big Tech AI Capex */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#8b5cf6'}}>Big Tech AI Capex</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-04-30 CNBC</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#8b5cf6',fontWeight:600}}>$725B total AI capex (+77% YoY) — trajectory toward $1T in 2027</div>
-                <div style={{color:'#888',fontSize:8}}>MSFT/GOOGL/META/AMZN combined AI infrastructure spend dwarfs NVDA GPU revenue. Hyperscalers building custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency</div>
-              </div>
-            </div>
-            {/* Broadcom ASIC */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Broadcom ASIC</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#ff8c00',fontWeight:600}}>6 major AI customers locked — $100B 2027 revenue target</div>
-                <div style={{color:'#888',fontSize:8}}>Google TPU, Meta MTIA, Anthropic custom chips all via Broadcom ASIC. NVDA GPU dominance under structural threat as hyperscalers diversify to custom silicon</div>
-              </div>
-            </div>
-            {/* TSLA SpaceX IPO */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #0c6',borderLeft:'3px solid #0c6'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#0c6'}}>TSLA / SpaceX IPO</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#0c6',fontWeight:600}}>TSLA abandons India factory — SpaceX IPO incoming (TSLA holds 19M shares)</div>
-                <div style={{color:'#888',fontSize:8}}>Paul Tudor Jones 9x stake increase signals conviction. SpaceX IPO could unlock $10B+ for TSLA balance sheet. India pivot suggests margin focus</div>
-              </div>
-            </div>
-            {/* Google I/O 2026 */}
-            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6'}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:'#8b5cf6'}}>Google I/O 2026</span>
-                <span style={{fontSize:9,color:'#555'}}>2026-05-20</span>
-              </div>
-              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
-                <div style={{color:'#8b5cf6',fontWeight:600}}>100 announcements — Gemini 3.5 Flash, Antigravity 2.0, OpenClaw agentic coding</div>
-                <div style={{color:'#888',fontSize:8}}>Agentic AI era officially here: autonomous agents that can code, browse, and execute tasks independently. GOOGL positioning as AI platform leader beyond search</div>
-              </div>
-            </div>
+            {MARKET_INTELLIGENCE.map((item) => (
+              <MarketIntelligenceCard key={item.id} item={item as import('@/types').MarketIntelligenceItem} />
+            ))}
           </div>
         </div>
 

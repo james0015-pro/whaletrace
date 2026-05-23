@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "title": "NVDA",
+    "source": "2026-05-21 CNBC",
+    "border_color": "#f33",
+    "highlight": "Jensen Huang admits: \"Effectively abandoned China market to Huawei\"",
+    "highlight_color": "#f33",
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) but stock fell 2% — market questions AI valuation ceiling"
+  },
+  {
+    "id": 2,
+    "title": "Broadcom ASIC",
+    "source": "Custom AI Chips",
+    "border_color": "#8b5cf6",
+    "highlight": "Google TPU / Meta MTIA / Anthropic — custom ASIC threat to NVDA general-purpose GPU dominance",
+    "detail": "Broadcom AI revenue growing rapidly as hyperscalers diversify away from NVDA GPU dependency"
+  },
+  {
+    "id": 3,
+    "title": "Geopolitics",
+    "source": "2026-05-21",
+    "border_color": "#ff8c00",
+    "highlight": "Trump pushes NVDA China chip export deal — Beijing counters: wants AMD chips instead",
+    "detail": "Stalemate reshapes AI chip supply chain. AMD $10B Taiwan investment (2026/5/21) strengthens AMD position"
+  },
+  {
+    "id": 4,
+    "title": "SOX / AI Bubble",
+    "source": "2026-05-22",
+    "border_color": "#f33",
+    "highlight": "Philly SOX at 2-week low — Morningstar draws 1999 dot-com parallel",
+    "highlight_color": "#f33",
+    "detail": "Harvard Business Review also warns of AI overinvestment cycle. Fund managers brace for AI/semi correction"
+  },
+  {
+    "id": 5,
+    "title": "Arm / Cathie Wood",
+    "source": "2026-05-22",
+    "border_color": "#ff8c00",
+    "highlight": "Arm +15% on AGI CPU narrative — Cathie Wood cuts semi exposure (contradictory signals)",
+    "highlight_color": "#ff8c00",
+    "detail": "NVDA Q1 $81.6B (+85%) record but stock fell — Investopedia: \"Lost Its Edge\", Fortune: \"forecasts disappoint\". AI valuation ceiling still in question"
+  },
+  {
+    "id": 6,
+    "title": "AI Rotation",
+    "source": "2026-05-20 WSJ",
+    "border_color": "#0c6",
+    "highlight": "Intel + AMD lead chip rally — SOX +4.7%, Wall Street dubs it \"AI changing of the guard\"",
+    "highlight_color": "#0c6",
+    "detail": "Arm +15% (AGI CPU) + Intel recovery + AMD $10B Taiwan investment — investors rotate from NVDA to diversified AI chip plays. SOX nears 2-week high reversal"
+  },
+  {
+    "id": 7,
+    "title": "Big Tech AI Capex",
+    "source": "2026-04-30 CNBC",
+    "border_color": "#8b5cf6",
+    "highlight": "$725B total AI capex (+77% YoY) — trajectory toward $1T in 2027",
+    "highlight_color": "#8b5cf6",
+    "detail": "MSFT/GOOGL/META/AMZN combined AI infrastructure spend dwarfs NVDA GPU revenue. Hyperscalers building custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency"
+  },
+  {
+    "id": 8,
+    "title": "Broadcom ASIC",
+    "source": "2026-05-22",
+    "border_color": "#ff8c00",
+    "highlight": "6 major AI customers locked — $100B 2027 revenue target",
+    "highlight_color": "#ff8c00",
+    "detail": "Google TPU, Meta MTIA, Anthropic custom chips all via Broadcom ASIC. NVDA GPU dominance under structural threat as hyperscalers diversify to custom silicon"
+  },
+  {
+    "id": 9,
+    "title": "TSLA / SpaceX IPO",
+    "source": "2026-05-22",
+    "border_color": "#0c6",
+    "highlight": "TSLA abandons India factory — SpaceX IPO incoming (TSLA holds 19M shares)",
+    "highlight_color": "#0c6",
+    "detail": "Paul Tudor Jones 9x stake increase signals conviction. SpaceX IPO could unlock $10B+ for TSLA balance sheet. India pivot suggests margin focus"
+  },
+  {
+    "id": 10,
+    "title": "Google I/O 2026",
+    "source": "2026-05-20",
+    "border_color": "#8b5cf6",
+    "highlight": "100 announcements — Gemini 3.5 Flash, Antigravity 2.0, OpenClaw agentic coding",
+    "highlight_color": "#8b5cf6",
+    "detail": "Agentic AI era officially here: autonomous agents that can code, browse, and execute tasks independently. GOOGL positioning as AI platform leader beyond search"
+  }
+]

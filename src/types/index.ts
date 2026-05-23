@@ -114,6 +114,17 @@ export interface PaginatedResponse<T> {
   has_more: boolean;
 }
 
+/** Market intelligence news card */
+export interface MarketIntelligenceItem {
+  id: number;
+  title: string;            // Card header (ticker or topic)
+  source: string;           // e.g. "2026-05-21 CNBC"
+  border_color: string;     // CSS color for left border
+  highlight: string;        // Bold first line
+  detail: string;           // Smaller detail text
+  highlight_color?: string; // Optional override for highlight text color
+}
+
 /** API error */
 export interface ApiError {
   message: string;
