@@ -17,11 +17,16 @@ const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
 function LoadingFallback() {
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      height: '100vh', background: '#000', color: '#888',
-      fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
-    }}>
+    <div
+      role="status"
+      aria-live="polite"
+      aria-label="Loading WhaleTrace"
+      style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        height: '100vh', background: '#000', color: '#888',
+        fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
+      }}
+    >
       <span style={{ animation: 'bl-shimmer 1.5s infinite' }}>WHALETRACE LOADING...</span>
     </div>
   );

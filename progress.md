@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 8: Vitest 單元測試 — 設定 Vitest + @testing-library/react + jsdom，建立 4 個測試檔共 63 個測試 (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)，npm run build ✅，npm test ✅ (全部通過)。feat-017 拆分為三：單元測試(✅) / WCAG(⬜) / Playwright(⬜)。
+**2026-05-23** — Night Shift 9: WCAG 2.1 AA 無障礙審計 — 鍵盤導航(13 處)、ARIA 標籤/角色(8 處)、載入指示器 role="status"、跑馬燈 aria-hidden、all 互動元素支援 Enter/Space/Escape。npm run build ✅，npm test ✅ (63/63)。WCAG 報告: WCAG_AUDIT.md。feat-018 標記為完成。
 
 ## 專案狀態
 
@@ -42,11 +42,12 @@
 - [x] 數據刷新 Cron 排程 — hermes cron job 每日 06/18 UTC 自動執行 refresh_and_deploy.sh
 - [x] 市場情報擴充 — 17 張卡片（去重 Broadcom ASIC + NVDA $200B/Lenovo AI Surge/SpaceX IPO）
 - [x] feat-017 Vitest 單元測試 — 63 tests (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)
+- [x] feat-018 WCAG 2.1 AA 無障礙審計 — 鍵盤導航 + ARIA 標籤/角色 + 載入指示器 + 跑馬燈 aria-hidden (WCAG_AUDIT.md)
 
 ## 下一步 (優先順序)
 
-1. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化 (需要 Supabase API keys)
-2. **無障礙與測試** — WCAG 2.1 + Vitest + Playwright smoke tests
+1. **Playwright E2E Smoke Tests (feat-019)** — 頁面載入、路由導航、資料渲染
+2. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化 (需要 Supabase API keys)
 3. **市場情報內容更新** — 後續透過 script 自動更新 market_intelligence.json
 4. **機構 13F 季度真實資料** — 等 SEC 13F 季度週期替換 mock 資料
 
@@ -61,4 +62,5 @@
 | 2026-05-23 | Night Shift 5 | 市場情報卡片外部化：從 DashboardPage.tsx 提取 10 張硬編碼卡片 → public/data/market_intelligence.json + MarketIntelligenceCard 元件 + MarketIntelligenceItem type。DashboardPage 從 226 行縮減至 118 行（-48%）。npm run build ✅，資料確認內嵌於 DashboardPage chunk。後續 script 可直接更新 JSON。 |
 | 2026-05-23 | Night Shift 6 | 數據刷新自動化：重新執行 night_shift_scrape.py (Finviz 20/20 + SEC EDGAR 259 trades + yfinance 190 holdings) → 複製 data/ → public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (所有 data JSON 200 OK)。建立 scripts/refresh_and_deploy.sh 一鍵管線腳本（爬取→複製→建置→部署→觸發 Pages rebuild）。 |
 | 2026-05-23 | Night Shift 7 | Cron 自動化 + 市場情報擴充：建立 hermes cron job (job_id: 1ce55d9a7f42, 每日 06/18 UTC 自動執行 refresh_and_deploy.sh)。market_intelligence.json → 17 張卡片：去重 Broadcom ASIC (合併 #2 + #8) + 新增 3 張 (NVDA $200B Oppty, SpaceX/OpenAI IPO, Lenovo AI Surge) based on CNBC 即時頭條。npm run build ✅ → GitHub Pages 部署驗證 ✅ |
-| 2026-05-23 | Night Shift 8 | Vitest 單元測試：安裝 vitest + @testing-library/react + jsdom，建立 vitest.config.ts + test-setup.ts。4 個測試檔 (utils.test.ts 38 tests, price-utils.test.ts 12 tests, sec-converter.test.ts 7 tests, SignalBadge.test.tsx 6 tests)，共 63 tests 全數通過。npm run build ✅。原本的 feat-017 拆分為 feat-017(✅)/feat-018(WCAG)/feat-019(Playwright)。
+| 2026-05-23 | Night Shift 8 | Vitest 單元測試：安裝 vitest + @testing-library/react + jsdom，建立 vitest.config.ts + test-setup.ts。4 個測試檔 (utils.test.ts 38 tests, price-utils.test.ts 12 tests, sec-converter.test.ts 7 tests, SignalBadge.test.tsx 6 tests)，共 63 tests 全數通過。npm run build ✅。原本的 feat-017 拆分為 feat-017(✅)/feat-018(WCAG)/feat-019(Playwright)。 |
+| 2026-05-23 | Night Shift 9 | WCAG 2.1 AA 審計：修復 13 處鍵盤導航 (Cell/R 元件 + DashboardPage 卡片 + FeedPage 遮罩)，8 處 ARIA 標籤/角色 (TopNavBar 6 按鈕 + LoadingFallback + Ticker tape aria-hidden)，1 處載入指示器 (role="status" + aria-live="polite")。npm run build ✅ (1.71s)，npm test ✅ (63/63)。建立 WCAG_AUDIT.md。feat-018 ✅。|

@@ -126,9 +126,9 @@
     {
       "id": "feat-018",
       "name": "WCAG 2.1 無障礙審計",
-      "status": "planned",
+      "status": "completed",
       "priority": "P3",
-      "description": "WCAG 2.1 AA 審計 + 修復 (鍵盤導航、ARIA labels、對比度、螢幕閱讀器)"
+      "description": "WCAG 2.1 AA 審計 + 修復 — 鍵盤導航(13 處) + ARIA labels(8 處) + role='status' + aria-hidden ticker tape"
     },
     {
       "id": "feat-019",

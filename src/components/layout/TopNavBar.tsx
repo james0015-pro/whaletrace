@@ -51,7 +51,7 @@ export function TopNavBar() {
       </div>
 
       {/* Ticker tape */}
-      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }} aria-hidden="true">
         <div style={{
           display: 'flex', gap: 24, padding: '0 12px',
           animation: 'scroll-tape 60s linear infinite', width: 'max-content',
@@ -66,26 +66,31 @@ export function TopNavBar() {
         </div>
       </div>
 
-      {/* Language switch */}
+      {/* Navigation buttons */}
       <button onClick={()=>{window.location.hash='#/dashboard';window.location.reload();}}
+        aria-label="Navigate to Dashboard"
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         DASH
       </button>
       <button onClick={()=>{window.location.hash='#/';window.location.reload();}}
+        aria-label="Navigate to Terminal"
         style={{background:'transparent',border:'1px solid #333',color:!window.location.hash.includes('dashboard')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         TERM
       </button>
       <button onClick={()=>{window.location.hash='#/treemap';window.location.reload();}}
+        aria-label="Navigate to Treemap"
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('treemap')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         TREE
       </button>
       <button onClick={()=>{window.location.hash='#/watchlist';window.location.reload();}}
+        aria-label="Navigate to Watchlist"
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('watchlist')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         ⭐ WATCH
       </button>
 
       {/* Language switch */}
       <button onClick={toggleLang}
+        aria-label={lang.startsWith('zh') ? 'Switch to English' : '切換至繁體中文'}
         style={{
           background: 'transparent', border: '1px solid #333', color: '#888',
           cursor: 'pointer', padding: '2px 8px', fontSize: 10,
@@ -97,6 +102,7 @@ export function TopNavBar() {
 
       {/* Login */}
       <button
+        aria-label="Login (coming soon)"
         style={{
           background: 'transparent', border: '1px solid #333', color: '#888',
           cursor: 'pointer', padding: '2px 8px', fontSize: 10,

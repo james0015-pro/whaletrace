@@ -21,7 +21,13 @@ const S = truncate;
    Reusable components
    ============================================================ */
 function Cell({ w, color, bold, underline, onClick, children }: { w: number; color: string; bold?: boolean; underline?: boolean; onClick?: () => void; children: React.ReactNode }) {
-  return <span onClick={onClick} style={{width:w,color,fontWeight:bold?600:400,cursor:onClick?'pointer':'default',textDecoration:underline?'underline':'none',display:'inline-block',height:ROW_H,lineHeight:`${ROW_H}px`,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',fontFamily:'JetBrains Mono,monospace',fontSize:11,textAlign:'left',padding:'0 3px'}}>{children}</span>;
+  const interactive = !!onClick;
+  return <span
+    onClick={onClick}
+    role={interactive ? 'button' : undefined}
+    tabIndex={interactive ? 0 : undefined}
+    onKeyDown={interactive ? (e: React.KeyboardEvent) => { if (e.key === 'Enter') onClick?.(); } : undefined}
+    style={{width:w,color,fontWeight:bold?600:400,cursor:onClick?'pointer':'default',textDecoration:underline?'underline':'none',display:'inline-block',height:ROW_H,lineHeight:`${ROW_H}px`,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',fontFamily:'JetBrains Mono,monospace',fontSize:11,textAlign:'left',padding:'0 3px'}}>{children}</span>;
 }
 function Row({ children, h }: { children: React.ReactNode; h?: boolean }) {
   return <div style={{display:'flex',alignItems:'center',height:ROW_H,padding:0,fontSize:11,fontFamily:'JetBrains Mono,monospace',background:h?'rgba(255,255,255,0.03)':'transparent',borderBottom:'1px solid rgba(255,255,255,0.04)'}}>{children}</div>;
@@ -30,7 +36,13 @@ function Hdr({ title, detail }: { title: string; detail?: string }) {
   return <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',height:22,padding:'0 8px',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',fontSize:10,fontWeight:700,color:'#ff8c00',letterSpacing:1,textTransform:'uppercase'}}><span>{title}</span>{detail&&<span style={{color:'#555',fontWeight:400,fontSize:9}}>{detail}</span>}</div>;
 }
 function R({ w, c, b, onClick, children }: { w: number; c: string; b?: boolean; onClick?: () => void; children: React.ReactNode }) {
-  return <span onClick={onClick} style={{display:'inline-block',width:w,height:ROW_H,lineHeight:`${ROW_H}px`,color:c,fontWeight:b?600:400,fontSize:11,fontFamily:'JetBrains Mono,monospace',textAlign:'right',padding:'0 3px',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',cursor:onClick?'pointer':'default',textDecoration:onClick?'underline':'none'}}>{children}</span>;
+  const interactive = !!onClick;
+  return <span
+    onClick={onClick}
+    role={interactive ? 'button' : undefined}
+    tabIndex={interactive ? 0 : undefined}
+    onKeyDown={interactive ? (e: React.KeyboardEvent) => { if (e.key === 'Enter') onClick?.(); } : undefined}
+    style={{display:'inline-block',width:w,height:ROW_H,lineHeight:`${ROW_H}px`,color:c,fontWeight:b?600:400,fontSize:11,fontFamily:'JetBrains Mono,monospace',textAlign:'right',padding:'0 3px',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',cursor:onClick?'pointer':'default',textDecoration:onClick?'underline':'none'}}>{children}</span>;
 }
 
 // Column widths for Q1 (total = 512 to fill panel)
@@ -66,7 +78,7 @@ function InsiderProfile({ trade, onClose }: { trade: InsiderTrade; onClose: () =
           <div style={{fontSize:11,color:'#e6e6e6',marginBottom:2}}>{trade.title}</div>
           <div style={{fontSize:11,color:'#888'}}>{trade.ticker} · {trade.company_name}</div>
         </div>
-        <button onClick={onClose} style={{background:'transparent',border:'1px solid #333',color:'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>✕</button>
+        <button onClick={onClose} aria-label="Close profile" style={{background:'transparent',border:'1px solid #333',color:'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>✕</button>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,fontSize:10,marginBottom:12,padding:'8px 0',borderTop:'1px solid #1f1f1f',borderBottom:'1px solid #1f1f1f'}}>
         <div>Total trades: <span style={{color:'#fff'}}>{allByInsider.length}</span></div>
@@ -133,9 +145,17 @@ function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget;
   return (
     <div style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:50,background:'#000',display:'flex',flexDirection:'column'}}>
       <div style={{display:'flex',alignItems:'center',padding:'4px 8px',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',gap:12}}>
-        <button onClick={pop} style={{background:'transparent',border:'1px solid #333',color:'#ff8c00',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>ESC BACK</button>
+        <button onClick={pop}
+          aria-label="Go back (Escape)"
+          style={{background:'transparent',border:'1px solid #333',color:'#ff8c00',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>ESC BACK</button>
         <div style={{display:'flex',gap:4,alignItems:'center',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>
-          {stack.map((t,i) => (<span key={i} style={{display:'flex',gap:4,alignItems:'center'}}>{i>0&&<span style={{color:'#555'}}>&gt;</span>}<span style={{color:i===stack.length-1?'#ff8c00':'#888',fontWeight:i===stack.length-1?700:400,cursor:'pointer'}} onClick={()=>setStack(prev=>prev.slice(0,i+1))}>{t.mode==='ticker'?t.label:t.label}</span></span>))}
+          {stack.map((t,i) => (<span key={i} style={{display:'flex',gap:4,alignItems:'center'}}>{i>0&&<span style={{color:'#555'}}>&gt;</span>}<span
+            role="button"
+            tabIndex={0}
+            aria-label={`Navigate to ${t.mode} ${t.label} layer`}
+            onKeyDown={e=>{if(e.key==='Enter') setStack(prev=>prev.slice(0,i+1))}}
+            onClick={()=>setStack(prev=>prev.slice(0,i+1))}
+            style={{color:i===stack.length-1?'#ff8c00':'#888',fontWeight:i===stack.length-1?700:400,cursor:'pointer'}}>{t.mode==='ticker'?t.label:t.label}</span></span>))}
         </div>
         <span style={{marginLeft:'auto',color:'#555',fontSize:9}}>{rows.length} rows | 🟢{F(tB)} 🔴{F(tS)} | L{stack.length}</span>
       </div>
@@ -285,7 +305,13 @@ export default function FeedPage() {
       {profile && <InsiderProfile trade={profile} onClose={() => setProfile(null)} />}
 
       {/* Backdrop for profile */}
-      {profile && <div onClick={()=>setProfile(null)} style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:55,background:'rgba(0,0,0,0.6)'}} />}
+      {profile && <div
+        role="button"
+        tabIndex={0}
+        aria-label="Close profile overlay"
+        onClick={()=>setProfile(null)}
+        onKeyDown={e=>{if(e.key==='Enter'||e.key==='Escape') setProfile(null)}}
+        style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:55,background:'rgba(0,0,0,0.6)',cursor:'pointer'}} />}
 
       <div style={{display:'flex',alignItems:'center',height:18,padding:'0 8px',fontSize:9,color:'#555',background:'#0a0a0a',borderTop:'1px solid #1f1f1f',gap:12}}>
         <span>🟠 Ticker=stock | 🟠 Insider=history | 🟠 Company/Title=profile | ESC to close</span>

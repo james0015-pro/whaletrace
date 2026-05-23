@@ -201,6 +201,7 @@ export default function StockDetailPage() {
       >
         <button
           onClick={() => navigate(-1)}
+          aria-label="Go back to previous page"
           style={{
             background: 'transparent',
             border: '1px solid #333',
@@ -605,6 +606,7 @@ export default function StockDetailPage() {
                 <button
                   key={t}
                   onClick={() => setTf(t)}
+                  aria-label={`Show ${t} price chart`}
                   style={{
                     background: tf === t ? '#1a1a1a' : 'transparent',
                     border: `1px solid ${tf === t ? '#ff8c00' : '#333'}`,

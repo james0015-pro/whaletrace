@@ -32,7 +32,13 @@ export default function DashboardPage() {
           <h2 style={{fontSize:12,color:'#8b5cf6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>🔮 Whale Resonance Signals</h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))',gap:10}}>
             {SIGS.map(s=>(
-              <div key={s.ticker} onClick={()=>navigate(`/stocks/${s.ticker}`)} style={{
+              <div key={s.ticker}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${s.ticker} stock detail`}
+                onClick={()=>navigate(`/stocks/${s.ticker}`)}
+                onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate(`/stocks/${s.ticker}`)}}
+              style={{
                 padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6',
                 cursor:'pointer',transition:'all 0.15s',
               }} onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.borderColor='#a78bfa';(e.currentTarget as HTMLElement).style.background='#111'}}
@@ -95,7 +101,13 @@ export default function DashboardPage() {
           <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>👤 Latest Insider Trades</h2>
           <div style={{display:'flex',flexDirection:'column',gap:6}}>
             {trades.map(t=>(
-              <div key={t.id} onClick={()=>navigate(`/stocks/${t.ticker}`)} style={{
+              <div key={t.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${t.ticker} stock detail, ${t.insider_name} ${t.transaction_type}`}
+                onClick={()=>navigate(`/stocks/${t.ticker}`)}
+                onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate(`/stocks/${t.ticker}`)}}
+              style={{
                 display:'flex',alignItems:'center',padding:'8px 10px',background:'#0a0a0a',border:'1px solid #1f1f1f',
                 borderLeft:`3px solid ${t.transaction_type==='BUY'?'#0c6':'#f33'}`,
                 cursor:'pointer',fontFamily:'JetBrains Mono,monospace',fontSize:10,

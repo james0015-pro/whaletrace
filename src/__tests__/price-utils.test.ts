@@ -3,6 +3,7 @@ import {
   generatePrices,
   generateConfidenceHistory,
   generatePostTradeReturns,
+  type Timeframe,
 } from '@/lib/price-utils';
 
 // ─── generatePrices ─────────────────────────────────────────────
@@ -13,7 +14,7 @@ describe('generatePrices', () => {
     };
 
     for (const [tf, expectedCount] of Object.entries(tfCounts)) {
-      const result = generatePrices('AAPL', tf as any);
+      const result = generatePrices('AAPL', tf as Timeframe);
       expect(result.prices).toHaveLength(expectedCount);
       expect(result.labels).toHaveLength(expectedCount);
     }
