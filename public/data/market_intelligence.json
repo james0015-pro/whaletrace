@@ -168,5 +168,32 @@
     "highlight": "Hedge funds max out SOXX exposure at all-time high — Michael Burry warns 1999-2000 dot-com deja vu",
     "highlight_color": "#f33",
     "detail": "Benzinga 5/19: Hedge fund semiconductor ETF (SOXX) allocation hits record levels — institutional investors going all-in on AI chips at peak valuations. Michael Burry (The Big Short) draws direct parallel to 1999-2000 dot-com bubble pattern (CNBC 5/8 interview): 'AI is real, but the valuation is 1999.' SOX index at elevated levels despite NVDA rotation. Combined with Morningstar dot-com parallel and HBR overinvestment warnings, concentration risk is historically extreme"
+  },
+  {
+    "id": 20,
+    "title": "NVDA $58.3B Net Profit",
+    "source": "2026-05-23 WSJ / Reuters",
+    "border_color": "#0c6",
+    "highlight": "Q1 FY2027 net profit $58.3B (+211% YoY) — WSJ: 'at $5T still underappreciated', $60B Networking biz to surpass Broadcom, $200B CPU TAM incl. China",
+    "highlight_color": "#0c6",
+    "detail": "NVDA Q1 FY2027 net profit hit $58.3B (+211% YoY), the strongest earnings in semiconductor history — yet stock continued to fall. WSJ 5/23: 'At $5T market cap, Nvidia is still underappreciated.' Three new growth curves: ①Networking business ($60B run-rate) set to surpass Broadcom as #1 data center networking vendor — NVDA now competes with its own customers ②$200B CPU TAM opportunity including China market (Reuters 5/23) — Jensen positions Vera CPU as x86 replacement ③Sovereign AI & Enterprise AI factories — governments and Fortune 500 building dedicated NVDA AI infrastructure. Market may be mispricing the shift from GPU vendor to full-stack AI infrastructure platform"
+  },
+  {
+    "id": 21,
+    "title": "MSFT/GitHub AI Loss",
+    "source": "2026-05-22 Fortune / CNBC / The Information",
+    "border_color": "#f33",
+    "highlight": "Fortune: 'Microsoft Lost Its Way in AI Race' — CNBC: 'GitHub outages got in the way' — The Information: 'Executives Sound Alarm'",
+    "highlight_color": "#f33",
+    "detail": "Three top-tier media outlets simultaneously criticize Microsoft's AI leadership erosion. Fortune 5/22: internal reorganization chaos, talent exodus to OpenAI/Anthropic, Azure AI growth slowing vs AWS/GCP. CNBC: repeated GitHub outages disrupted developer workflows — Copilot reliability issues eroding trust. The Information: senior executives privately sounding alarm on competitive positioning. MSFT's $13B OpenAI investment faces diminishing returns as enterprises shift to multi-model strategies (Anthropic Claude + Google Gemini). Stock implications: MSFT faces risk of AI premium de-rating if Q2 cloud numbers disappoint"
+  },
+  {
+    "id": 22,
+    "title": "Gemini Omni + Agentic Search",
+    "source": "2026-05-23 NYT / Google I/O",
+    "border_color": "#8b5cf6",
+    "highlight": "Google Gemini Omni (5/19) + agentic search overhaul (5/23 TODAY) — first search box redesign in 25 years under AI-first paradigm",
+    "highlight_color": "#8b5cf6",
+    "detail": "NYT 5/20: Google's agentic search represents the most radical search engine redesign since 1998 — AI agents autonomously browse, compare, and synthesize results before presenting answers. Gemini Omni (launched 5/19) adds multimodal reasoning (text+image+audio+video) and real-time web grounding. Google positioning Gemini as the 'AI operating system' for search, cloud, and enterprise — directly challenging MSFT/OpenAI's Copilot dominance. GOOGL stock implications: search moat reinforcement could reverse recent AI-market-share-loss narrative"
   }
 ]
