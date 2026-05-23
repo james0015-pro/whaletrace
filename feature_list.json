@@ -133,9 +133,9 @@
     {
       "id": "feat-019",
       "name": "Playwright E2E Smoke Tests",
-      "status": "planned",
+      "status": "completed",
       "priority": "P3",
-      "description": "Playwright 端到端 smoke tests — 頁面載入、路由導航、資料渲染"
+      "description": "Playwright 端到端 smoke tests — 15 tests (8 routes, navigation, stock detail, interactions), all pass"
     }
   ]
 }

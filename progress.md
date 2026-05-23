@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 8: 市場情報內容擴充 v2 — 更新 Big Tech AI Capex (id 7) + 新增 5 張卡片 (Fed Hawks/China Chip Flop/Tesla FSD/Gates Exits/TI Power Chips) → 27 張 → npm run build ✅ → 部署 GitHub Pages
+**2026-05-23** — Night Shift 10: Playwright E2E Smoke Tests — 15 tests covering all 8 routes, page load, routing navigation, stock detail, interactions. All 15/15 pass + 63/63 unit tests. npm run build ✅.
 
 ## 專案狀態
 
@@ -17,6 +17,8 @@
 | 部署 | ✅ 就緒 | GitHub Pages (gh-pages branch) |
 | 認證 | ⬜ 未實作 | Phase 4 需要 Supabase |
 | 關注清單 (後端) | ⬜ 未實作 | 有 localStorage 前端版，無後端持久化 |
+| 測試 (Vitest) | ✅ 63 tests | utils + price-utils + sec-converter + SignalBadge |
+| 測試 (E2E) | ✅ 15 tests | Playwright smoke tests — 8 routes, navigation, interactions |
 | 效能 | ✅ code-split | React.lazy 8 page chunks，initial load 326KB main + 20KB page |
 | 數據刷新 | ✅ 自動化 | refresh_and_deploy.sh 一鍵爬取→複製→建置→部署 + hermes cron 排程 (每日 06/18 UTC) |
 
@@ -43,13 +45,13 @@
 - [x] 市場情報擴充 — 17 張卡片（去重 Broadcom ASIC + NVDA $200B/Lenovo AI Surge/SpaceX IPO）
 - [x] feat-017 Vitest 單元測試 — 63 tests (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)
 - [x] feat-018 WCAG 2.1 AA 無障礙審計 — 鍵盤導航 + ARIA 標籤/角色 + 載入指示器 + 跑馬燈 aria-hidden (WCAG_AUDIT.md)
+- [x] feat-019 Playwright E2E Smoke Tests — 15 tests (8 routes + navigation + interactions), playwright.config.ts, scripts/run-e2e.sh, all 15/15 pass
 
 ## 下一步 (優先順序)
 
-1. **Playwright E2E Smoke Tests (feat-019)** — 頁面載入、路由導航、資料渲染
-2. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化 (需要 Supabase API keys)
+1. **Phase 4: 認證系統 (feat-011)** — Supabase auth + 後端 watchlist 持久化 (需要 Supabase API keys，夜班無法自主處理)
+2. **機構 13F 季度真實資料 (feat-013)** — 等 SEC 13F 季度週期替換 mock 資料
 3. **市場情報內容更新** — 後續透過 script 自動更新 market_intelligence.json
-4. **機構 13F 季度真實資料** — 等 SEC 13F 季度週期替換 mock 資料
 
 ## Session Log
 
@@ -64,4 +66,5 @@
 | 2026-05-23 | Night Shift 6 | 數據刷新自動化：重新執行 night_shift_scrape.py (Finviz 20/20 + SEC EDGAR 259 trades + yfinance 190 holdings) → 複製 data/ → public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (所有 data JSON 200 OK)。建立 scripts/refresh_and_deploy.sh 一鍵管線腳本（爬取→複製→建置→部署→觸發 Pages rebuild）。 |
 | 2026-05-23 | Night Shift 7 | Cron 自動化 + 市場情報擴充：建立 hermes cron job (job_id: 1ce55d9a7f42, 每日 06/18 UTC 自動執行 refresh_and_deploy.sh)。market_intelligence.json → 17 張卡片：去重 Broadcom ASIC (合併 #2 + #8) + 新增 3 張 (NVDA $200B Oppty, SpaceX/OpenAI IPO, Lenovo AI Surge) based on CNBC 即時頭條。npm run build ✅ → GitHub Pages 部署驗證 ✅ |
 | 2026-05-23 | Night Shift 8 | Vitest 單元測試：安裝 vitest + @testing-library/react + jsdom，建立 vitest.config.ts + test-setup.ts。4 個測試檔 (utils.test.ts 38 tests, price-utils.test.ts 12 tests, sec-converter.test.ts 7 tests, SignalBadge.test.tsx 6 tests)，共 63 tests 全數通過。npm run build ✅。原本的 feat-017 拆分為 feat-017(✅)/feat-018(WCAG)/feat-019(Playwright)。 |
+| 2026-05-23 | Night Shift 10 | feat-019 Playwright E2E Smoke Tests: npm install -D @playwright/test, playwright.config.ts (chromium headless shell), e2e/smoke.spec.ts (15 tests: App Shell 2, FeedPage 1, Dashboard 2, StockDetail 3, Watchlist 1, Treemap 1, Navigation 3, Interactions 2), scripts/run-e2e.sh runner, vitest.config.ts exclude e2e/. All 15/15 pass + 63/63 unit tests. npm run build ✅. |
 | 2026-05-23 | Night Shift 9 | WCAG 2.1 AA 審計：修復 13 處鍵盤導航 (Cell/R 元件 + DashboardPage 卡片 + FeedPage 遮罩)，8 處 ARIA 標籤/角色 (TopNavBar 6 按鈕 + LoadingFallback + Ticker tape aria-hidden)，1 處載入指示器 (role="status" + aria-live="polite")。npm run build ✅ (1.71s)，npm test ✅ (63/63)。建立 WCAG_AUDIT.md。feat-018 ✅。|
