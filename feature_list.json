@@ -1,7 +1,7 @@
 {
   "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
   "project": "WhaleTrace — 鯨魚共振訊號雷達",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "last_updated": "2026-05-23",
   "features": [
     {
@@ -118,10 +118,24 @@
     },
     {
       "id": "feat-017",
-      "name": "無障礙與測試 (WCAG + Vitest + Playwright)",
+      "name": "Vitest 單元測試",
+      "status": "completed",
+      "priority": "P3",
+      "description": "Vitest + @testing-library/react 設定 + 63 個測試 (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)"
+    },
+    {
+      "id": "feat-018",
+      "name": "WCAG 2.1 無障礙審計",
       "status": "planned",
       "priority": "P3",
-      "description": "WCAG 2.1 audit + Vitest 單元測試 + Playwright E2E smoke tests"
+      "description": "WCAG 2.1 AA 審計 + 修復 (鍵盤導航、ARIA labels、對比度、螢幕閱讀器)"
+    },
+    {
+      "id": "feat-019",
+      "name": "Playwright E2E Smoke Tests",
+      "status": "planned",
+      "priority": "P3",
+      "description": "Playwright 端到端 smoke tests — 頁面載入、路由導航、資料渲染"
     }
   ]
 }

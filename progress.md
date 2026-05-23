@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 7: Cron 自動化 + 市場情報擴充 — 建立 hermes cron job (每日 06/18 UTC 執行 refresh_and_deploy.sh) + market_intelligence.json 擴充至 17 張卡片（去重 Broadcom ASIC + 新增 NVDA $200B/Lenovo AI Surge/SpaceX IPO 信號）
+**2026-05-23** — Night Shift 8: Vitest 單元測試 — 設定 Vitest + @testing-library/react + jsdom，建立 4 個測試檔共 63 個測試 (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)，npm run build ✅，npm test ✅ (全部通過)。feat-017 拆分為三：單元測試(✅) / WCAG(⬜) / Playwright(⬜)。
 
 ## 專案狀態
 
@@ -41,6 +41,7 @@
 - [x] 市場情報卡片外部化 — market_intelligence.json + MarketIntelligenceCard 元件
 - [x] 數據刷新 Cron 排程 — hermes cron job 每日 06/18 UTC 自動執行 refresh_and_deploy.sh
 - [x] 市場情報擴充 — 17 張卡片（去重 Broadcom ASIC + NVDA $200B/Lenovo AI Surge/SpaceX IPO）
+- [x] feat-017 Vitest 單元測試 — 63 tests (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)
 
 ## 下一步 (優先順序)
 
@@ -60,3 +61,4 @@
 | 2026-05-23 | Night Shift 5 | 市場情報卡片外部化：從 DashboardPage.tsx 提取 10 張硬編碼卡片 → public/data/market_intelligence.json + MarketIntelligenceCard 元件 + MarketIntelligenceItem type。DashboardPage 從 226 行縮減至 118 行（-48%）。npm run build ✅，資料確認內嵌於 DashboardPage chunk。後續 script 可直接更新 JSON。 |
 | 2026-05-23 | Night Shift 6 | 數據刷新自動化：重新執行 night_shift_scrape.py (Finviz 20/20 + SEC EDGAR 259 trades + yfinance 190 holdings) → 複製 data/ → public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (所有 data JSON 200 OK)。建立 scripts/refresh_and_deploy.sh 一鍵管線腳本（爬取→複製→建置→部署→觸發 Pages rebuild）。 |
 | 2026-05-23 | Night Shift 7 | Cron 自動化 + 市場情報擴充：建立 hermes cron job (job_id: 1ce55d9a7f42, 每日 06/18 UTC 自動執行 refresh_and_deploy.sh)。market_intelligence.json → 17 張卡片：去重 Broadcom ASIC (合併 #2 + #8) + 新增 3 張 (NVDA $200B Oppty, SpaceX/OpenAI IPO, Lenovo AI Surge) based on CNBC 即時頭條。npm run build ✅ → GitHub Pages 部署驗證 ✅ |
+| 2026-05-23 | Night Shift 8 | Vitest 單元測試：安裝 vitest + @testing-library/react + jsdom，建立 vitest.config.ts + test-setup.ts。4 個測試檔 (utils.test.ts 38 tests, price-utils.test.ts 12 tests, sec-converter.test.ts 7 tests, SignalBadge.test.tsx 6 tests)，共 63 tests 全數通過。npm run build ✅。原本的 feat-017 拆分為 feat-017(✅)/feat-018(WCAG)/feat-019(Playwright)。
