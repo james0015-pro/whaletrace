@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 5: 市場情報卡片外部化 — 從 DashboardPage 硬編碼提取為 JSON 資料檔 + React 元件
+**2026-05-23** — Night Shift 6: 數據刷新自動化 — 重新爬取 Finviz(20/20) + SEC EDGAR(259 trades) + yfinance(190 holdings) → 部署至 GitHub Pages → 建立一鍵 refresh_and_deploy.sh
 
 ## 專案狀態
 
@@ -18,7 +18,7 @@
 | 認證 | ⬜ 未實作 | Phase 4 需要 Supabase |
 | 關注清單 (後端) | ⬜ 未實作 | 有 localStorage 前端版，無後端持久化 |
 | 效能 | ✅ code-split | React.lazy 8 page chunks，initial load 326KB main + 20KB page |
-| 市場情報 | ✅ 資料驅動 | JSON → MarketIntelligenceCard — 可透過 script 更新內容 |
+| 數據刷新 | ✅ 自動化 | refresh_and_deploy.sh 一鍵爬取→複製→建置→部署 + 本班手動執行驗證 |
 
 ## 已完成功能
 
@@ -42,9 +42,10 @@
 
 ## 下一步 (優先順序)
 
-1. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化
-2. **數據刷新自動化** — 定時 SEC/Finviz 爬蟲 + 自動部署
-3. **無障礙與測試** — WCAG 2.1 + Vitest + Playwright smoke tests
+1. **Phase 4: 認證系統** — Supabase auth + 後端 watchlist 持久化 (需要 Supabase API keys)
+2. **無障礙與測試** — WCAG 2.1 + Vitest + Playwright smoke tests
+3. **cron 排程自動化** — 用 hermes cron 定期執行 refresh_and_deploy.sh
+4. **市場情報內容擴充** — 更新 market_intelligence.json 中的卡片內容
 
 ## Session Log
 
@@ -55,3 +56,4 @@
 | 2026-05-22 | Night Shift 3 | feat-014 效能優化：App.tsx 所有 page imports 改 React.lazy → 8 個獨立 page chunks，主 bundle 326KB (↓12% initial load)，首次載入只下載 FeedPage chunk (20KB)，後續導航按需載入 |
 | 2026-05-22 | Night Shift 4 | 數據刷新自動化：執行 whaletrace_scraper.py quick mode (Finviz + yfinance) → 20 檔快照 + 200 筆機構持股；執行 SEC EDGAR 爬蟲 (零依賴 urllib+re) → 334 筆真實 Form 4 內部人交易 (BUY:108 / SELL:226)，日期範圍 2025-11-11 ~ 2026-05-21，涵蓋 25 檔美股。資料複製到 public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (334 trades on live site) |
 | 2026-05-23 | Night Shift 5 | 市場情報卡片外部化：從 DashboardPage.tsx 提取 10 張硬編碼卡片 → public/data/market_intelligence.json + MarketIntelligenceCard 元件 + MarketIntelligenceItem type。DashboardPage 從 226 行縮減至 118 行（-48%）。npm run build ✅，資料確認內嵌於 DashboardPage chunk。後續 script 可直接更新 JSON。 |
+| 2026-05-23 | Night Shift 6 | 數據刷新自動化：重新執行 night_shift_scrape.py (Finviz 20/20 + SEC EDGAR 259 trades + yfinance 190 holdings) → 複製 data/ → public/data/ → npm run build ✅ → GitHub Pages 部署驗證 ✅ (所有 data JSON 200 OK)。建立 scripts/refresh_and_deploy.sh 一鍵管線腳本（爬取→複製→建置→部署→觸發 Pages rebuild）。下一步可設定 hermes cron 排程定時執行。 |
