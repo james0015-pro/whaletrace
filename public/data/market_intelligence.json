@@ -2,11 +2,11 @@
   {
     "id": 1,
     "title": "NVDA",
-    "source": "2026-05-23 Barron's",
+    "source": "2026-05-23 Barron's / Yahoo Finance",
     "border_color": "#f33",
     "highlight": "5 consecutive earnings beats — stock fell after ALL of them. Barron's: \"Nvidia Shares Have Fallen After Four Straight Earnings Beats\"",
     "highlight_color": "#f33",
-    "detail": "Q1 FY2027 revenue $81.6B (+85%) record — yet -5% post-earnings. TechNews: \"Market questions AI investment sustainability\" — AI valuation ceiling signal strengthens. Jensen admits China market lost to Huawei. NVDA $5.5T market cap at risk of mean reversion as hyperscalers build custom silicon (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic)"
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) record — yet -5% post-earnings. Yahoo Finance 5/22: \"Chip stocks hit records but NVDA isn't the driver\" — AI rotation from NVDA to Intel/AMD/Navitas/Broadcom. TechNews: \"Market questions AI investment sustainability\" — AI valuation ceiling signal strengthens. Jensen admits China market lost to Huawei. NVDA $5.5T market cap at risk of mean reversion as hyperscalers build custom silicon (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic)"
   },
   {
     "id": 2,
@@ -150,5 +150,23 @@
     "highlight": "Lenovo +20% on record earnings — AI server revenue nearly doubles YoY",
     "highlight_color": "#0c6",
     "detail": "Lenovo shares jumped nearly 20% after reporting record earnings driven by AI infrastructure demand. AI server revenue nearly doubled YoY — signals enterprise AI adoption accelerating beyond hyperscalers. Dell, HPE, Super Micro also benefiting. AI infrastructure buildout entering Phase 2: enterprise deployment at scale"
+  },
+  {
+    "id": 18,
+    "title": "SpaceX $1.5T IPO",
+    "source": "2026-05-20 SEC Filing",
+    "border_color": "#ff8c00",
+    "highlight": "SpaceX files for $1.5T IPO — largest IPO in history: $1.29B BTC on balance sheet, Musk retains control, xAI losses disclosed",
+    "highlight_color": "#ff8c00",
+    "detail": "S-1 filing reveals SpaceX valued at $1.5T (vs $350B prior private round). Key disclosures: $1.29B Bitcoin on balance sheet, Musk retains absolute voting control via dual-class shares, xAI subsidiary reported losses, Anthropic AI partnership for Starlink optimization. TSLA holds 19M SpaceX shares (~$28B value). IPO could reshape US capital markets — analysts compare to Saudi Aramco $1.9T 2019 listing but with far broader retail investor access. Starlink revenue $12.4B (2025) growing 58% YoY"
+  },
+  {
+    "id": 19,
+    "title": "Hedge Fund AI All-In",
+    "source": "2026-05-19 Benzinga / CNBC",
+    "border_color": "#f33",
+    "highlight": "Hedge funds max out SOXX exposure at all-time high — Michael Burry warns 1999-2000 dot-com deja vu",
+    "highlight_color": "#f33",
+    "detail": "Benzinga 5/19: Hedge fund semiconductor ETF (SOXX) allocation hits record levels — institutional investors going all-in on AI chips at peak valuations. Michael Burry (The Big Short) draws direct parallel to 1999-2000 dot-com bubble pattern (CNBC 5/8 interview): 'AI is real, but the valuation is 1999.' SOX index at elevated levels despite NVDA rotation. Combined with Morningstar dot-com parallel and HBR overinvestment warnings, concentration risk is historically extreme"
   }
 ]
