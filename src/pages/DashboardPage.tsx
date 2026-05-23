@@ -159,6 +159,39 @@ export default function DashboardPage() {
                 <div style={{color:'#888',fontSize:8}}>MSFT/GOOGL/META/AMZN combined AI infrastructure spend dwarfs NVDA GPU revenue. Hyperscalers building custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency</div>
               </div>
             </div>
+            {/* Broadcom ASIC */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #ff8c00',borderLeft:'3px solid #ff8c00'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#ff8c00'}}>Broadcom ASIC</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#ff8c00',fontWeight:600}}>6 major AI customers locked — $100B 2027 revenue target</div>
+                <div style={{color:'#888',fontSize:8}}>Google TPU, Meta MTIA, Anthropic custom chips all via Broadcom ASIC. NVDA GPU dominance under structural threat as hyperscalers diversify to custom silicon</div>
+              </div>
+            </div>
+            {/* TSLA SpaceX IPO */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #0c6',borderLeft:'3px solid #0c6'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#0c6'}}>TSLA / SpaceX IPO</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-22</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#0c6',fontWeight:600}}>TSLA abandons India factory — SpaceX IPO incoming (TSLA holds 19M shares)</div>
+                <div style={{color:'#888',fontSize:8}}>Paul Tudor Jones 9x stake increase signals conviction. SpaceX IPO could unlock $10B+ for TSLA balance sheet. India pivot suggests margin focus</div>
+              </div>
+            </div>
+            {/* Google I/O 2026 */}
+            <div style={{padding:12,background:'#0a0a0a',border:'1px solid #8b5cf6',borderLeft:'3px solid #8b5cf6'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                <span style={{fontSize:12,fontWeight:700,color:'#8b5cf6'}}>Google I/O 2026</span>
+                <span style={{fontSize:9,color:'#555'}}>2026-05-20</span>
+              </div>
+              <div style={{fontSize:9,color:'#e6e6e6',lineHeight:1.8}}>
+                <div style={{color:'#8b5cf6',fontWeight:600}}>100 announcements — Gemini 3.5 Flash, Antigravity 2.0, OpenClaw agentic coding</div>
+                <div style={{color:'#888',fontSize:8}}>Agentic AI era officially here: autonomous agents that can code, browse, and execute tasks independently. GOOGL positioning as AI platform leader beyond search</div>
+              </div>
+            </div>
           </div>
         </div>
 
