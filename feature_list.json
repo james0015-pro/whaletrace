@@ -101,6 +101,27 @@
       "status": "completed",
       "priority": "P3",
       "description": "React.lazy → 按頁面分割 bundle → 主 bundle 326KB + 8 個 page chunks (0.8-20KB each)"
+    },
+    {
+      "id": "feat-015",
+      "name": "Cron 排程自動化 (數據刷新)",
+      "status": "completed",
+      "priority": "P1",
+      "description": "hermes cron job 每日 06/18 UTC 自動執行 refresh_and_deploy.sh (爬蟲→建置→部署)"
+    },
+    {
+      "id": "feat-016",
+      "name": "市場情報卡片擴充至 17 張",
+      "status": "completed",
+      "priority": "P2",
+      "description": "market_intelligence.json 17 張卡片：去重 Broadcom ASIC + 新增 NVDA $200B/Lenovo AI Surge/SpaceX IPO (CNBC 即時頭條)"
+    },
+    {
+      "id": "feat-017",
+      "name": "無障礙與測試 (WCAG + Vitest + Playwright)",
+      "status": "planned",
+      "priority": "P3",
+      "description": "WCAG 2.1 audit + Vitest 單元測試 + Playwright E2E smoke tests"
     }
   ]
 }
