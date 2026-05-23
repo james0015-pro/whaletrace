@@ -1,6 +1,6 @@
 {
   "source": "Finviz",
-  "scraped_at": "2026-05-23T04:03:16.015816+00:00",
+  "scraped_at": "2026-05-23T18:01:14.655013+00:00",
   "tickers_scraped": 20,
   "tickers_successful": 20,
   "tickers_failed": 0,
@@ -44,7 +44,7 @@
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
-      "market_cap": 4617520000000.0,
+      "market_cap": 4620520000000.0,
       "shares_outstanding": 5820000000.0,
       "shares_float": 5800000000.0,
       "ticker": "GOOGL"
