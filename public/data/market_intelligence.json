@@ -104,5 +104,32 @@
     "highlight": "Akamai leads S&P 500 on reported Anthropic AI edge computing deal",
     "highlight_color": "#8b5cf6",
     "detail": "AI inference at the edge — Akamai's CDN infrastructure (4,100+ PoPs globally) repurposed for low-latency AI model serving. Anthropic partnership positions Akamai as AI infrastructure play beyond traditional CDN. Edge AI market projected $27B by 2030 — Akamai + Cloudflare + Fastly competing for LLM inference workloads at the edge"
+  },
+  {
+    "id": 13,
+    "title": "DJIA 50,000",
+    "source": "2026-05-23",
+    "border_color": "#0c6",
+    "highlight": "Dow Jones breaches 50,000 for first time — AI rotation in full swing: NVDA down vs TSLA/AAPL/DELL/QCOM rally",
+    "highlight_color": "#0c6",
+    "detail": "Historic milestone signals broad market strength beyond mega-cap tech. AI trade rotation accelerates: investors shift from concentrated NVDA bet to diversified AI beneficiaries. TSLA/AAPL benefit from AI-at-the-edge narrative, DELL/QCOM from enterprise AI infrastructure buildout"
+  },
+  {
+    "id": 14,
+    "title": "COMPUTEX Vera CPU",
+    "source": "2026-05-22 Wccftech",
+    "border_color": "#ff8c00",
+    "highlight": "NVIDIA Vera CPU: 1.5x x86 performance — NVDA formally enters CPU market vs Intel/AMD",
+    "highlight_color": "#ff8c00",
+    "detail": "COMPUTEX 2026: NVDA unveils Vera, first ARM-based data center CPU claiming 1.5x performance over x86 rivals. Marks NVDA's entry into $80B server CPU market — direct challenge to Intel Xeon/AMD EPYC duopoly. Combined with Grace superchip, NVDA building fully integrated AI infrastructure stack (GPU+CPU+DPU)"
+  },
+  {
+    "id": 15,
+    "title": "BlackBerry Auto AI",
+    "source": "2026-05-23",
+    "border_color": "#8b5cf6",
+    "highlight": "BlackBerry +18% — emerges as automotive AI dark horse in AI rotation narrative",
+    "highlight_color": "#8b5cf6",
+    "detail": "BlackBerry (BB) surges 18% on automotive AI momentum — QNX/Ivy platform positioned as vehicle AI middleware standard. Joins TSLA/DELL/QCOM in broad AI rotation beyond NVDA. 250M+ vehicles running QNX globally, Ivy platform enables real-time vehicle data AI processing"
   }
 ]
