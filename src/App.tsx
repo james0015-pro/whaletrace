@@ -14,6 +14,7 @@ const InstitutionsPage = lazy(() => import('@/pages/InstitutionsPage'));
 const StockDetailPage = lazy(() => import('@/pages/StockDetailPage'));
 const TreemapPage = lazy(() => import('@/pages/TreemapPage'));
 const HeatmapPage = lazy(() => import('@/pages/HeatmapPage'));
+const ScreenerPage = lazy(() => import('@/pages/ScreenerPage'));
 const WatchlistPage = lazy(() => import('@/pages/WatchlistPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
@@ -52,6 +53,7 @@ export default function App() {
                   <Route path="/stocks/:ticker" element={<StockDetailPage />} />
                   <Route path="/treemap" element={<TreemapPage />} />
                   <Route path="/heatmap" element={<HeatmapPage />} />
+                  <Route path="/screener" element={<ScreenerPage />} />
                   <Route path="/watchlist" element={<WatchlistPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                 </Routes>

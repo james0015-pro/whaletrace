@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-24** — Night Shift 13: Bloomberg Heatmap Page (feat-021) — colored tile grid with 3 modes
+**2026-05-24** — Night Shift 14: Finviz-Style Bloomberg Screener Page (feat-022) — sortable 12-column table with filter/search
 
 ## 專案狀態
 
@@ -48,6 +48,7 @@
 - [x] feat-019 Playwright E2E Smoke Tests — 15 tests (8 routes + navigation + interactions), playwright.config.ts, scripts/run-e2e.sh, all 15/15 pass
 - [x] feat-020 市場情報擴充 v3 — 33 張卡片：+3 (NVDA $80B Buyback, Anthropic x MSFT AI Chip Deal, Growth→Value Rotation Signal) based on 2026-05-24 Google News headlines
 - [x] feat-021 熱度圖頁面 — Bloomberg 終端機風格彩色磚塊網格 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 44-120px，hover 提示框 + 色彩圖例，導航按鈕 (TERM/OVR/TREE/WATCH)
+- [x] feat-022 Finviz-Style Bloomberg Screener — sortable 12-column table (TICKER/COMPANY/PRICE/MKT CAP/P/E/RS/INST%/INS%/SIGNAL/B/S/NET)，5 種篩選模式 (ALL/BUY/SELL/S≥50/S≥70)，ticker 搜尋 + 點擊排序 + 箭頭指示器，20 tickers 資料來自 stock_snapshots.json + sec_insider_trades.json。59KB page chunk (10KB gzipped)。
 
 ## 下一步 (優先順序)
 
@@ -73,3 +74,4 @@
 | 2026-05-24 | Night Shift 11 | **SEC 爬蟲修復 + 資料刷新**: 上次 cron 執行 night_shift_scrape.py 命中 SEC rate limit (0.3s delay)，sec_insider_trades.json = 0 trades。修復：(1) 建立 sec_incremental_scrape.py (逐檔存檔 + 3.0s delay + 429 自動 90s backoff retry)，(2) 降低 filings/ticker 5→3 避免超時。**成果**: 149 real SEC Form 4 trades (44 buys, 75 sells) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-21。yfinance 190 筆機構持股 (19/20 tickers, BRK.B = none)。npm run build ✅ (2.25s) → GitHub Pages 部署 + rebuild trigger 201。night_shift_scrape.py 也修復：sleep 0.3s→2.0s + 429 retry。|
 | 2026-05-24 | Night Shift 12 | **市場情報擴充 v3**: 搜尋 Google News RSS 取得 2026-05-24 最新金融頭條。新增 3 張卡片：(1) NVDA $80B Buyback — Motley Fool/Yahoo Finance 報導 NVDA 董事會授權額外 $80B 回購，總額 ~$115B 科技史上最大，Yahoo 比擬 Apple 2013 年回購模式 (2) Anthropic x MSFT Chips — CNBC/Reuters 報導 Anthropic 洽談使用 Microsoft Athena 客製化 AI 晶片，對沖「MSFT 輸掉 AI 競賽」敘事 (3) Growth→Value Rotation — Morningstar/Goldman Sachs 同步發出戰術性成長→價值輪動訊號。market_intelligence.json 30→33 張卡片。npm run build ✅ (1.72s) + 63/63 tests ✅ → GitHub Pages 部署驗證 ✅ (DashboardPage-20WhfzB1.js 確認含 3 張新卡片)。 |
 | 2026-05-24 | Night Shift 13 | **feat-021: Bloomberg Heatmap 頁面**: 建立 src/pages/HeatmapPage.tsx — Bloomberg 終端機風格彩色磚塊網格。3 種模式切換 (SIGNAL 信心分數 / NET_FLOW 淨流向 / VOLUME 交易量)，可調磚塊大小 (44-120px range slider)，hover scale(1.08) + 提示框 (買/賣/淨值)，色彩圖例 (綠→黃→紅)，點擊導航至 /stocks/:ticker。新增 route (/heatmap) + TopNavBar 導航按鈕 (HEAT) + lazy load chunk。npm run build ✅ (HeatmapPage-BIvIc1cC.js 8.37KB gzipped 2.90KB) + 63/63 tests ✅。feature_list.json v3.2.0→v3.3.0。 |
+| 2026-05-24 | Night Shift 14 | **feat-022: Finviz-Style Bloomberg Screener 頁面**: 建立 src/pages/ScreenerPage.tsx — Bloomberg 終端機風格的 Finviz 篩選器。12 欄位可排序表格 (TICKER/COMPANY/PRICE/MKT CAP/P/E/RS(14)/INST%/INS%/SIGNAL/BUYS/SELLS/NET)，5 種篩選按鈕 (ALL/BUY/SELL/S≥50/S≥70)，ticker 搜尋欄，點擊欄標題切換排序 (asc↔desc)，箭頭指示器 ▴/▾，R/HCol 原始元件。資料來源：stock_snapshots.json (20 檔基本面) + sec_insider_trades.json (127 筆內部人交易)。新增 route (/screener) + lazy chunk (ScreenerPage-DhqQyvx7.js 59KB gzipped 10.22KB) + TopNavBar SCRN 按鈕。npm run build ✅ (2.35s) + 63/63 tests ✅。feature_list.json v3.3.0→v3.4.0。 |

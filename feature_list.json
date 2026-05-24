@@ -1,7 +1,7 @@
 {
   "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
   "project": "WhaleTrace — 鯨魚共振訊號雷達",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "last_updated": "2026-05-24",
   "features": [
     {
@@ -150,6 +150,13 @@
       "status": "completed",
       "priority": "P1",
       "description": "/heatmap — Bloomberg 終端機風格彩色磚塊網格，3 模式 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 (44-120px)，hover 提示框，色彩圖例，點擊導航至股票詳情"
+    },
+    {
+      "id": "feat-022",
+      "name": "Finviz-Style Bloomberg Screener 篩選器頁面",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/screener — Bloomberg 終端機風格 Finviz 篩選器，12 欄位可排序表格 (TICK/COMPANY/PRICE/MKT CAP/P/E/RS(14)/INST%/INS%/SIGNAL/B/S/NET)，5 種篩選 + ticker 搜尋，資料來自 stock_snapshots.json + sec_insider_trades.json"
     }
   ]
 }
