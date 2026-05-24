@@ -110,6 +110,7 @@ def fetch_earnings_data(buy_tickers, lookback_years=10):
                 continue
             
             cutoff = datetime.now() - timedelta(days=lookback_years * 365)
+            today = datetime.now()
             ticker_data = {}
             
             for dt, row in earnings.iterrows():
@@ -117,7 +118,7 @@ def fetch_earnings_data(buy_tickers, lookback_years=10):
                     dt = dt.to_pydatetime()
                 if dt.tzinfo:
                     dt = dt.replace(tzinfo=None)
-                if dt < cutoff:
+                if dt < cutoff or dt > today:  # 跳過未來日期
                     continue
                 
                 date_str = dt.strftime('%Y-%m-%d')
