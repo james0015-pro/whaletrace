@@ -233,5 +233,30 @@
   "language": {
     "switch": "中 / EN",
     "label": "語言"
+  },
+  "dashboard": {
+    "title": "🐋 WHALETRACE 儀表板",
+    "subtitle": "鯨魚共振訊號 · 機構金流 · 內部人交易",
+    "whaleResonance": "🔮 鯨魚共振訊號",
+    "institutionOrders": "🏦 今日機構大單",
+    "marketIntel": "📡 市場情報",
+    "insiderTrades": "👤 最新內部人交易",
+    "columns": {
+      "institution": "機構",
+      "ticker": "代號",
+      "amount": "金額",
+      "company": "公司",
+      "change": "變動",
+      "date": "日期",
+      "insider": "內部人",
+      "title": "職位",
+      "dir": "方向",
+      "shares": "股數",
+      "price": "價格",
+      "value": "價值"
+    },
+    "insidersBuying": "位內部人買入",
+    "institutions": "家機構",
+    "signalStrength": "訊號強度"
   }
 }

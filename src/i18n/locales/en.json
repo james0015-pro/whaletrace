@@ -127,5 +127,30 @@
   "language": {
     "switch": "中 / EN",
     "label": "Language"
+  },
+  "dashboard": {
+    "title": "🐋 WHALETRACE DASHBOARD",
+    "subtitle": "Whale Resonance Signals · Institution Flow · Insider Trades",
+    "whaleResonance": "🔮 Whale Resonance Signals",
+    "institutionOrders": "🏦 Today's Institution Orders",
+    "marketIntel": "📡 Market Intelligence",
+    "insiderTrades": "👤 Latest Insider Trades",
+    "columns": {
+      "institution": "INSTITUTION",
+      "ticker": "TICKER",
+      "amount": "AMOUNT",
+      "company": "COMPANY",
+      "change": "CHANGE",
+      "date": "DATE",
+      "insider": "INSIDER",
+      "title": "TITLE",
+      "dir": "DIR",
+      "shares": "SHARES",
+      "price": "PRICE",
+      "value": "VALUE"
+    },
+    "insidersBuying": "insiders buying",
+    "institutions": "institutions",
+    "signalStrength": "Signal"
   }
 }

@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { QueryProvider } from '@/lib/query';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { TopNavBar } from '@/components/layout/TopNavBar';
 
 // Code-split pages — each gets its own chunk (feat-014)
@@ -37,6 +38,7 @@ export default function App() {
     <I18nextProvider i18n={i18n}>
       <Suspense fallback={<LoadingFallback />}>
         <QueryProvider>
+          <AuthProvider>
           <HashRouter>
             <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#000' }}>
               <TopNavBar />
@@ -54,6 +56,7 @@ export default function App() {
               </div>
             </div>
           </HashRouter>
+          </AuthProvider>
         </QueryProvider>
       </Suspense>
     </I18nextProvider>

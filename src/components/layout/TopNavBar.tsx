@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
 
 const TAPE = [
   { t: 'AAPL', p: '196.34', c: '+2.15', up: true },
@@ -16,6 +17,7 @@ const TAPE = [
 
 export function TopNavBar() {
   const { i18n } = useTranslation();
+  const { user, signInWithGoogle, signOut } = useAuth();
   const [time, setTime] = useState('');
   const [lang, setLang] = useState(i18n.language);
 
@@ -100,18 +102,44 @@ export function TopNavBar() {
         {lang.startsWith('zh') ? '中文' : 'EN'}
       </button>
 
-      {/* Login */}
-      <button
-        aria-label="Login (coming soon)"
-        style={{
-          background: 'transparent', border: '1px solid #333', color: '#888',
-          cursor: 'pointer', padding: '2px 8px', fontSize: 10,
-          fontFamily: 'JetBrains Mono, monospace', marginRight: 8,
-          height: 20, borderRadius: 2,
-        }}
-        onClick={() => alert('Login (NYI)')}>
-        LOGIN
-      </button>
+      {/* Login / User */}
+      {user ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 8 }}>
+          {user.user_metadata?.avatar_url ? (
+            <img src={user.user_metadata.avatar_url} alt=""
+              style={{ width: 18, height: 18, borderRadius: '50%', border: '1px solid #333' }} />
+          ) : (
+            <span style={{
+              width: 18, height: 18, borderRadius: '50%', background: '#ff8c00',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 8, color: '#000', fontWeight: 700,
+            }}>
+              {(user.email?.[0] || '?').toUpperCase()}
+            </span>
+          )}
+          <span style={{ fontSize: 9, color: '#888', fontFamily: 'JetBrains Mono,monospace', maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {user.email?.split('@')[0]}
+          </span>
+          <button onClick={signOut}
+            aria-label="登出"
+            style={{
+              background: 'transparent', border: '1px solid #333', color: '#f33',
+              cursor: 'pointer', padding: '1px 6px', fontSize: 9,
+              fontFamily: 'JetBrains Mono,monospace', height: 18, borderRadius: 2,
+            }}>✕</button>
+        </div>
+      ) : (
+        <button onClick={signInWithGoogle}
+          aria-label="使用 Google 帳號登入"
+          style={{
+            background: 'transparent', border: '1px solid #333', color: '#ff8c00',
+            cursor: 'pointer', padding: '2px 10px', fontSize: 10,
+            fontFamily: 'JetBrains Mono,monospace', marginRight: 8,
+            height: 20, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 4,
+          }}>
+          <span style={{ fontSize: 12 }}>G</span> 登入
+        </button>
+      )}
 
       {/* Clock */}
       <div style={{

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
 import { formatCompactNumber, truncate } from '@/lib/utils';
 import type { InsiderTrade, ResonanceSignal } from '@/types';
@@ -14,9 +15,10 @@ const F = formatCompactNumber;
 const S = truncate;
 
 /* ============================================================
-   Dashboard Page
+   Dashboard Page — 繁體中文 + i18n
    ============================================================ */
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const trades = ALL.slice(0, 20);
 
@@ -24,12 +26,12 @@ export default function DashboardPage() {
     <div style={{height:'100%',background:'#000',color:'#e6e6e6',fontFamily:'JetBrains Mono,monospace',overflow:'auto',position:'relative'}}>
 
       <div style={{maxWidth:1200,margin:'0 auto',padding:16}}>
-        <h1 style={{fontSize:16,color:'#ff8c00',fontWeight:700,marginBottom:4,fontFamily:'JetBrains Mono,monospace'}}>🐋 WHALETRACE DASHBOARD</h1>
-        <p style={{fontSize:10,color:'#555',marginBottom:16}}>Whale Resonance Signals · Institution Flow · Insider Trades</p>
+        <h1 style={{fontSize:16,color:'#ff8c00',fontWeight:700,marginBottom:4,fontFamily:'JetBrains Mono,monospace'}}>{t('dashboard.title')}</h1>
+        <p style={{fontSize:10,color:'#555',marginBottom:16}}>{t('dashboard.subtitle')}</p>
 
         {/* SECTION 1: Whale Resonance Signals */}
         <div style={{marginBottom:20}}>
-          <h2 style={{fontSize:12,color:'#8b5cf6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>🔮 Whale Resonance Signals</h2>
+          <h2 style={{fontSize:12,color:'#8b5cf6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>{t('dashboard.whaleResonance')}</h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))',gap:10}}>
             {SIGS.map(s=>(
               <div key={s.ticker}
@@ -51,12 +53,12 @@ export default function DashboardPage() {
                   <span style={{fontSize:9,color:'#555'}}>{s.signal_date.slice(5)}</span>
                 </div>
                 <div style={{fontSize:20,fontWeight:700,color:'#e6e6e6',marginBottom:4}}>{F(s.total_institutional_buy)}</div>
-                <div style={{fontSize:9,color:'#888',marginBottom:8}}>{s.institution_count} institutions</div>
+                <div style={{fontSize:9,color:'#888',marginBottom:8}}>{s.institution_count} {t('dashboard.institutions')}</div>
                 <div style={{display:'flex',flexWrap:'wrap',gap:'4px 8px',marginBottom:8}}>
                   {s.institutions.map(i=><span key={i.name} style={{fontSize:9,color:'#888'}}><span style={{color:'#e6e6e6'}}>{S(i.name,12)}</span> <span style={{color:'#555'}}>{F(i.amount)}</span></span>)}
                 </div>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                  <span style={{fontSize:10,color:'#0c6'}}>🟢 {s.insider_buy_count} insiders buying</span>
+                  <span style={{fontSize:10,color:'#0c6'}}>🟢 {s.insider_buy_count} {t('dashboard.insidersBuying')}</span>
                   <div style={{display:'flex',alignItems:'center',gap:6}}>
                     <div style={{width:50,height:4,background:'#1f1f1f'}}><div style={{width:`${s.signal_strength}%`,height:'100%',background:'#8b5cf6'}}/></div>
                     <span style={{fontSize:11,fontWeight:700,color:'#8b5cf6'}}>{s.signal_strength}</span>
@@ -69,10 +71,10 @@ export default function DashboardPage() {
 
         {/* SECTION 2: Today's Institution Orders */}
         <div style={{marginBottom:20}}>
-          <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>🏦 Today's Institution Large Orders</h2>
+          <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>{t('dashboard.institutionOrders')}</h2>
           <div style={{background:'#0a0a0a',border:'1px solid #1f1f1f',overflow:'hidden'}}>
             <div style={{display:'flex',fontSize:9,color:'#555',padding:'6px 8px',borderBottom:'1px solid #1f1f1f',fontFamily:'JetBrains Mono,monospace'}}>
-              <span style={{width:140}}>INSTITUTION</span><span style={{width:60}}>TICKER</span><span style={{width:80,textAlign:'right'}}>AMOUNT</span><span style={{width:100,textAlign:'right'}}>COMPANY</span><span style={{width:60,textAlign:'right'}}>CHANGE</span>
+              <span style={{width:140}}>{t('dashboard.columns.institution')}</span><span style={{width:60}}>{t('dashboard.columns.ticker')}</span><span style={{width:80,textAlign:'right'}}>{t('dashboard.columns.amount')}</span><span style={{width:100,textAlign:'right'}}>{t('dashboard.columns.company')}</span><span style={{width:60,textAlign:'right'}}>{t('dashboard.columns.change')}</span>
             </div>
             {INSTS.map((o,i)=>(
               <div key={i} style={{display:'flex',alignItems:'center',fontSize:10,padding:'5px 8px',borderBottom:i<INSTS.length-1?'1px solid #1a1a1a':'none',fontFamily:'JetBrains Mono,monospace',background:i%2===0?'rgba(255,255,255,0.015)':'transparent'}}>
@@ -86,9 +88,9 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* SECTION 2.5: Market Intelligence */}
+        {/* SECTION 3: Market Intelligence */}
         <div style={{marginBottom:20}}>
-          <h2 style={{fontSize:12,color:'#e6e6e6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>MARKET INTELLIGENCE</h2>
+          <h2 style={{fontSize:12,color:'#e6e6e6',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>{t('dashboard.marketIntel')}</h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:10}}>
             {MARKET_INTELLIGENCE.map((item) => (
               <MarketIntelligenceCard key={item.id} item={item as import('@/types').MarketIntelligenceItem} />
@@ -96,9 +98,9 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* SECTION 3: Latest Insider Trades */}
+        {/* SECTION 4: Latest Insider Trades */}
         <div>
-          <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>👤 Latest Insider Trades</h2>
+          <h2 style={{fontSize:12,color:'#ff8c00',fontWeight:700,marginBottom:10,textTransform:'uppercase',letterSpacing:1}}>{t('dashboard.insiderTrades')}</h2>
           <div style={{display:'flex',flexDirection:'column',gap:6}}>
             {trades.map(t=>(
               <div key={t.id}
