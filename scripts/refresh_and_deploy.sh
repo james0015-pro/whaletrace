@@ -98,28 +98,35 @@ echo "✅ Deploy pushed"
 # ─── Trigger GitHub Pages rebuild ───
 echo ""
 echo "▶ Triggering Pages rebuild..."
-TOKEN=$(python3 -c "
-import os, re
+python3 -c "
+import os, re, json
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+
+token = None
+cred_file = os.path.expanduser('~/.git-credentials')
 try:
-    with open(os.path.expanduser('~/.git-credentials')) as f:
+    with open(cred_file) as f:
         for line in f:
             m = re.search(r'https://([^:]+):([^@]+)@', line.strip())
             if m:
-                print(m.group(2))
+                token = m.group(2)
                 break
 except: pass
-")
 
-if [ -n "$TOKEN" ]; then
-  STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-    -X POST \
-    -H "Authorization: Bearer $TOKEN" \
-    -H "Accept: application/vnd.github+json" \
-    "https://api.github.com/repos/${OWNER}/${REPO}/pages/builds")
-  echo "  Pages build trigger: HTTP $STATUS"
-else
-  echo "  ⚠️  No git credentials found, skipping Pages rebuild trigger"
-fi
+if token:
+    url = 'https://api.github.com/repos/${OWNER}/${REPO}/pages/builds'
+    req = Request(url, method='POST')
+    req.add_header('Authorization', f'Bearer {token}')
+    req.add_header('Accept', 'application/vnd.github+json')
+    try:
+        resp = urlopen(req)
+        print(f'  Pages build trigger: HTTP {resp.status}')
+    except HTTPError as e:
+        print(f'  Pages build trigger: HTTP {e.code}')
+else:
+    print('  ⚠️  No git credentials found, skipping Pages rebuild trigger')
+"
 
 echo ""
 echo "============================================================"
