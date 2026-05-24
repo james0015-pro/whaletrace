@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-// @ts-ignore
 import SNAPSHOTS from '../../public/data/stock_snapshots.json';
-// @ts-ignore
 import SEC_TRADES_RAW from '../../public/data/sec_insider_trades.json';
 
 // ─── Types ───────────────────────────────────────────────
@@ -267,11 +265,12 @@ export default function ScreenerPage() {
 
     // Sort
     rows.sort((a, b) => {
-      let cmp = 0;
       const f = sortField;
-      if (f === 'ticker') cmp = a.ticker.localeCompare(b.ticker);
-      else if (f === 'recommendation') cmp = a.recommendation.localeCompare(b.recommendation);
-      else cmp = (a[f] as number) - (b[f] as number);
+      const cmp = f === 'ticker'
+        ? a.ticker.localeCompare(b.ticker)
+        : f === 'recommendation'
+          ? a.recommendation.localeCompare(b.recommendation)
+          : (a[f] as number) - (b[f] as number);
       return sortDir === 'asc' ? cmp : -cmp;
     });
 
