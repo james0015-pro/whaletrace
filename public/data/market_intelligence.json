@@ -154,11 +154,11 @@
   {
     "id": 18,
     "title": "SpaceX $1.5T IPO",
-    "source": "2026-05-20/23 Fortune / WSJ / CNBC",
+    "source": "2026-05-20/23 Fortune / WSJ / CNBC / 24/7 Wall St",
     "border_color": "#ff8c00",
-    "highlight": "SpaceX $1.5T IPO deep-dive: Fortune — non-rocket core growth; WSJ — dual-class stock cements Musk control; CNBC — Tesla merger speculation",
+    "highlight": "SpaceX .5T IPO: Musk could become world first trillionaire (24/7 Wall St 5/22); Fortune: non-rocket core growth; WSJ: dual-class stock cements Musk control",
     "highlight_color": "#ff8c00",
-    "detail": "Fortune 5/23 analysis: SpaceX's rocket launch business is NOT the growth driver — Starlink ($12.4B, +58% YoY) and Starship (Mars colonization + deep-space transport) are the real valuation anchors. WSJ 5/20: dual-class share structure gives Musk 78% voting control with only 42% economic ownership — IPO investors get rich but not powerful. CNBC 5/22: renewed speculation Musk may merge Tesla + SpaceX into single $7T+ entity, though legal/regulatory barriers are enormous. TSLA holds 19M SpaceX shares (~$28B at IPO), enough to fully fund TSLA's AI infrastructure expansion. S-1 also disclosed: $1.29B Bitcoin on balance sheet, xAI subsidiary losses, Anthropic partnership for Starlink AI optimization. IPO date still TBD — SEC review of dual-class structure likely to take 6-9 months"
+    "detail": "24/7 Wall St 5/22 analysis: At .5T IPO valuation, Elon Musk would become the world first trillionaire — surpassing Rockefeller relative wealth share in American history (Rockefeller at peak controlled ~1.5% of US GDP). Fortune 5/23 analysis: SpaceX rocket launch business is NOT the growth driver — Starlink (2.4B, +58% YoY) and Starship (Mars colonization + deep-space transport) are the real valuation anchors. WSJ 5/20: dual-class share structure gives Musk 78% voting control with only 42% economic ownership — IPO investors get rich but not powerful. CNBC 5/22: renewed speculation Musk may merge Tesla + SpaceX into single T+ entity, though legal/regulatory barriers are enormous. TSLA holds 19M SpaceX shares (~8B at IPO), enough to fully fund TSLA AI infrastructure expansion. S-1 also disclosed: .29B Bitcoin on balance sheet, xAI subsidiary losses, Anthropic partnership for Starlink AI optimization. IPO date still TBD — SEC review of dual-class structure likely to take 6-9 months"
   },
   {
     "id": 19,
@@ -294,5 +294,14 @@
     "highlight": "Morningstar: 'It's Time to Reallocate from Growth to Value' — Goldman: hedge funds max out SOXX at ATH while rotation signals flash",
     "highlight_color": "#f33",
     "detail": "Morningstar 5/22 issues explicit tactical call: reallocate from growth stocks to value stocks. Four converging signals: (1) hedge fund SOXX allocation at all-time high — every institutional investor is already long AI/semis, no incremental buyer left (2) DJIA 50,000 milestone typically signals late-cycle euphoria (3) Morningstar's fair value estimates show growth stocks 12% overvalued vs value stocks 8% undervalued — largest spread since 2007 (4) Goldman Sachs 5/23 report confirms hedge funds rotating OUT of NVDA and INTO industrial/value cyclicals. This doesn't mean AI thesis is wrong — it means the trade is crowded and the easy money has been made. NVDA earnings beat and stock fell: the textbook definition of 'priced to perfection.' Contrarian signal: when Morningstar and Goldman both say rotate, the rotation may already be priced in"
+  },
+  {
+    "id": 34,
+    "title": "S&P 500 Rally",
+    "source": "2026-05-22 Investopedia",
+    "border_color": "#0c6",
+    "highlight": "S&P 500 posts 8th consecutive weekly gain — DJIA hits fresh all-time high. US-Iran peace talks drive risk-on sentiment across global markets",
+    "highlight_color": "#0c6",
+    "detail": "Investopedia 5/22: S&P 500 recorded its 8th straight weekly gain, matching the longest winning streak since 2017. DJIA breached a new all-time high, driven by broadening market participation beyond mega-cap tech. US-Iran peace negotiations (mediated by Oman and Qatar) emerged as an unexpected catalyst — de-escalation in the Middle East reduces geopolitical risk premium and energy cost uncertainty, both tailwinds for equities. The peace talks focus on a phased sanctions relief framework in exchange for nuclear program transparency. Key market implications: (1) lower oil prices improve corporate margins and consumer spending (2) reduced military escalation risk lowers VIX (3) emerging market funds reallocate from defensive positions to risk assets. Contrarian note: 8-week win streaks historically precede 2-4% pullbacks — the last 8-week streak (Nov 2024) was followed by a 3.5% correction within 2 weeks. The rally breadth (NYSE advance-decline line at record highs) suggests underlying strength, but extreme bullish sentiment (AAII bull ratio above 55%) is a yellow flag"
   }
 ]
