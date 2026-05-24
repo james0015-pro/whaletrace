@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-24** — Night Shift 15: 數據刷新 + 市場情報更新至 40 張卡片 — SEC 133 trades (0 rate-limit), Finviz 20/20, MI cards: Fed Rate HIKE / Mag 7 Rotation / Semi $830B+
+**2026-05-24** — Night Shift 16: 市場情報擴充 v5 (40→43 張卡片) — +New Fed Chair Warsh / +Goldman Hedge Fund Semi Rotation / +NVDA $15T by 2029 prediction
 
 ## 專案狀態
 
@@ -49,6 +49,7 @@
 - [x] feat-020 市場情報擴充 v3 — 33 張卡片：+3 (NVDA $80B Buyback, Anthropic x MSFT AI Chip Deal, Growth→Value Rotation Signal) based on 2026-05-24 Google News headlines
 - [x] feat-021 熱度圖頁面 — Bloomberg 終端機風格彩色磚塊網格 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 44-120px，hover 提示框 + 色彩圖例，導航按鈕 (TERM/OVR/TREE/WATCH)
 - [x] feat-022 Finviz-Style Bloomberg Screener — sortable 12-column table (TICKER/COMPANY/PRICE/MKT CAP/P/E/RS/INST%/INS%/SIGNAL/B/S/NET)，5 種篩選模式 (ALL/BUY/SELL/S≥50/S≥70)，ticker 搜尋 + 點擊排序 + 箭頭指示器，20 tickers 資料來自 stock_snapshots.json + sec_insider_trades.json。59KB page chunk (10KB gzipped)。
+- [x] 市場情報擴充 v5 (43 張卡片) — +New Fed Chair Warsh (MarketWatch/Motley Fool/Politico) / +Goldman Hedge Fund Semi Rotation (Goldman Sachs/Seeking Alpha/Benzinga) / +NVDA $15T by 2029 (Motley Fool/Seeking Alpha/24/7 Wall St)
 
 ## 下一步 (優先順序)
 
@@ -76,3 +77,4 @@
 | 2026-05-24 | Night Shift 13 | **feat-021: Bloomberg Heatmap 頁面**: 建立 src/pages/HeatmapPage.tsx — Bloomberg 終端機風格彩色磚塊網格。3 種模式切換 (SIGNAL 信心分數 / NET_FLOW 淨流向 / VOLUME 交易量)，可調磚塊大小 (44-120px range slider)，hover scale(1.08) + 提示框 (買/賣/淨值)，色彩圖例 (綠→黃→紅)，點擊導航至 /stocks/:ticker。新增 route (/heatmap) + TopNavBar 導航按鈕 (HEAT) + lazy load chunk。npm run build ✅ (HeatmapPage-BIvIc1cC.js 8.37KB gzipped 2.90KB) + 63/63 tests ✅。feature_list.json v3.2.0→v3.3.0。 |
 | 2026-05-24 | Night Shift 14 | **feat-022: Finviz-Style Bloomberg Screener 頁面**: 建立 src/pages/ScreenerPage.tsx — Bloomberg 終端機風格的 Finviz 篩選器。12 欄位可排序表格 (TICKER/COMPANY/PRICE/MKT CAP/P/E/RS(14)/INST%/INS%/SIGNAL/BUYS/SELLS/NET)，5 種篩選按鈕 (ALL/BUY/SELL/S≥50/S≥70)，ticker 搜尋欄，點擊欄標題切換排序 (asc↔desc)，箭頭指示器 ▴/▾，R/HCol 原始元件。資料來源：stock_snapshots.json (20 檔基本面) + sec_insider_trades.json (127 筆內部人交易)。新增 route (/screener) + lazy chunk (ScreenerPage-DhqQyvx7.js 59KB gzipped 10.22KB) + TopNavBar SCRN 按鈕。npm run build ✅ (2.35s) + 63/63 tests ✅。feature_list.json v3.3.0→v3.4.0。 |
 | 2026-05-24 | Night Shift 15 | **數據刷新 + 市場情報擴充 v4**: (1) 執行 night_shift_scrape.py — Finviz 20/20 + OpenInsider 0 in tracked + SEC EDGAR 150 raw → 133 unique trades (0 rate-limit at 3.0s delay) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-23。yfinance 190 筆機構持股。(2) 市場情報更新：更新 card 23 (Fed Rate HIKE Signal — CNBC/Forbes/CBS 5/24 Fed 會議紀要顯示升息偏向) + card 33 (Mag 7 Rotation Accelerates — Fortune "Magnificent 7 stocks are dying" + Morningstar/Goldman/Barron's) + 新增 card 40 (Semi $830B+ Milestone — Omdia/Deloitte/IDC 全球半導體市場突破 $830B)。market_intelligence.json 39→40 張卡片。npm run build ✅ (2.08s) → GitHub Pages 部署驗證 ✅ (all data JSON 200 OK)。 |
+| 2026-05-24 | Night Shift 16 | **市場情報擴充 v5 (40→43 卡片) + 未提交資料修復**: 提交 Night Shift 15 殘留的未提交資料檔 (finviz_institutions.json + sec_insider_trades.json)。掃描 Google News RSS 取得 2026-05-24 最新金融頭條，新增 3 張卡片：(1) New Fed Chair Warsh — Kevin Warsh 宣誓就任 Fed 主席，誓言「炸毀維持股市 15 年上漲的規則手冊」，縮減 $6.7T 資產負債表，連債券投資人都在測試他。來源：MarketWatch/Politico/Motley Fool/Reuters/Intellectia AI。(2) Goldman Hedge Fund Semi Rotation — Goldman Sachs 5/23 報告顯示避險基金以創紀錄速度從軟體輪動到半導體，SOXX 曝險創歷史新高。來源：Goldman Sachs/Seeking Alpha/GuruFocus/Benzinga/ANI News。(3) NVDA $15T by 2029 — Motley Fool 預測 NVDA 將在 2029 年成為全球首家 $15T 公司；Seeking Alpha 認為「市場的懷疑創造了巨大的錯誤定價」。隱藏的 $60B 網路業務即將超越 Broadcom。npm run build ✅ (2.37s) → GitHub Pages 部署 ✅ (Pages build 201)。 |

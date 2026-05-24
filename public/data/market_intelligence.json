@@ -357,5 +357,32 @@
     "highlight": "Global semiconductor market surpassed $830B in 2025 driven by AI demand, heading toward trillion-dollar threshold - Omdia/Deloitte/IDC reports",
     "highlight_color": "#0c6",
     "detail": "Omdia 5/24: \"Semiconductor market surpasses $830bn in 2025, driven by AI demand and broad segment growth.\" Deloitte 2026 Global Semiconductor Industry Outlook: projects continued double-digit growth with AI infrastructure as primary driver. IDC: \"Semiconductor Market to Surge Past the Trillion-Dollar Threshold: AI Infrastructure Drives Market Growth.\" Key data points: (1) AI chips (GPU/ASIC/FPGA) are the fastest-growing segment, (2) Memory (HBM) riding AI coattails, (3) Broad analog/industrial recovery in 2H 2026. Non-AI semis still in correction but showing early recovery signs. Implications: NVDA/AVGO/MRVL benefit from AI chip growth, MU/Samsung from HBM, TI/ADI from broad recovery. Risk: if AI capex slows, the trillion-dollar thesis could stall."
+  },
+  {
+    "id": 41,
+    "title": "New Fed Chair Warsh",
+    "source": "2026-05-24 MarketWatch / Motley Fool / Politico / Reuters / Intellectia AI / MSN",
+    "border_color": "#f33",
+    "highlight": "Kevin Warsh sworn in as Fed Chair — vows to 'blow up the 15-year playbook' that kept stocks rising. Bond investors already testing him. Balance sheet shrinkage from $6.7T incoming.",
+    "highlight_color": "#f33",
+    "detail": "MarketWatch 5/22: 'The oil shock meets the Fed curse: What Kevin Warsh's swearing-in means for your portfolio.' Politico 5/22: 'Trump finally gets his Fed chair. Bond investors are already testing him.' Motley Fool 5/20: '7 Words From New Fed Chair Kevin Warsh That Portend a Significant Shift in Central Bank Ideology.' Intellectia AI 5/23: 'Kevin Warsh Fed Chair: What It Means for Investors in 2026.' Key implications: (1) Warsh wants to shrink the Fed's $6.7T balance sheet — could drain liquidity that has supported equity valuations for 15 years. IndexBox 5/17 reports explicit balance sheet reduction plans. (2) Motley Fool 5/17: 'New Fed Chair Kevin Warsh Wants to Blow Up the Playbook That's Kept Stocks Rising for 15 Years' — signaling a fundamental shift from the Greenspan/Bernanke/Yellen/Powell era of accommodative policy. (3) Reuters 5/22: 'New Fed Chair Warsh unlikely to cut rates soon, says market expert' — despite Trump's pressure for cuts. (4) Reuters 5/19: 'Warsh's arrival leaves long bonds without a safety net' — bond vigilantes may return. (5) CNBC 5/22: treasury yields surging as 'risk-free' bonds compete with equities. (6) MSN 5/24: 'Warsh takes Fed helm as markets brace for possible rate hikes.' The combination of Warsh's hawkish ideology + Iran oil shock + existing inflation stickiness = most uncertain Fed transition since Volcker 1979. Barron's 4/25: 'Kevin Warsh Wants to Fix the Fed. Will Trump's Pick Break It Instead?' — question now being answered in real-time."
+  },
+  {
+    "id": 42,
+    "title": "Hedge Funds: Software→Semis",
+    "source": "2026-05-24 Goldman Sachs / Seeking Alpha / GuruFocus / Benzinga / ANI News",
+    "border_color": "#0c6",
+    "highlight": "Goldman Sachs reports hedge funds rotating OUT of software INTO semiconductors at record pace — SOXX exposure hits all-time high. 'Chipmakers emerge as biggest Wall Street bet' (ANI News 5/24)",
+    "highlight_color": "#0c6",
+    "detail": "Goldman Sachs 5/23: 'How Hedge Funds Are Trading Semiconductor Stocks' — a landmark report detailing the largest sector rotation since the 2020 COVID re-opening trade. Seeking Alpha 5/24: 'Goldman Sachs sees funds fleeing software for semiconductors as tech trade evolves.' GuruFocus 5/24: 'Investor Shift: Hedge Funds Favor Semiconductors Over Software' — net flows show software losing AUM while semis gain at the fastest rate in 5 years. ANI News 5/24: 'Hedge funds double down on AI stocks; chipmakers emerge biggest Wall Street bet.' Benzinga 5/19: 'Hedge Funds Go All-In On Semiconductors As SOXX Exposure Hits Record Highs' — SOXX (iShares Semiconductor ETF) positioning hit all-time high among hedge fund 13F filings. Blockonomi 5/21: 'Hedge Funds Dump Semiconductor Stocks While Maintaining AI Positions' — BUT this appears to be profit-taking on non-AI semis while maintaining/exiting core AI positions (NVDA/AVGO/MRVL). Key distinction: the rotation is INTO AI semis and OUT OF legacy software (not out of semis). This mirrors the dot-com era pattern where funds chased infrastructure (chips/networking) while abandoning application-layer plays. Risk: when hedge fund positioning is this concentrated, any negative AI catalyst could trigger a violent unwind."
+  },
+  {
+    "id": 43,
+    "title": "NVDA: $15T by 2029?",
+    "source": "2026-05-23 Motley Fool / Seeking Alpha / 24/7 Wall St",
+    "border_color": "#ff8c00",
+    "highlight": "Motley Fool prediction: NVDA becomes world's first $15 TRILLION company by 2029. Seeking Alpha: 'Market's skepticism creates a massive mispricing.' NVDA's hidden $60B networking business to overtake Broadcom.",
+    "highlight_color": "#ff8c00",
+    "detail": "Motley Fool 5/23: 'Prediction: Nvidia Will Become the World's First $15 Trillion Company by 2029' — argues NVDA's AI dominance + networking + CPU expansion creates an unmatched growth flywheel. 24/7 Wall St 5/23: 'Nvidia's Hidden $60 Billion Business Is About to Overtake Broadcom' — NVDA's networking division (InfiniBand + Spectrum-X Ethernet) is on track to surpass Broadcom's total networking revenue within 2 years. Seeking Alpha 5/24: 'Nvidia: Market's Skepticism Creates A Massive Mispricing' — argues NVDA's PE compression (from 60x to ~30x forward despite earnings growing 85%+) is irrational given the revenue runway. Barron's 5/22: 'Nvidia Stock Gets Even Cheaper With Each Earnings Beat' — 6 consecutive beats, stock fell after ALL of them. Motley Fool 5/24: 'After a 1,390% gain in 5 years, is it time to move on?' — counterpoint: some argue the easy money has been made. Fortune 5/20: 'The one number that will actually move Nvidia's stock' — data center revenue growth rate is the only metric that matters. The bull case rests on: (1) AI capex continuing at $800B+ annual run-rate through 2029, (2) NVDA maintaining 80%+ AI GPU market share, (3) Networking + CPU + software creating a moat beyond hardware. Bear case: (1) custom ASICs (Google TPU, Amazon Trainium, MSFT Athena) eating into GPU TAM, (2) China restrictions limiting growth, (3) 6 consecutive post-earnings selloffs suggest peak sentiment."
   }
 ]
