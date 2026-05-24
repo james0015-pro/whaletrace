@@ -82,11 +82,11 @@
   {
     "id": 10,
     "title": "SEC Tokenization",
-    "source": "2026-05-23 SEC / BitKE",
-    "border_color": "#0c6",
-    "highlight": "SEC Commissioner differentiates tokenized securities vs synthetic instruments — CLARITY Act regulatory definition advances today (5/23)",
-    "highlight_color": "#0c6",
-    "detail": "BitKE 5/23: SEC Commissioner Hester Peirce publicly distinguishes 'tokenized securities' (blockchain-native representations of real equity, fully regulated) from 'synthetic instruments' (derivatives on digital assets, less regulated) — a critical legal taxonomy that will shape the entire tokenization industry. CLARITY Act enters Senate Banking Committee markup this week — defines legal framework for regulated digital asset securities. US capital markets infrastructure transformation accelerates: blockchain settlement reduces T+2 to instant, cuts clearing costs ~80%. Traditional broker-dealers face structural disruption as blockchain-native securities issuance becomes legally defined"
+    "source": "2026-05-23 SEC / Yahoo / BitKE",
+    "border_color": "#ff8c00",
+    "highlight": "SEC Commissioner differentiates tokenized securities vs synthetic instruments — BUT Wall Street opposition delays CLARITY Act to late 2026 (Yahoo 5/22)",
+    "highlight_color": "#ff8c00",
+    "detail": "BitKE 5/23: SEC Commissioner Hester Peirce distinguishes tokenized securities from synthetic instruments. Yahoo Finance 5/22 reports Wall Street firms (Goldman Sachs, JPMorgan, Citadel) lobbying against CLARITY Act, pushing the bill from Spring to late 2026. Key Wall Street concerns: (1) decentralized exchanges would cannibalize 70% of equity trading fees (2) T+0 blockchain settlement would eliminate the $3.2T securities lending market (3) compliance costs for legacy broker-dealers estimated at $2-4B each. Despite regulatory taxonomy progress, the bill path through Senate Banking Committee is now blocked by heavy industry opposition. US capital markets transformation faces classic innovator dilemma: technology is ready but incumbents fight to maintain status quo."
   },
   {
     "id": 11,
@@ -154,11 +154,11 @@
   {
     "id": 18,
     "title": "SpaceX $1.5T IPO",
-    "source": "2026-05-20 SEC Filing",
+    "source": "2026-05-20/23 Fortune / WSJ / CNBC",
     "border_color": "#ff8c00",
-    "highlight": "SpaceX files for $1.5T IPO — largest IPO in history: $1.29B BTC on balance sheet, Musk retains control, xAI losses disclosed",
+    "highlight": "SpaceX $1.5T IPO deep-dive: Fortune — non-rocket core growth; WSJ — dual-class stock cements Musk control; CNBC — Tesla merger speculation",
     "highlight_color": "#ff8c00",
-    "detail": "S-1 filing reveals SpaceX valued at $1.5T (vs $350B prior private round). Key disclosures: $1.29B Bitcoin on balance sheet, Musk retains absolute voting control via dual-class shares, xAI subsidiary reported losses, Anthropic AI partnership for Starlink optimization. TSLA holds 19M SpaceX shares (~$28B value). IPO could reshape US capital markets — analysts compare to Saudi Aramco $1.9T 2019 listing but with far broader retail investor access. Starlink revenue $12.4B (2025) growing 58% YoY"
+    "detail": "Fortune 5/23 analysis: SpaceX's rocket launch business is NOT the growth driver — Starlink ($12.4B, +58% YoY) and Starship (Mars colonization + deep-space transport) are the real valuation anchors. WSJ 5/20: dual-class share structure gives Musk 78% voting control with only 42% economic ownership — IPO investors get rich but not powerful. CNBC 5/22: renewed speculation Musk may merge Tesla + SpaceX into single $7T+ entity, though legal/regulatory barriers are enormous. TSLA holds 19M SpaceX shares (~$28B at IPO), enough to fully fund TSLA's AI infrastructure expansion. S-1 also disclosed: $1.29B Bitcoin on balance sheet, xAI subsidiary losses, Anthropic partnership for Starlink AI optimization. IPO date still TBD — SEC review of dual-class structure likely to take 6-9 months"
   },
   {
     "id": 19,
@@ -249,5 +249,23 @@
     "highlight": "Structural shift — Samsung/Intel/Apple simultaneously testing foundry alternatives to TSMC: not a short-term fluctuation",
     "highlight_color": "#f33",
     "detail": "digitimes 5/18 deep-dive: For the first time, all three major TSMC customers are simultaneously and seriously testing alternative foundry options — Samsung Foundry (3nm GAA for Apple A-series), Intel Foundry (18A for US government chips), and a potential Samsung-Apple partnership. This is NOT a short-term pricing renegotiation — it's a structural supply chain diversification play driven by: ①TSMC's $31.38B capex (5/13) cannot keep pace with AI demand ②Taiwan geopolitical risk premium rising ③TSMC's near-100% advanced node market share creates customer concentration anxiety. TSMC's CEO C.C. Wei acknowledged the pressure at COMPUTEX 2026 but emphasized technology moat depth (3nm/2nm lead time). Outcome: TSMC remains dominant but the era of unquestioned monopoly is ending — expect margin compression as customers gain credible alternatives"
+  },
+  {
+    "id": 29,
+    "title": "Broadcom $600B Network",
+    "source": "2026-05-23 Citigroup / AOL / Barchart",
+    "border_color": "#0c6",
+    "highlight": "Citigroup names AVGO top 2026 semiconductor pick — $600B Networking biz set to surpass Broadcom's own name, AVGO AI packaging layout gets unanimous analyst love",
+    "highlight_color": "#0c6",
+    "detail": "Citigroup 5/23: names Broadcom as #1 semiconductor stock for 2026 (AOL/Barchart), citing three structural catalysts: (1) AVGO's AI networking revenue ($60B+ annual run-rate) is on track to surpass traditional Broadcom semiconductor revenue within 2 years — the networking tail is now wagging the dog (2) AI custom ASIC pipeline: 6 hyperscaler customers locked (Google TPU, Meta MTIA, Anthropic), $100B+ 2027 target — AVGO has quietly become the #2 AI chip company behind only NVDA (3) AI packaging dominance: AVGO's advanced 2.5D/3D packaging ecosystem is being positioned as the pick-and-shovel play for ALL AI chips regardless of who designs them. Wall Street consensus: AVGO is the structural winner from NVDA's GPU dominance erosion — when hyperscalers diversify to custom ASIC, AVGO captures the silicon, not NVDA"
+  },
+  {
+    "id": 30,
+    "title": "AI Coding War",
+    "source": "2026-05-23 Business Insider / CNBC / The Information",
+    "border_color": "#8b5cf6",
+    "highlight": "Business Insider 5/23: Claude Has Already Won the AI Coding War — Cursor Is Declining. CNBC 5/22: GitHub Should Have Won but Outages Got in the Way",
+    "highlight_color": "#8b5cf6",
+    "detail": "AI coding tools competitive landscape undergoes seismic shift Q2 2026. Business Insider 5/23 declares: Claude Has Already Won the AI Coding War — Claude Code's superior reasoning, longer context windows, and artifact-based collaborative coding have captured the startup/elite developer ecosystem. Cursor is declining as its GPT-4.5 foundation hits diminishing returns vs Claude's recursive self-improvement. CNBC 5/22: GitHub Copilot should have won given MSFT's $13B OpenAI investment and 100M+ developer base, but repeated outages and reliability issues eroded trust. The Information 5/18: MSFT executives privately sounding alarm on Copilot losing leadership position. Key winner: Anthropic — now the default AI coding partner for YC startups, open-source projects, and enterprise dev teams. Verdict: 2026 is the year coding AI shifted from copilot to agent — autonomous agents that design, implement, and deploy independently"
   }
 ]
