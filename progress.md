@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-24** — Night Shift 14: Finviz-Style Bloomberg Screener Page (feat-022) — sortable 12-column table with filter/search
+**2026-05-24** — Night Shift 15: 數據刷新 + 市場情報更新至 40 張卡片 — SEC 133 trades (0 rate-limit), Finviz 20/20, MI cards: Fed Rate HIKE / Mag 7 Rotation / Semi $830B+
 
 ## 專案狀態
 
@@ -75,3 +75,4 @@
 | 2026-05-24 | Night Shift 12 | **市場情報擴充 v3**: 搜尋 Google News RSS 取得 2026-05-24 最新金融頭條。新增 3 張卡片：(1) NVDA $80B Buyback — Motley Fool/Yahoo Finance 報導 NVDA 董事會授權額外 $80B 回購，總額 ~$115B 科技史上最大，Yahoo 比擬 Apple 2013 年回購模式 (2) Anthropic x MSFT Chips — CNBC/Reuters 報導 Anthropic 洽談使用 Microsoft Athena 客製化 AI 晶片，對沖「MSFT 輸掉 AI 競賽」敘事 (3) Growth→Value Rotation — Morningstar/Goldman Sachs 同步發出戰術性成長→價值輪動訊號。market_intelligence.json 30→33 張卡片。npm run build ✅ (1.72s) + 63/63 tests ✅ → GitHub Pages 部署驗證 ✅ (DashboardPage-20WhfzB1.js 確認含 3 張新卡片)。 |
 | 2026-05-24 | Night Shift 13 | **feat-021: Bloomberg Heatmap 頁面**: 建立 src/pages/HeatmapPage.tsx — Bloomberg 終端機風格彩色磚塊網格。3 種模式切換 (SIGNAL 信心分數 / NET_FLOW 淨流向 / VOLUME 交易量)，可調磚塊大小 (44-120px range slider)，hover scale(1.08) + 提示框 (買/賣/淨值)，色彩圖例 (綠→黃→紅)，點擊導航至 /stocks/:ticker。新增 route (/heatmap) + TopNavBar 導航按鈕 (HEAT) + lazy load chunk。npm run build ✅ (HeatmapPage-BIvIc1cC.js 8.37KB gzipped 2.90KB) + 63/63 tests ✅。feature_list.json v3.2.0→v3.3.0。 |
 | 2026-05-24 | Night Shift 14 | **feat-022: Finviz-Style Bloomberg Screener 頁面**: 建立 src/pages/ScreenerPage.tsx — Bloomberg 終端機風格的 Finviz 篩選器。12 欄位可排序表格 (TICKER/COMPANY/PRICE/MKT CAP/P/E/RS(14)/INST%/INS%/SIGNAL/BUYS/SELLS/NET)，5 種篩選按鈕 (ALL/BUY/SELL/S≥50/S≥70)，ticker 搜尋欄，點擊欄標題切換排序 (asc↔desc)，箭頭指示器 ▴/▾，R/HCol 原始元件。資料來源：stock_snapshots.json (20 檔基本面) + sec_insider_trades.json (127 筆內部人交易)。新增 route (/screener) + lazy chunk (ScreenerPage-DhqQyvx7.js 59KB gzipped 10.22KB) + TopNavBar SCRN 按鈕。npm run build ✅ (2.35s) + 63/63 tests ✅。feature_list.json v3.3.0→v3.4.0。 |
+| 2026-05-24 | Night Shift 15 | **數據刷新 + 市場情報擴充 v4**: (1) 執行 night_shift_scrape.py — Finviz 20/20 + OpenInsider 0 in tracked + SEC EDGAR 150 raw → 133 unique trades (0 rate-limit at 3.0s delay) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-23。yfinance 190 筆機構持股。(2) 市場情報更新：更新 card 23 (Fed Rate HIKE Signal — CNBC/Forbes/CBS 5/24 Fed 會議紀要顯示升息偏向) + card 33 (Mag 7 Rotation Accelerates — Fortune "Magnificent 7 stocks are dying" + Morningstar/Goldman/Barron's) + 新增 card 40 (Semi $830B+ Milestone — Omdia/Deloitte/IDC 全球半導體市場突破 $830B)。market_intelligence.json 39→40 張卡片。npm run build ✅ (2.08s) → GitHub Pages 部署驗證 ✅ (all data JSON 200 OK)。 |

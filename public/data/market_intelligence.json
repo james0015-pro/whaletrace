@@ -198,12 +198,12 @@
   },
   {
     "id": 23,
-    "title": "Fed Hawks Return",
-    "source": "2026-05-21 Fed Minutes",
+    "title": "Fed Rate HIKE Signal",
+    "source": "2026-05-24 CNBC / Forbes / CBS News / JP Morgan",
     "border_color": "#f33",
-    "highlight": "\"Most Fed officials embraced possibility of higher rates at recent meeting\" — hawkish pivot threatens growth stocks",
+    "highlight": "Fed minutes: officials see rate HIKE ahead if inflation stays elevated - massive shift from cut expectations, threatens tech valuations",
     "highlight_color": "#f33",
-    "detail": "Rising interest rates exploding debt servicing costs. Wall Street bonuses seen flat to slightly negative for 2026 — Iran war + private credit turmoil add headwinds. Higher-for-longer narrative challenges AI/semi growth stock valuations as discount rates reset upward"
+    "detail": "CNBC 5/24: \"Fed officials see rate hike ahead if inflation stays elevated, minutes show.\" Forbes Fed Meeting Tracker 2026 updates: interest rate shifts reshape investor strategy. CBS News: \"Will the Fed cut interest rates? Here's what to expect at Wednesday's meeting.\" The narrative has flipped from \"when will they cut?\" to \"will they hike?\" JP Morgan and TD Economics both flag the hawkish pivot. Impact: growth/tech stocks (Mag 7) face multiple compression if rates move higher. The \"higher for longer\" thesis strengthens - rate cuts in 2026 now look unlikely. This is a structural headwind for high-PE AI/semiconductor names."
   },
   {
     "id": 24,
@@ -288,12 +288,12 @@
   },
   {
     "id": 33,
-    "title": "Growth → Value Rotation",
-    "source": "2026-05-22 Morningstar / Goldman Sachs",
-    "border_color": "#f33",
-    "highlight": "Morningstar: 'It's Time to Reallocate from Growth to Value' — Goldman: hedge funds max out SOXX at ATH while rotation signals flash",
-    "highlight_color": "#f33",
-    "detail": "Morningstar 5/22 issues explicit tactical call: reallocate from growth stocks to value stocks. Four converging signals: (1) hedge fund SOXX allocation at all-time high — every institutional investor is already long AI/semis, no incremental buyer left (2) DJIA 50,000 milestone typically signals late-cycle euphoria (3) Morningstar's fair value estimates show growth stocks 12% overvalued vs value stocks 8% undervalued — largest spread since 2007 (4) Goldman Sachs 5/23 report confirms hedge funds rotating OUT of NVDA and INTO industrial/value cyclicals. This doesn't mean AI thesis is wrong — it means the trade is crowded and the easy money has been made. NVDA earnings beat and stock fell: the textbook definition of 'priced to perfection.' Contrarian signal: when Morningstar and Goldman both say rotate, the rotation may already be priced in"
+    "title": "Mag 7 Rotation Accelerates",
+    "source": "2026-05-24 Fortune / Morningstar / Goldman / Barron's",
+    "border_color": "#ff8c00",
+    "highlight": "Fortune: \"The Magnificent 7 stocks are dying, and Wall Street is pretty happy about it\" - broad rotation from Mag 7 into rest of S&P 500 underway",
+    "highlight_color": "#ff8c00",
+    "detail": "Fortune 5/24: \"The 'Magnificent 7' stocks are dying, and Wall Street is pretty happy about it.\" Morningstar: \"Is a Stock Market Rotation Underway? These Sectors Are Outpacing Tech in 2026.\" Goldman Sachs via Barron's: \"Magnificent 7 Dominance Expected Again in 2026, but a Broadening Trade Is Starting.\" The Chronicle-Journal: \"The Great Rotation of 2026: Why the Magnificent Seven Are Stalling While the Rest of the Market Soars.\" 24/7 Wall St: \"Is the 2026 Market Rotation Already Underway?\" Multiple independent sources confirm the same signal: Mag 7 YTD significantly underperforming rest of S&P 500, breadth improving, rotation from mega-cap growth to value/cyclicals accelerating. Implications: Mag 7 PE compression, alpha opportunity in non-Mag 7 names, sector rotation from tech to financials/energy/industrials."
   },
   {
     "id": 34,
@@ -348,5 +348,14 @@
     "highlight": "DeepSeek forms internal 'Harness' team to challenge Claude Code — four independent sources confirm (Pandaily, Decrypt, WEEX, the-decoder). Beijing's full-stack AI coding strategy emerges",
     "highlight_color": "#8b5cf6",
     "detail": "Pandaily 5/21, Decrypt 5/21, WEEX 5/23, and the-decoder 5/20 all independently confirm: DeepSeek has assembled an internal team codenamed 'Harness' (ironic naming coincidence with Harness Engineering methodology) to build a direct competitor to Anthropic's Claude Code. Key details: (1) The Harness team is staffed with 40+ engineers poached from Baidu, Alibaba, and ByteDance — Beijing's best AI coding talent concentrated in one unit. (2) DeepSeek's strategy is 'full-stack AI coding' — not just code completion but agentic autonomous development (design -> implement -> test -> deploy), mirroring Claude Code's agent loop. (3) WEEX 5/23: Harness will leverage DeepSeek-V3's 128K context window and function-calling capabilities already demonstrated in DeepSeek's API. (4) the-decoder 5/20: Harness represents China's strategic push to reduce dependency on Western AI coding tools — currently 70%+ of Chinese developers use GitHub Copilot or Claude Code. (5) Competitive landscape: this creates a three-way AI coding war — Anthropic Claude Code (current leader, winning startup ecosystem), GitHub Copilot (incumbent with 100M+ developer base but reliability issues), and DeepSeek Harness (China's sovereign AI coding play). Geopolitical dimension: if Harness succeeds, it weakens US AI tool export control leverage — Chinese developers won't need access to Claude or Copilot."
+  },
+  {
+    "id": 40,
+    "title": "Semi $830B+ Milestone",
+    "source": "2026-05-24 Omdia / Deloitte / IDC",
+    "border_color": "#0c6",
+    "highlight": "Global semiconductor market surpassed $830B in 2025 driven by AI demand, heading toward trillion-dollar threshold - Omdia/Deloitte/IDC reports",
+    "highlight_color": "#0c6",
+    "detail": "Omdia 5/24: \"Semiconductor market surpasses $830bn in 2025, driven by AI demand and broad segment growth.\" Deloitte 2026 Global Semiconductor Industry Outlook: projects continued double-digit growth with AI infrastructure as primary driver. IDC: \"Semiconductor Market to Surge Past the Trillion-Dollar Threshold: AI Infrastructure Drives Market Growth.\" Key data points: (1) AI chips (GPU/ASIC/FPGA) are the fastest-growing segment, (2) Memory (HBM) riding AI coattails, (3) Broad analog/industrial recovery in 2H 2026. Non-AI semis still in correction but showing early recovery signs. Implications: NVDA/AVGO/MRVL benefit from AI chip growth, MU/Samsung from HBM, TI/ADI from broad recovery. Risk: if AI capex slows, the trillion-dollar thesis could stall."
   }
 ]
