@@ -201,7 +201,7 @@ export default function FeedPage() {
 
   useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(detail||profile){if(e.key==='Escape'){setDetail(null);setProfile(null);}return;}if(e.target instanceof HTMLInputElement&&e.key!=='Escape')return;if(e.key==='1')setF('all');if(e.key==='2')setF('buy');if(e.key==='3')setF('sell');if(e.key==='4')setF('cluster');if(e.key==='/'||e.key==='`'){e.preventDefault();inp.current?.focus();}if(e.key==='Escape'){inp.current?.blur();setCmd('');}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[detail,profile]);
 
-  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toLowerCase();setCmd('');if(v==='all'||v==='1')setF('all');else if(v==='buy'||v==='2')setF('buy');else if(v==='sell'||v==='3')setF('sell');else if(v==='cluster'||v==='4')setF('cluster');else if(v.startsWith('/'))setMsg('Search: '+v.slice(1).toUpperCase());else setMsg('?');inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
+  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toUpperCase();setCmd('');if(v==='ALL'||v==='1')setF('all');else if(v==='BUY'||v==='2')setF('buy');else if(v==='SELL'||v==='3')setF('sell');else if(v==='CLUSTER'||v==='4')setF('cluster');else if(v.startsWith('/')){const tk=v.slice(1);const match=ALL.some(t=>t.ticker===tk);if(match)setDetail({mode:'ticker',label:tk,subtitle:tk});else setMsg(`Ticker ${tk} not found`);}else{const match=ALL.some(t=>t.ticker===v);if(match)setDetail({mode:'ticker',label:v,subtitle:v});else if(/^[A-Z]{1,5}$/.test(v))setMsg(`Ticker ${v} not found`);else setMsg('?');}inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',background:'#000',position:'relative'}}>
@@ -290,7 +290,7 @@ export default function FeedPage() {
                 <div style={{fontSize:10,color:'#ff8c00',fontWeight:600,marginBottom:2}}>CMD</div>
                 <div style={{display:'flex',alignItems:'center',border:'1px solid #1f1f1f',padding:'3px 6px'}}>
                   <span style={{color:'#0c6',fontSize:12,marginRight:6}}>&gt;</span>
-                  <input ref={inp} value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={onCmd} placeholder="/AAPL | buy | sell | all"
+                  <input ref={inp} value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={onCmd} placeholder="AAPL | /NVDA | buy | sell"
                     style={{flex:1,background:'transparent',border:'none',outline:'none',color:'#ff8c00',fontFamily:'JetBrains Mono,monospace',fontSize:12}}/>
                   <span style={{color:'#555',fontSize:9}}>↵</span>
                 </div>

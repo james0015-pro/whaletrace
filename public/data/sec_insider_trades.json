@@ -1,11 +1,11 @@
 {
   "source": "SEC EDGAR Form 4 (raw .txt XML parsing)",
-  "scraped_at": "2026-05-24T01:44:35.759253+00:00",
+  "scraped_at": "2026-05-24T06:19:04.236691+00:00",
   "count": 149,
-  "buys": 44,
+  "buys": 22,
   "sells": 75,
   "tickers_scanned": 20,
-  "date_range": "pending",
+  "date_range": "2026-03-01 to 2026-05-21",
   "trades": [
     {
       "ticker": "PUMP",
@@ -22,8 +22,7 @@
       "price": 16.66,
       "total_value": 276556000.0,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "WMT",
@@ -40,8 +39,7 @@
       "price": 124.01,
       "total_value": 1500521.0,
       "shares_owned_after": "662062.405",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "WMT",
@@ -58,8 +56,7 @@
       "price": 124.93,
       "total_value": 128053.25,
       "shares_owned_after": "661037.405",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "WMT",
@@ -76,8 +73,7 @@
       "price": 123.92,
       "total_value": 359368.0,
       "shares_owned_after": "577853.269",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "PML",
@@ -94,8 +90,7 @@
       "price": 7.355,
       "total_value": 5001.400000000001,
       "shares_owned_after": "680",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "PML",
@@ -112,8 +107,7 @@
       "price": 7.3313,
       "total_value": 4985.284,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NBH",
@@ -130,8 +124,7 @@
       "price": 10.26,
       "total_value": 32832.0,
       "shares_owned_after": "3200",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NBH",
@@ -148,8 +141,7 @@
       "price": 10.1109,
       "total_value": 20221.800000000003,
       "shares_owned_after": "1200",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NBH",
@@ -166,8 +158,7 @@
       "price": 10.1109,
       "total_value": 12133.080000000002,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "WMT",
@@ -184,8 +175,7 @@
       "price": 133.34,
       "total_value": 2034062.76472,
       "shares_owned_after": "580753.269",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "HD",
@@ -202,8 +192,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "51516",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NAN",
@@ -220,8 +209,7 @@
       "price": 11.28,
       "total_value": 33840.0,
       "shares_owned_after": "3000",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NAN",
@@ -238,8 +226,7 @@
       "price": 11.375,
       "total_value": 34125.0,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -256,8 +243,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "905898",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -274,8 +260,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "452",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -292,8 +277,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "202",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -310,8 +294,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "23",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "BRK.A",
@@ -328,8 +311,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "19968",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "BRK.A",
@@ -346,8 +328,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "1322",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "JPM",
@@ -364,8 +345,7 @@
       "price": 300.2662,
       "total_value": 1641855.5816000002,
       "shares_owned_after": "46428.0000",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -382,8 +362,7 @@
       "price": 391.89,
       "total_value": 14499.93,
       "shares_owned_after": "3544",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -400,8 +379,7 @@
       "price": 392.86,
       "total_value": 52643.240000000005,
       "shares_owned_after": "3320",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -418,8 +396,7 @@
       "price": 393.75,
       "total_value": 35437.5,
       "shares_owned_after": "3454",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -436,8 +413,7 @@
       "price": 394.95,
       "total_value": 15403.05,
       "shares_owned_after": "3281",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -454,8 +430,7 @@
       "price": 392.41,
       "total_value": 52582.94,
       "shares_owned_after": "3147",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -472,8 +447,7 @@
       "price": 393.54,
       "total_value": 67295.34,
       "shares_owned_after": "2976",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -490,8 +464,7 @@
       "price": 394.96,
       "total_value": 17773.2,
       "shares_owned_after": "2931",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -508,8 +481,7 @@
       "price": 392.79,
       "total_value": 78165.21,
       "shares_owned_after": "2732",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -526,8 +498,7 @@
       "price": 393.79,
       "total_value": 54343.020000000004,
       "shares_owned_after": "2594",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -544,8 +515,7 @@
       "price": 391.2,
       "total_value": 12518.4,
       "shares_owned_after": "2562",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "GOOGL",
@@ -562,8 +532,7 @@
       "price": 395.42,
       "total_value": 12258.02,
       "shares_owned_after": "2531",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -580,8 +549,7 @@
       "price": 261.7887,
       "total_value": 887201.9043,
       "shares_owned_after": "19516",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -598,8 +566,7 @@
       "price": 262.8454,
       "total_value": 1616762.0554,
       "shares_owned_after": "13365",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -616,8 +583,7 @@
       "price": 263.5705,
       "total_value": 510008.9175,
       "shares_owned_after": "11430",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -634,8 +600,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "13500",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "AMZN",
@@ -652,8 +617,7 @@
       "price": 261.7441,
       "total_value": 273260.8404,
       "shares_owned_after": "479670",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -670,8 +634,7 @@
       "price": 262.725,
       "total_value": 551197.05,
       "shares_owned_after": "477572",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -688,8 +651,7 @@
       "price": 263.5733,
       "total_value": 158143.98,
       "shares_owned_after": "476972",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AMZN",
@@ -706,8 +668,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "56927",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "AMZN",
@@ -724,8 +685,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "1984",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -742,8 +702,7 @@
       "price": 618.43,
       "total_value": 2711197.1199999996,
       "shares_owned_after": "6612",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -760,8 +719,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "28340",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -778,8 +736,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "83722",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -796,8 +753,7 @@
       "price": 618.43,
       "total_value": 4789121.92,
       "shares_owned_after": "15497",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -814,8 +770,7 @@
       "price": 609.35,
       "total_value": 510025.95,
       "shares_owned_after": "14660",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -832,8 +787,7 @@
       "price": 609.35,
       "total_value": 49966.700000000004,
       "shares_owned_after": "7474",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -850,8 +804,7 @@
       "price": 609.35,
       "total_value": 34732.950000000004,
       "shares_owned_after": "2201",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -868,8 +821,7 @@
       "price": 609.35,
       "total_value": 49966.700000000004,
       "shares_owned_after": "7474",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -886,8 +838,7 @@
       "price": 609.35,
       "total_value": 248614.80000000002,
       "shares_owned_after": "84781",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -904,8 +855,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "20373",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -922,8 +872,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "18756",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -940,8 +889,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "21567",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -958,8 +906,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "74367",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "META",
@@ -976,8 +923,7 @@
       "price": 618.43,
       "total_value": 1944962.3499999999,
       "shares_owned_after": "3197",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "META",
@@ -994,8 +940,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "69769",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "MSFT",
@@ -1012,8 +957,7 @@
       "price": 411.342,
       "total_value": 519241.9427039999,
       "shares_owned_after": "46003.3801",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MSFT",
@@ -1030,8 +974,7 @@
       "price": 409.43,
       "total_value": 36293.92235,
       "shares_owned_after": "45914.7351",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "LIFE",
@@ -1048,8 +991,7 @@
       "price": 23.0093,
       "total_value": 1382329.7161,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "LIFE",
@@ -1066,8 +1008,7 @@
       "price": 23.2691,
       "total_value": 1056649.831,
       "shares_owned_after": "42065",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "LIFE",
@@ -1084,8 +1025,7 @@
       "price": 24.2679,
       "total_value": 1020829.2135000001,
       "shares_owned_after": "0",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "BRK.A",
@@ -1102,8 +1042,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "2888",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1120,8 +1059,7 @@
       "price": 450.0,
       "total_value": 1350000.0,
       "shares_owned_after": "18106.5",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1138,8 +1076,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "2390",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "TSLA",
@@ -1156,8 +1093,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "711920",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "JPM",
@@ -1174,8 +1110,7 @@
       "price": 298.3644,
       "total_value": 1983526.5311999999,
       "shares_owned_after": "632399.0000",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "JPM",
@@ -1192,8 +1127,7 @@
       "price": 298.3555,
       "total_value": 1917530.7985,
       "shares_owned_after": "76402.0000",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "V",
@@ -1210,8 +1144,7 @@
       "price": 324.8111,
       "total_value": 3455665.2929000002,
       "shares_owned_after": "9872",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AAPL",
@@ -1228,8 +1161,7 @@
       "price": 290.0,
       "total_value": 369460.0,
       "shares_owned_after": "38713",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AAPL",
@@ -1246,8 +1178,7 @@
       "price": 284.57,
       "total_value": 42550898.39,
       "shares_owned_after": "3920049",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AAPL",
@@ -1264,8 +1195,7 @@
       "price": 285.04,
       "total_value": 28638823.92,
       "shares_owned_after": "3819576",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "AAPL",
@@ -1282,8 +1212,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "3814576",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "BRK.B",
@@ -1300,8 +1229,7 @@
       "price": 467.13,
       "total_value": 225623.79,
       "shares_owned_after": "610",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "BRK.B",
@@ -1318,8 +1246,7 @@
       "price": 470.22,
       "total_value": 24921.66,
       "shares_owned_after": "663",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1336,8 +1263,7 @@
       "price": 369.01,
       "total_value": 309968.39999999997,
       "shares_owned_after": "73968",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1354,8 +1280,7 @@
       "price": 369.769,
       "total_value": 562048.88,
       "shares_owned_after": "72448",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1372,8 +1297,7 @@
       "price": 370.929,
       "total_value": 472934.475,
       "shares_owned_after": "71173",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1390,8 +1314,7 @@
       "price": 371.881,
       "total_value": 379318.62,
       "shares_owned_after": "70153",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1408,8 +1331,7 @@
       "price": 372.819,
       "total_value": 230774.961,
       "shares_owned_after": "69534",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1426,8 +1348,7 @@
       "price": 374.402,
       "total_value": 194689.03999999998,
       "shares_owned_after": "69014",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1444,8 +1365,7 @@
       "price": 375.149,
       "total_value": 105041.72,
       "shares_owned_after": "68734",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1462,8 +1382,7 @@
       "price": 376.689,
       "total_value": 407200.809,
       "shares_owned_after": "67653",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1480,8 +1399,7 @@
       "price": 377.487,
       "total_value": 1133593.4610000001,
       "shares_owned_after": "64650",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1498,8 +1416,7 @@
       "price": 378.573,
       "total_value": 1317434.04,
       "shares_owned_after": "61170",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1516,8 +1433,7 @@
       "price": 379.427,
       "total_value": 667791.52,
       "shares_owned_after": "59410",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1534,8 +1450,7 @@
       "price": 380.756,
       "total_value": 668226.7799999999,
       "shares_owned_after": "57655",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1552,8 +1467,7 @@
       "price": 381.607,
       "total_value": 2631561.872,
       "shares_owned_after": "50759",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1570,8 +1484,7 @@
       "price": 382.414,
       "total_value": 260041.52,
       "shares_owned_after": "50079",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1588,8 +1501,7 @@
       "price": 383.612,
       "total_value": 475678.88,
       "shares_owned_after": "48839",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1606,8 +1518,7 @@
       "price": 384.284,
       "total_value": 169084.96,
       "shares_owned_after": "48399",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "TSLA",
@@ -1624,8 +1535,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "0",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "JNJ",
@@ -1642,8 +1552,7 @@
       "price": 229.85,
       "total_value": 2528809.6999999997,
       "shares_owned_after": "24911",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "JNJ",
@@ -1660,8 +1569,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "0",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "V",
@@ -1678,8 +1586,7 @@
       "price": 340.1432,
       "total_value": 10699204.355999999,
       "shares_owned_after": "15174",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "V",
@@ -1696,8 +1603,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "31460",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "AAPL",
@@ -1714,8 +1620,7 @@
       "price": 275.0,
       "total_value": 421850.0,
       "shares_owned_after": "13366",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "UNH",
@@ -1732,8 +1637,7 @@
       "price": 355.0,
       "total_value": 284000.0,
       "shares_owned_after": "17804.991",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "JNJ",
@@ -1750,8 +1654,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "6215.094",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "JNJ",
@@ -1768,8 +1671,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "7730.0491",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "CRM",
@@ -1786,8 +1688,7 @@
       "price": 189.8,
       "total_value": 168162.80000000002,
       "shares_owned_after": "82258",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "CRM",
@@ -1804,8 +1705,7 @@
       "price": 189.8,
       "total_value": 2615633.8000000003,
       "shares_owned_after": "68477",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "CRM",
@@ -1822,8 +1722,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "7142",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "CRM",
@@ -1840,8 +1739,7 @@
       "price": 189.8,
       "total_value": 168162.80000000002,
       "shares_owned_after": "174890",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "CRM",
@@ -1858,8 +1756,7 @@
       "price": 189.8,
       "total_value": 2615633.8000000003,
       "shares_owned_after": "161109",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "CRM",
@@ -1876,8 +1773,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "7142",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "CRM",
@@ -1894,8 +1790,7 @@
       "price": 189.8,
       "total_value": 4281888.0,
       "shares_owned_after": "11934486",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MSFT",
@@ -1912,8 +1807,7 @@
       "price": 393.11,
       "total_value": 536097.07963,
       "shares_owned_after": "47265.6921",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "UNH",
@@ -1930,8 +1824,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "41792",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "UNH",
@@ -1948,8 +1841,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "15162",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "HD",
@@ -1966,8 +1858,7 @@
       "price": 321.63,
       "total_value": 955884.36,
       "shares_owned_after": "25223.9518",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "DIS",
@@ -1984,8 +1875,7 @@
       "price": 96.96,
       "total_value": 105463.39199999999,
       "shares_owned_after": "23184",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "DIS",
@@ -2002,8 +1892,7 @@
       "price": 96.96,
       "total_value": 122828.92799999999,
       "shares_owned_after": "36785.2",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "DIS",
@@ -2020,8 +1909,7 @@
       "price": 96.96,
       "total_value": 100285.72799999999,
       "shares_owned_after": "8958.9",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "DIS",
@@ -2038,8 +1926,7 @@
       "price": 95.54,
       "total_value": 8541.276000000002,
       "shares_owned_after": "8869.5",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "HD",
@@ -2056,8 +1943,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "137793.5584",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "HD",
@@ -2074,8 +1960,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "30192",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "NVDA",
@@ -2092,8 +1977,7 @@
       "price": 172.6068,
       "total_value": 17260680.0,
       "shares_owned_after": "7521453",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2110,8 +1994,7 @@
       "price": 174.5685,
       "total_value": 21241844.217,
       "shares_owned_after": "7399771",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2128,8 +2011,7 @@
       "price": 176.2743,
       "total_value": 1501151.9388000001,
       "shares_owned_after": "46491",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2146,8 +2028,7 @@
       "price": 177.0565,
       "total_value": 1820494.933,
       "shares_owned_after": "36209",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2164,8 +2045,7 @@
       "price": 177.7335,
       "total_value": 35902.167,
       "shares_owned_after": "36007",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2182,8 +2062,7 @@
       "price": 181.93,
       "total_value": 832329.75,
       "shares_owned_after": "342516",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2200,8 +2079,7 @@
       "price": 172.5777,
       "total_value": 206402.92919999998,
       "shares_owned_after": "341320",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2218,8 +2096,7 @@
       "price": 172.97,
       "total_value": 69188.0,
       "shares_owned_after": "340920",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2236,8 +2113,7 @@
       "price": 173.778,
       "total_value": 86889.0,
       "shares_owned_after": "340420",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2254,8 +2130,7 @@
       "price": 174.8467,
       "total_value": 104908.02,
       "shares_owned_after": "339820",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2272,8 +2147,7 @@
       "price": 175.7948,
       "total_value": 369169.08,
       "shares_owned_after": "337720",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "NVDA",
@@ -2290,8 +2164,7 @@
       "price": 177.3117,
       "total_value": 106387.02,
       "shares_owned_after": "337120",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "XOM",
@@ -2308,8 +2181,7 @@
       "price": 155.495,
       "total_value": 167934.6,
       "shares_owned_after": "17124",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MSFT",
@@ -2326,8 +2198,7 @@
       "price": 395.55,
       "total_value": 12299.62725,
       "shares_owned_after": "48576.5643",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "V",
@@ -2344,8 +2215,7 @@
       "price": 309.6198,
       "total_value": 201252.87,
       "shares_owned_after": "2679",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "PG",
@@ -2362,8 +2232,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "5209.7148",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "PG",
@@ -2380,8 +2249,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "5751.065",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "PG",
@@ -2398,8 +2266,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "17128.6365",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "XOM",
@@ -2416,8 +2283,7 @@
       "price": 157.8201,
       "total_value": 339313.21499999997,
       "shares_owned_after": "18204",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2434,8 +2300,7 @@
       "price": 512.76,
       "total_value": 949631.52,
       "shares_owned_after": "29029.718",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2452,8 +2317,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "33533.718",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2470,8 +2334,7 @@
       "price": 512.76,
       "total_value": 3995425.92,
       "shares_owned_after": "25741.718",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2488,8 +2351,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "43885.718",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2506,8 +2368,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "13978",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "MA",
@@ -2524,8 +2385,7 @@
       "price": 512.76,
       "total_value": 94347.84,
       "shares_owned_after": "2736.011",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2542,8 +2402,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "3177.011",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2560,8 +2419,7 @@
       "price": 512.76,
       "total_value": 93835.08,
       "shares_owned_after": "2994.011",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2578,8 +2436,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "3476.011",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2596,8 +2453,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "547",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     },
     {
       "ticker": "MA",
@@ -2614,8 +2470,7 @@
       "price": 512.76,
       "total_value": 145623.84,
       "shares_owned_after": "11085.78",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2632,8 +2487,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "13043.78",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2650,8 +2504,7 @@
       "price": 512.76,
       "total_value": 970654.6799999999,
       "shares_owned_after": "11150.78",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2668,8 +2521,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "16183.78",
-      "is_derivative": false,
-      "is_cross_holding": false
+      "is_derivative": false
     },
     {
       "ticker": "MA",
@@ -2686,8 +2538,7 @@
       "price": 0.0,
       "total_value": 0.0,
       "shares_owned_after": "6078",
-      "is_derivative": true,
-      "is_cross_holding": false
+      "is_derivative": true
     }
   ]
 }

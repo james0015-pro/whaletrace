@@ -1,0 +1,62 @@
+{
+  "name": "WhaleTrace Supabase Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whaletrace-supabase-sync",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-sync",
+      "name": "📥 POST /whaletrace-supabase-sync",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// WhaleTrace Supabase Sync\n// 接收爬蟲資料 → 寫入 Supabase (DELETE + INSERT per table)\n// ============================================================\n\nconst SUPABASE_URL = 'https://vihxecnwonwmqclaxubn.supabase.co';\nconst SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpaHhlY253b253bXFjbGF4dWJuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU4NTY4OCwiZXhwIjoyMDk1MTYxNjg4fQ.-Tsme1Yakhfrj_nms3fG3TPvoblYS4WBSzO-Ejw5fK0';\n\nconst body = $input.first().json;\n\nasync function supabaseRequest(method, path, data) {\n  const options = {\n    method: method,\n    url: SUPABASE_URL + path,\n    headers: {\n      'apikey': SUPABASE_KEY,\n      'Authorization': 'Bearer ' + SUPABASE_KEY,\n      'Content-Type': 'application/json',\n      'Prefer': 'return=minimal'\n    },\n    json: true\n  };\n  if (data) options.body = data;\n  try {\n    await this.helpers.httpRequest(options);\n    return 'OK';\n  } catch (e) {\n    return 'ERR:' + (e.message || e).toString().slice(0, 80);\n  }\n}\n\nconst tickers = body.tickers || [];\nconst tickerFilter = tickers.length > 0 ? '?ticker=in.(' + tickers.join(',') + ')' : '';\nconst results = {};\n\n// 1. stock_snapshots\nif (body.stock_snapshots && body.stock_snapshots.length > 0) {\n  const rows = body.stock_snapshots.map(s => ({\n    ticker: s.ticker || '',\n    snapshot_date: s.data_date || new Date().toISOString().slice(0,10),\n    inst_ownership_pct: s.inst_own_pct,\n    insider_ownership_pct: s.insider_own_pct,\n    short_float_pct: s.short_float_pct,\n    short_ratio: s.short_ratio,\n    market_cap: s.market_cap,\n    pe_ratio: s.pe_trailing,\n    analyst_recommendation: s.recommendation || ''\n  }));\n  const del = await supabaseRequest('DELETE', '/rest/v1/stock_snapshots' + tickerFilter);\n  const ins = await supabaseRequest('POST', '/rest/v1/stock_snapshots', rows);\n  results.stock_snapshots = `del=${del} ins=${ins} rows=${rows.length}`;\n}\n\n// 2. insider_trades\nif (body.insider_trades && body.insider_trades.length > 0) {\n  const rows = body.insider_trades.map(t => ({\n    ticker: t.ticker || '',\n    insider_name: t.insider_name || '',\n    role: t.title || '',\n    transaction_date: t.trade_date || '',\n    filing_date: t.filing_date || '',\n    security: 'Common Stock',\n    transaction_type: t.transaction_type || '',\n    shares: t.shares || 0,\n    price: 0,\n    value: 0,\n    shares_held: 0,\n    filing_url: t.filing_url || ''\n  }));\n  const del = await supabaseRequest('DELETE', '/rest/v1/insider_trades' + tickerFilter);\n  const ins = await supabaseRequest('POST', '/rest/v1/insider_trades', rows);\n  results.insider_trades = `del=${del} ins=${ins} rows=${rows.length}`;\n}\n\n// 3. institutional_holdings\nif (body.institutional_holdings && body.institutional_holdings.length > 0) {\n  const rows = body.institutional_holdings.map(h => ({\n    ticker: h.ticker || '',\n    institution_name: h.institution_name || '',\n    shares: h.shares || 0,\n    market_value: h.market_value || 0,\n    change_shares: h.change_shares || 0,\n    change_pct: 0,\n    portfolio_pct: h.pct_of_portfolio || 0,\n    filing_date: h.quarter || '',\n    source: 'whaletrace-n8n'\n  }));\n  const del = await supabaseRequest('DELETE', '/rest/v1/institutional_holdings' + tickerFilter);\n  const ins = await supabaseRequest('POST', '/rest/v1/institutional_holdings', rows);\n  results.institutional_holdings = `del=${del} ins=${ins} rows=${rows.length}`;\n}\n\nresults._ts = new Date().toISOString();\nreturn [{ json: results }];"
+      },
+      "id": "code-sync",
+      "name": "🔄 Sync to Supabase",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-sync",
+      "name": "📤 Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "content": "## 🐋 WhaleTrace → Supabase Sync\n\n**POST /whaletrace-supabase-sync**\n\n接收 Python 爬蟲資料，寫入 Supabase 三張表：\n1. stock_snapshots — 籌碼快照\n2. insider_trades — 內部人交易\n3. institutional_holdings — 機構持股\n\nBody 格式：\n```json\n{\n  \"tickers\": [\"AAPL\",\"NVDA\"],\n  \"stock_snapshots\": [...],\n  \"insider_trades\": [...],\n  \"institutional_holdings\": [...]\n}\n```\n\n同步策略：DELETE (by ticker) → INSERT\n\nPython 爬蟲：`python whaletrace_scraper.py --sync-supabase`"
+      },
+      "id": "sticky-info",
+      "name": "📋 使用說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [50, 150]
+    }
+  ],
+  "connections": {
+    "📥 POST /whaletrace-supabase-sync": {
+      "main": [[{"node": "🔄 Sync to Supabase", "type": "main", "index": 0}]]
+    },
+    "🔄 Sync to Supabase": {
+      "main": [[{"node": "📤 Respond", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [{"name": "whaletrace"}, {"name": "supabase"}, {"name": "sync"}]
+}
