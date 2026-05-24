@@ -159,7 +159,7 @@ for ticker in TICKERS:
         accessions = filings.get("accessionNumber", [])
         filing_dates = filings.get("filingDate", [])
         
-        form4_indices = [i for i, ft in enumerate(form_types) if ft == "4"][:5]
+        form4_indices = [i for i, ft in enumerate(form_types) if ft == "4"][:3]  # 3 filings/ticker to avoid timeout
         
         if not form4_indices:
             print(f"  SKIP {ticker}: no Form 4")
@@ -174,7 +174,7 @@ for ticker in TICKERS:
             acc_no_dash = accession.replace('-', '')
             filing_url = f"https://www.sec.gov/Archives/edgar/data/{company_cik_num}/{acc_no_dash}/{accession}.txt"
             
-            time.sleep(2.0)  # SEC rate limit: 2.0s minimum per raw filing fetch
+            time.sleep(3.0)  # SEC rate limit: 3.0s minimum per raw filing fetch (proven safe)
             
             status2, text = http_get(filing_url)
             # Retry on 429 with 60s backoff
