@@ -2,11 +2,11 @@
   {
     "id": 1,
     "title": "NVDA",
-    "source": "2026-05-23 Motley Fool / Barron's / TheStreet",
+    "source": "2026-05-24 Motley Fool / 24/7 Wall St / Barron's / TheStreet",
     "border_color": "#f33",
-    "highlight": "6 consecutive earnings beats — stock fell after ALL of them. Motley Fool 5/23: \"Just Crushed Earnings Estimates, but the Stock Fell\" — JPMorgan reset target, Trefis: $200B CPU TAM market isn't buying",
+    "highlight": "NVDA boosts dividend +2,400% ($0.01->$0.25/qtr) alongside $80B buyback -- Motley Fool 5/24: strongest confidence signal yet. S&P 500 semi exposure hits 18% -- 2x 2000 Tech Bubble peak (24/7 Wall St 5/19). 6 consecutive earnings beats, stock fell after ALL of them",
     "highlight_color": "#f33",
-    "detail": "Q1 FY2027 revenue $81.6B (+85%) / net profit $58.3B (+211%) are the strongest earnings in semiconductor history — yet the stock fell for the 6th consecutive time post-earnings. Motley Fool 5/23: \"Nvidia Just Crushed Earnings Estimates, but the Stock Fell\" identifies three paradoxes: ①the market prices perfection — another beat is already expected ②custom silicon threat (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic) erodes GPU lock-in ③the beat margin is narrowing (growth rate decelerating from triple-digit to double-digit). JPMorgan reset price target (TheStreet 5/23) reflecting lower terminal growth assumptions. Trefis analysis: $200B CPU TAM opportunity (Vera CPU + Grace superchip) is real but the market views it as unproven execution risk, not yet a growth catalyst. Barron's observed the same pattern: \"Shares Have Fallen After Four Straight Earnings Beats\" — now extended to six. Wall Street's AI valuation ceiling thesis hardens: every beat just makes the stock cheaper"
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) / net profit $58.3B (+211%) are the strongest earnings in semiconductor history -- yet the stock fell for the 6th consecutive time post-earnings. TWO MAJOR NEW DEVELOPMENTS (5/24): (1) Dividend surge -- NVDA announced a 2,400% quarterly dividend increase from $0.01 to $0.25 per share, alongside an additional $80B buyback authorization (total buyback now ~$115B, largest in tech history). Motley Fool 5/24: the dividend surge is the strongest confidence signal yet from management -- with $58.3B quarterly net profit, NVDA can self-fund shareholder returns while still investing $20B+/year in R&D. The dividend+buyback combo signals maturation from pure growth to capital-return story, similar to Apple's 2013 pivot that preceded a decade of outperformance. (2) S&P 500 semiconductor concentration reaches 18% -- 24/7 Wall St 5/19 reports semiconductor stocks now make up 18% of the S&P 500 index, exactly double the ~9% peak during the 2000 Tech Bubble. This concentration risk is unprecedented: when NVDA sneezes, the entire index catches a cold. Hedge funds are max-long SOXX at all-time highs (Benzinga 5/19), Michael Burry draws direct 1999-2000 dot-com parallels (CNBC 5/8). Motley Fool 5/23: Nvidia Just Crushed Earnings Estimates, but the Stock Fell -- three paradoxes: (1) market prices perfection -- another beat is expected (2) custom silicon threat (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic) erodes GPU lock-in (3) beat margin narrowing (growth decelerating from triple-digit to double-digit). JPMorgan reset price target (TheStreet 5/23). Trefis: $200B CPU TAM (Vera CPU + Grace superchip) is real but market views as unproven execution risk. The dividend hike is management's answer to the stock's post-earnings decline pattern -- a signal that even at $5.5T market cap, they believe the stock is undervalued"
   },
   {
     "id": 2,
@@ -100,11 +100,11 @@
   {
     "id": 12,
     "title": "DJIA 50,000",
-    "source": "2026-05-23",
+    "source": "2026-05-22/24 Benzinga / Investopedia",
     "border_color": "#0c6",
-    "highlight": "Dow Jones breaches 50,000 for first time — AI rotation in full swing: NVDA down vs TSLA/AAPL/DELL/QCOM rally",
+    "highlight": "Dow Jones breaches 50,000 for first time -- DELL +15%, Qualcomm +11.6% lead historic rally. AI rotation accelerates: NVDA down while enterprise AI infrastructure stocks surge. US-Iran peace talks fuel risk appetite",
     "highlight_color": "#0c6",
-    "detail": "Historic milestone signals broad market strength beyond mega-cap tech. AI trade rotation accelerates: investors shift from concentrated NVDA bet to diversified AI beneficiaries. TSLA/AAPL benefit from AI-at-the-edge narrative, DELL/QCOM from enterprise AI infrastructure buildout"
+    "detail": "Historic milestone signals broad market strength beyond mega-cap tech. Benzinga 5/22: DELL surged +15% and Qualcomm jumped +11.6% as the DJIA crossed 50,000 for the first time in history. The DJIA milestone coincided with S&P 500's 8th consecutive weekly gain (Investopedia 5/22), the longest winning streak since 2017. AI trade rotation accelerates: investors shift from concentrated NVDA bet to diversified enterprise AI infrastructure plays -- DELL (AI server manufacturing), QCOM (edge AI chips), TSLA/AAPL (AI-at-the-edge narrative). US-Iran peace negotiations (mediated by Oman and Qatar) emerged as an additional catalyst, reducing geopolitical risk premium and energy cost uncertainty. The rally breadth (NYSE advance-decline line at record highs) suggests genuine underlying strength rather than narrow mega-cap leadership -- a healthy sign for market sustainability"
   },
   {
     "id": 13,
