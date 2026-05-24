@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
 import { formatCompactNumber, truncate } from '@/lib/utils';
@@ -266,17 +266,25 @@ export default function FeedPage() {
   const { t } = useTranslation();
   const [f, setF] = useState<FM>('all');
   const [cmd, setCmd] = useState('');
+  const cmdRef = useRef('');
   const [msg, setMsg] = useState('');
   const [detail, setDetail] = useState<DetailTarget | null>(null);
   const [profile, setProfile] = useState<InsiderTrade | null>(null);
   const [tickerFilter, setTickerFilter] = useState<string | null>(null);
   const inp = useRef<HTMLInputElement>(null);
 
-  // Data: when tickerFilter is set, generate 10-year history
-  const tickerTrades = tickerFilter ? gen10YearTrades(tickerFilter) : null;
-  const tickerInstitutions = tickerFilter ? gen10YearInstitutions(tickerFilter) : null;
+  // 10-year data — memoized, only regenerates when tickerFilter changes
+  const tickerTrades = useMemo(() => {
+    if (!tickerFilter) return null;
+    try { return gen10YearTrades(tickerFilter); } catch { return []; }
+  }, [tickerFilter]);
 
-  const filtered = (() => {
+  const tickerInstitutions = useMemo(() => {
+    if (!tickerFilter) return null;
+    try { return gen10YearInstitutions(tickerFilter); } catch { return []; }
+  }, [tickerFilter]);
+
+  const filtered = useMemo(() => {
     const base = tickerFilter ? (tickerTrades || []) : ALL;
     switch (f) {
       case 'buy': return base.filter(t => t.transaction_type === 'BUY');
@@ -284,22 +292,72 @@ export default function FeedPage() {
       case 'cluster': return base.filter(t => t.signal_category === 'CLUSTER');
       default: return base;
     }
-  })();
+  }, [tickerFilter, tickerTrades, f]);
 
-  const instData = tickerFilter ? (tickerInstitutions || []) : INSTS;
+  const instData = useMemo(() => tickerFilter ? (tickerInstitutions || []) : INSTS, [tickerFilter, tickerInstitutions]);
 
-  const buyN = filtered.filter(t => t.transaction_type === 'BUY').length;
-  const sellN = filtered.filter(t => t.transaction_type === 'SELL').length;
-  const cluN = filtered.filter(t => t.signal_category === 'CLUSTER').length;
+  const buyN = useMemo(() => filtered.filter(t => t.transaction_type === 'BUY').length, [filtered]);
+  const sellN = useMemo(() => filtered.filter(t => t.transaction_type === 'SELL').length, [filtered]);
+  const cluN = useMemo(() => filtered.filter(t => t.signal_category === 'CLUSTER').length, [filtered]);
 
-  const clearTickerFilter = () => {
+  const clearTickerFilter = useCallback(() => {
     setTickerFilter(null);
     setF('all');
-  };
+  }, []);
 
-  useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(detail||profile){if(e.key==='Escape'){setDetail(null);setProfile(null);}return;}if(e.target instanceof HTMLInputElement&&e.key!=='Escape')return;if(e.key==='1'){setF('all');setTickerFilter(null);}if(e.key==='2')setF('buy');if(e.key==='3')setF('sell');if(e.key==='4')setF('cluster');if(e.key==='/'||e.key==='`'){e.preventDefault();inp.current?.focus();}if(e.key==='Escape'){inp.current?.blur();setCmd('');clearTickerFilter();}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[detail,profile,tickerFilter]);
+  // Keyboard shortcuts
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (detail || profile) {
+        if (e.key === 'Escape') { setDetail(null); setProfile(null); }
+        return;
+      }
+      if (e.target instanceof HTMLInputElement && e.key !== 'Escape') return;
+      if (e.key === '1') { setF('all'); setTickerFilter(null); }
+      if (e.key === '2') setF('buy');
+      if (e.key === '3') setF('sell');
+      if (e.key === '4') setF('cluster');
+      if (e.key === '/' || e.key === '`') { e.preventDefault(); inp.current?.focus(); }
+      if (e.key === 'Escape') { inp.current?.blur(); setCmd(''); cmdRef.current = ''; clearTickerFilter(); }
+    };
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, [detail, profile, clearTickerFilter]);
 
-  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toUpperCase();setCmd('');if(v==='ALL'||v==='1'){setF('all');clearTickerFilter();}else if(v==='BUY'||v==='2')setF('buy');else if(v==='SELL'||v==='3')setF('sell');else if(v==='CLUSTER'||v==='4')setF('cluster');else if(v==='CLEAR'||v==='CLS'){clearTickerFilter();setMsg('Filter cleared');}else{const tk=v.startsWith('/')?v.slice(1):v;if(/^[A-Z]{1,5}$/.test(tk)){setTickerFilter(tk);setDetail(null);setF('all');setMsg(`🔍 ${tk} — 10Y history`);}else{setMsg('?');}}inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
+  // CMD handler — uses ref to avoid stale closure on cmd state
+  const onCmd = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== 'Enter') return;
+    const v = cmdRef.current.trim().toUpperCase();
+    setCmd('');
+    cmdRef.current = '';
+
+    if (v === 'ALL' || v === '1') { setF('all'); setTickerFilter(null); }
+    else if (v === 'BUY' || v === '2') setF('buy');
+    else if (v === 'SELL' || v === '3') setF('sell');
+    else if (v === 'CLUSTER' || v === '4') setF('cluster');
+    else if (v === 'CLEAR' || v === 'CLS' || v === 'RESET') { setTickerFilter(null); setF('all'); setMsg('Filter cleared'); }
+    else {
+      const tk = v.startsWith('/') ? v.slice(1) : v;
+      if (/^[A-Z]{1,5}$/.test(tk)) {
+        setTickerFilter(tk);
+        setDetail(null);
+        setF('all');
+        setMsg(`🔍 ${tk} — 10Y history`);
+      } else {
+        setMsg('?');
+      }
+    }
+    inp.current?.blur();
+    setTimeout(() => setMsg(''), 2500);
+  }, []);
+
+  // Sync cmd state → ref (for onCmd to always read latest)
+  const onCmdChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    cmdRef.current = val;
+    setCmd(val);
+  }, []);
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',background:'#000',position:'relative'}}>
@@ -416,7 +474,7 @@ export default function FeedPage() {
                 <div style={{fontSize:10,color:'#ff8c00',fontWeight:600,marginBottom:2}}>CMD</div>
                 <div style={{display:'flex',alignItems:'center',border:'1px solid #1f1f1f',padding:'3px 6px'}}>
                   <span style={{color:'#0c6',fontSize:12,marginRight:6}}>&gt;</span>
-                  <input ref={inp} value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={onCmd} placeholder="AAPL | /NVDA | buy | sell"
+                  <input ref={inp} value={cmd} onChange={onCmdChange} onKeyDown={onCmd} placeholder="AAPL | /NVDA | buy | sell"
                     style={{flex:1,background:'transparent',border:'none',outline:'none',color:'#ff8c00',fontFamily:'JetBrains Mono,monospace',fontSize:12}}/>
                   <span style={{color:'#555',fontSize:9}}>↵</span>
                 </div>
