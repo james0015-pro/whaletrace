@@ -30,3 +30,6 @@ scripts/output/
 playwright-report/
 test-results/
 
+scripts/abu_ump_backtest.py
+scripts/vnpy_backtest.py
+__pycache__/
