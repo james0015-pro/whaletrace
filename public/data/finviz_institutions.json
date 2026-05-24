@@ -1,6 +1,6 @@
 {
   "source": "Finviz",
-  "scraped_at": "2026-05-23T18:01:14.655013+00:00",
+  "scraped_at": "2026-05-24T01:28:40.338637+00:00",
   "tickers_scraped": 20,
   "tickers_successful": 20,
   "tickers_failed": 0,
@@ -35,7 +35,7 @@
       "short_ratio": 0.0,
       "market_cap": 5210990000000.0,
       "shares_outstanding": 24220000000.0,
-      "shares_float": 23260000000.0,
+      "shares_float": 23270000000.0,
       "ticker": "NVDA"
     },
     "GOOGL": {
@@ -72,7 +72,7 @@
       "ticker": "META"
     },
     "TSLA": {
-      "inst_own_pct": 43.43,
+      "inst_own_pct": 43.44,
       "insider_own_pct": 22.4,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
@@ -94,7 +94,7 @@
       "ticker": "BRK.B"
     },
     "JPM": {
-      "inst_own_pct": 75.16,
+      "inst_own_pct": 75.15,
       "insider_own_pct": 0.44,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
@@ -105,7 +105,7 @@
       "ticker": "JPM"
     },
     "V": {
-      "inst_own_pct": 79.91,
+      "inst_own_pct": 79.9,
       "insider_own_pct": 12.11,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
@@ -116,14 +116,14 @@
       "ticker": "V"
     },
     "UNH": {
-      "inst_own_pct": 84.94,
+      "inst_own_pct": 84.93,
       "insider_own_pct": 0.28,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 352790000000.0,
       "shares_outstanding": 908000000.0,
-      "shares_float": 905620000.0,
+      "shares_float": 905720000.0,
       "ticker": "UNH"
     },
     "XOM": {
@@ -134,7 +134,7 @@
       "short_ratio": 0.0,
       "market_cap": 642140000000.0,
       "shares_outstanding": 4139999999.9999995,
-      "shares_float": 4130000000.0,
+      "shares_float": 4139999999.9999995,
       "ticker": "XOM"
     },
     "WMT": {
@@ -149,7 +149,7 @@
       "ticker": "WMT"
     },
     "JNJ": {
-      "inst_own_pct": 76.1,
+      "inst_own_pct": 76.09,
       "insider_own_pct": 0.14,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
@@ -171,7 +171,7 @@
       "ticker": "MA"
     },
     "PG": {
-      "inst_own_pct": 71.23,
+      "inst_own_pct": 71.24,
       "insider_own_pct": 0.08,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
@@ -189,7 +189,7 @@
       "short_ratio": 0.0,
       "market_cap": 311830000000.0,
       "shares_outstanding": 996030000.0,
-      "shares_float": 995310000.0,
+      "shares_float": 995300000.0,
       "ticker": "HD"
     },
     "BAC": {

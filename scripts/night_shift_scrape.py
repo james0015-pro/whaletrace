@@ -174,9 +174,14 @@ for ticker in TICKERS:
             acc_no_dash = accession.replace('-', '')
             filing_url = f"https://www.sec.gov/Archives/edgar/data/{company_cik_num}/{acc_no_dash}/{accession}.txt"
             
-            time.sleep(0.3)
+            time.sleep(2.0)  # SEC rate limit: 2.0s minimum per raw filing fetch
             
             status2, text = http_get(filing_url)
+            # Retry on 429 with 60s backoff
+            if status2 == 429:
+                print(f"    ⚠️  429 rate limited, waiting 60s...")
+                time.sleep(60)
+                status2, text = http_get(filing_url)
             if status2 != 200:
                 continue
             
@@ -296,7 +301,7 @@ for ticker in TICKERS:
         print(f"  FAIL {ticker}: {e}")
         sec_fail += 1
     
-    time.sleep(0.25)
+    time.sleep(0.5)  # 0.5s between submissions API calls
 
 all_trades.sort(key=lambda t: (t.get('filing_date') or ''), reverse=True)
 

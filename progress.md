@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-23** — Night Shift 10: Playwright E2E Smoke Tests — 15 tests covering all 8 routes, page load, routing navigation, stock detail, interactions. All 15/15 pass + 63/63 unit tests. npm run build ✅.
+**2026-05-24** — Night Shift 11: SEC Scraper Rate-Limit Fix + Data Refresh
 
 ## 專案狀態
 
@@ -68,3 +68,4 @@
 | 2026-05-23 | Night Shift 8 | Vitest 單元測試：安裝 vitest + @testing-library/react + jsdom，建立 vitest.config.ts + test-setup.ts。4 個測試檔 (utils.test.ts 38 tests, price-utils.test.ts 12 tests, sec-converter.test.ts 7 tests, SignalBadge.test.tsx 6 tests)，共 63 tests 全數通過。npm run build ✅。原本的 feat-017 拆分為 feat-017(✅)/feat-018(WCAG)/feat-019(Playwright)。 |
 | 2026-05-23 | Night Shift 10 | feat-019 Playwright E2E Smoke Tests: npm install -D @playwright/test, playwright.config.ts (chromium headless shell), e2e/smoke.spec.ts (15 tests: App Shell 2, FeedPage 1, Dashboard 2, StockDetail 3, Watchlist 1, Treemap 1, Navigation 3, Interactions 2), scripts/run-e2e.sh runner, vitest.config.ts exclude e2e/. All 15/15 pass + 63/63 unit tests. npm run build ✅. |
 | 2026-05-23 | Night Shift 9 | WCAG 2.1 AA 審計：修復 13 處鍵盤導航 (Cell/R 元件 + DashboardPage 卡片 + FeedPage 遮罩)，8 處 ARIA 標籤/角色 (TopNavBar 6 按鈕 + LoadingFallback + Ticker tape aria-hidden)，1 處載入指示器 (role="status" + aria-live="polite")。npm run build ✅ (1.71s)，npm test ✅ (63/63)。建立 WCAG_AUDIT.md。feat-018 ✅。|
+| 2026-05-24 | Night Shift 11 | **SEC 爬蟲修復 + 資料刷新**: 上次 cron 執行 night_shift_scrape.py 命中 SEC rate limit (0.3s delay)，sec_insider_trades.json = 0 trades。修復：(1) 建立 sec_incremental_scrape.py (逐檔存檔 + 3.0s delay + 429 自動 90s backoff retry)，(2) 降低 filings/ticker 5→3 避免超時。**成果**: 149 real SEC Form 4 trades (44 buys, 75 sells) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-21。yfinance 190 筆機構持股 (19/20 tickers, BRK.B = none)。npm run build ✅ (2.25s) → GitHub Pages 部署 + rebuild trigger 201。night_shift_scrape.py 也修復：sleep 0.3s→2.0s + 429 retry。|
