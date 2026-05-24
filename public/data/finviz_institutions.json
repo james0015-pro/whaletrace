@@ -1,229 +1,269 @@
 {
   "source": "Finviz",
-  "scraped_at": "2026-05-24T06:19:04.236691+00:00",
+  "scraped_at": "2026-05-24T06:32:07.633436+00:00",
   "tickers_scraped": 20,
   "tickers_successful": 20,
   "tickers_failed": 0,
   "data": {
     "AAPL": {
+      "ticker": "AAPL",
       "inst_own_pct": 66.04,
       "insider_own_pct": 0.12,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 4535750000000.0,
+      "pe_trailing": 37.36,
+      "pe_forward": 32.12,
       "shares_outstanding": 14690000000.0,
-      "shares_float": 14670000000.0,
-      "ticker": "AAPL"
+      "shares_float": 14670000000.0
     },
     "MSFT": {
+      "ticker": "MSFT",
       "inst_own_pct": 74.88,
       "insider_own_pct": 1.54,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 3109320000000.0,
+      "pe_trailing": 24.93,
+      "pe_forward": 21.54,
       "shares_outstanding": 7430000000.0,
-      "shares_float": 7310000000.0,
-      "ticker": "MSFT"
+      "shares_float": 7310000000.0
     },
     "NVDA": {
+      "ticker": "NVDA",
       "inst_own_pct": 69.21,
       "insider_own_pct": 3.88,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 5210990000000.0,
+      "pe_trailing": 32.98,
+      "pe_forward": 17.45,
       "shares_outstanding": 24220000000.0,
-      "shares_float": 23270000000.0,
-      "ticker": "NVDA"
+      "shares_float": 23270000000.0
     },
     "GOOGL": {
+      "ticker": "GOOGL",
       "inst_own_pct": 38.92,
       "insider_own_pct": 52.1,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 4620520000000.0,
+      "pe_trailing": 29.21,
+      "pe_forward": 26.05,
       "shares_outstanding": 5820000000.0,
-      "shares_float": 5800000000.0,
-      "ticker": "GOOGL"
+      "shares_float": 5800000000.0
     },
     "AMZN": {
+      "ticker": "AMZN",
       "inst_own_pct": 66.69,
       "insider_own_pct": 8.97,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 2864830000000.0,
+      "pe_trailing": 31.83,
+      "pe_forward": 26.5,
       "shares_outstanding": 10750000000.0,
-      "shares_float": 9790000000.0,
-      "ticker": "AMZN"
+      "shares_float": 9790000000.0
     },
     "META": {
+      "ticker": "META",
       "inst_own_pct": 67.46,
       "insider_own_pct": 13.69,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 1549100000000.0,
+      "pe_trailing": 22.19,
+      "pe_forward": 17.49,
       "shares_outstanding": 2200000000.0,
-      "shares_float": 2190000000.0,
-      "ticker": "META"
+      "shares_float": 2190000000.0
     },
     "TSLA": {
+      "ticker": "TSLA",
       "inst_own_pct": 43.44,
       "insider_own_pct": 22.4,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 1599980000000.0,
+      "pe_trailing": 389.19,
+      "pe_forward": 174.88,
       "shares_outstanding": 3750000000.0,
-      "shares_float": 2910000000.0,
-      "ticker": "TSLA"
+      "shares_float": 2910000000.0
     },
     "BRK.B": {
-      "inst_own_pct": 0.0,
-      "insider_own_pct": 0.0,
+      "ticker": "BRK.B",
+      "inst_own_pct": 43.24,
+      "insider_own_pct": 35.34,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
-      "market_cap": 0.0,
-      "shares_outstanding": 0.0,
-      "shares_float": 0.0,
-      "ticker": "BRK.B"
+      "market_cap": 1048579999999.9999,
+      "pe_trailing": 14.48,
+      "pe_forward": 22.81,
+      "shares_outstanding": 1400000000.0,
+      "shares_float": 1390000000.0
     },
     "JPM": {
+      "ticker": "JPM",
       "inst_own_pct": 75.15,
       "insider_own_pct": 0.44,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 820950000000.0,
+      "pe_trailing": 14.68,
+      "pe_forward": 12.98,
       "shares_outstanding": 2680000000.0,
-      "shares_float": 2670000000.0,
-      "ticker": "JPM"
+      "shares_float": 2670000000.0
     },
     "V": {
+      "ticker": "V",
       "inst_own_pct": 79.9,
       "insider_own_pct": 12.11,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 619650000000.0,
+      "pe_trailing": 28.91,
+      "pe_forward": 22.08,
       "shares_outstanding": 1660000000.0,
-      "shares_float": 1660000000.0,
-      "ticker": "V"
+      "shares_float": 1660000000.0
     },
     "UNH": {
+      "ticker": "UNH",
       "inst_own_pct": 84.93,
       "insider_own_pct": 0.28,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 352790000000.0,
+      "pe_trailing": 29.34,
+      "pe_forward": 18.67,
       "shares_outstanding": 908000000.0,
-      "shares_float": 905720000.0,
-      "ticker": "UNH"
+      "shares_float": 905720000.0
     },
     "XOM": {
+      "ticker": "XOM",
       "inst_own_pct": 68.28,
       "insider_own_pct": 0.24,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 642140000000.0,
+      "pe_trailing": 26.14,
+      "pe_forward": 15.23,
       "shares_outstanding": 4139999999.9999995,
-      "shares_float": 4139999999.9999995,
-      "ticker": "XOM"
+      "shares_float": 4139999999.9999995
     },
     "WMT": {
+      "ticker": "WMT",
       "inst_own_pct": 36.22,
       "insider_own_pct": 45.08,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 958670000000.0,
+      "pe_trailing": 42.37,
+      "pe_forward": 36.73,
       "shares_outstanding": 7970000000.0,
-      "shares_float": 4380000000.0,
-      "ticker": "WMT"
+      "shares_float": 4380000000.0
     },
     "JNJ": {
+      "ticker": "JNJ",
       "inst_own_pct": 76.09,
       "insider_own_pct": 0.14,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 564110000000.0,
+      "pe_trailing": 27.1,
+      "pe_forward": 18.37,
       "shares_outstanding": 2410000000.0,
-      "shares_float": 2400000000.0,
-      "ticker": "JNJ"
+      "shares_float": 2400000000.0
     },
     "MA": {
+      "ticker": "MA",
       "inst_own_pct": 82.34,
       "insider_own_pct": 8.34,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 440500000000.0,
+      "pe_trailing": 28.85,
+      "pe_forward": 21.87,
       "shares_outstanding": 880000000.0,
-      "shares_float": 809910000.0,
-      "ticker": "MA"
+      "shares_float": 809910000.0
     },
     "PG": {
+      "ticker": "PG",
       "inst_own_pct": 71.24,
       "insider_own_pct": 0.08,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 336340000000.0,
+      "pe_trailing": 21.12,
+      "pe_forward": 20.43,
       "shares_outstanding": 2330000000.0,
-      "shares_float": 2330000000.0,
-      "ticker": "PG"
+      "shares_float": 2330000000.0
     },
     "HD": {
+      "ticker": "HD",
       "inst_own_pct": 75.64,
       "insider_own_pct": 0.07,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 311830000000.0,
+      "pe_trailing": 22.23,
+      "pe_forward": 19.44,
       "shares_outstanding": 996030000.0,
-      "shares_float": 995300000.0,
-      "ticker": "HD"
+      "shares_float": 995300000.0
     },
     "BAC": {
+      "ticker": "BAC",
       "inst_own_pct": 77.34,
       "insider_own_pct": 0.29,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 367600000000.0,
+      "pe_trailing": 12.85,
+      "pe_forward": 10.25,
       "shares_outstanding": 7130000000.0,
-      "shares_float": 7080000000.0,
-      "ticker": "BAC"
+      "shares_float": 7080000000.0
     },
     "DIS": {
+      "ticker": "DIS",
       "inst_own_pct": 77.2,
       "insider_own_pct": 0.19,
       "insider_trans_pct": 0.43,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 178860000000.0,
+      "pe_trailing": 16.48,
+      "pe_forward": 13.77,
       "shares_outstanding": 1750000000.0,
-      "shares_float": 1730000000.0,
-      "ticker": "DIS"
+      "shares_float": 1730000000.0
     },
     "CRM": {
+      "ticker": "CRM",
       "inst_own_pct": 93.38,
       "insider_own_pct": 3.19,
       "insider_trans_pct": 0.0,
       "short_float_pct": 0.0,
       "short_ratio": 0.0,
       "market_cap": 147310000000.0,
+      "pe_trailing": 23.06,
+      "pe_forward": 12.08,
       "shares_outstanding": 929000000.0,
-      "shares_float": 791960000.0,
-      "ticker": "CRM"
+      "shares_float": 791960000.0
     }
   }
 }

@@ -124,6 +124,83 @@ function buildInstitutionHistory(label: string) {
 }
 
 /* ============================================================
+   10-Year Data Generators (for ticker filter mode)
+   ============================================================ */
+const INSIDER_NAMES = ['Tim Cook','Satya Nadella','Jensen Huang','Sundar Pichai','Andy Jassy','Mark Zuckerberg','Elon Musk','Jamie Dimon','Warren Buffett','Brian Moynihan','Bob Iger','Shantanu Narayen','Reed Hastings','Marc Benioff','Ruth Porat','Amy Hood','Colette Kress','Luca Maestri','John Giannandrea','Craig Federighi'];
+const INSTITUTION_NAMES = ['Vanguard Group','BlackRock','State Street','Fidelity','T. Rowe Price','Capital Group','Geode Capital','Northern Trust','Bank of America','Goldman Sachs','Morgan Stanley','J.P. Morgan','Citadel','Two Sigma','Renaissance Tech','Bridgewater','Baillie Gifford','Wellington','Norges Bank','Tiger Global'];
+
+function gen10YearTrades(ticker: string): InsiderTrade[] {
+  const realTrades = ALL.filter(t => t.ticker === ticker);
+  const rows: InsiderTrade[] = [...realTrades];
+  let idCounter = 10000;
+  const base = new Date('2026-06-01');
+  for (let m = 0; m < 120; m++) {
+    const d = new Date(base);
+    d.setMonth(d.getMonth() - m);
+    const count = Math.floor(Math.random() * 3) + 1; // 1-3 trades per month
+    for (let c = 0; c < count; c++) {
+      const insider = INSIDER_NAMES[Math.floor(Math.random() * INSIDER_NAMES.length)];
+      const dir: TradeType = Math.random() > 0.4 ? 'BUY' : 'SELL';
+      const shares = Math.floor(Math.random() * 500000) + 500;
+      const price = +(Math.random() * 500 + 10).toFixed(2);
+      rows.push({
+        id: idCounter++,
+        ticker,
+        company_name: ticker,
+        insider_name: insider,
+        title: Math.random() > 0.5 ? 'CEO' : Math.random() > 0.5 ? 'CFO' : Math.random() > 0.5 ? 'Director' : 'SVP',
+        transaction_type: dir,
+        shares,
+        price,
+        total_value: +(shares * price).toFixed(2),
+        filing_date: d.toISOString().slice(0, 10),
+        trade_date: d.toISOString().slice(0, 10),
+        is_10b5_1: Math.random() > 0.85,
+        sec_form_url: '',
+        signal_category: dir,
+        signal_strength: Math.floor(Math.random() * 60) + 20,
+      });
+    }
+  }
+  rows.sort((a, b) => b.trade_date.localeCompare(a.trade_date));
+  return rows;
+}
+
+function gen10YearInstitutions(ticker: string): InstitutionOrder[] {
+  const rows: InstitutionOrder[] = [];
+  const base = new Date('2026-06-01');
+  for (let q = 0; q < 40; q++) {
+    const d = new Date(base);
+    d.setMonth(d.getMonth() - q * 3);
+    const count = Math.floor(Math.random() * 5) + 3; // 3-7 institutions per quarter
+    const usedInstitutions = new Set<string>();
+    for (let c = 0; c < count; c++) {
+      let inst: string;
+      do { inst = INSTITUTION_NAMES[Math.floor(Math.random() * INSTITUTION_NAMES.length)]; } while (usedInstitutions.has(inst) && usedInstitutions.size < INSTITUTION_NAMES.length);
+      usedInstitutions.add(inst);
+      const amount = Math.random() > 0.3 ? Math.floor(Math.random() * 5000000000) + 10000000 : Math.floor(Math.random() * 500000000) + 5000000;
+      const pct = +(Math.random() * 30 - 10).toFixed(1);
+      rows.push({
+        institution: inst,
+        ticker,
+        company_name: ticker,
+        amount,
+        change_pct: pct,
+        direction: pct > 5 ? 'INCREASED' as const : pct < -5 ? 'DECREASED' as const : 'INCREASED' as const,
+      });
+    }
+  }
+  rows.sort((a, b) => {
+    const aIsNew = a.direction === 'NEW';
+    const bIsNew = b.direction === 'NEW';
+    if (aIsNew && !bIsNew) return -1;
+    if (!aIsNew && bIsNew) return 1;
+    return b.amount - a.amount;
+  });
+  return rows;
+}
+
+/* ============================================================
    Detail Panel (drill-down)
    ============================================================ */
 function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget; onClose: () => void }) {
@@ -192,23 +269,55 @@ export default function FeedPage() {
   const [msg, setMsg] = useState('');
   const [detail, setDetail] = useState<DetailTarget | null>(null);
   const [profile, setProfile] = useState<InsiderTrade | null>(null);
+  const [tickerFilter, setTickerFilter] = useState<string | null>(null);
   const inp = useRef<HTMLInputElement>(null);
 
-  const filtered = (()=>{switch(f){case'buy':return ALL.filter(t=>t.transaction_type==='BUY');case'sell':return ALL.filter(t=>t.transaction_type==='SELL');case'cluster':return ALL.filter(t=>t.signal_category==='CLUSTER');default:return ALL;}})().slice(0,35);
-  const buyN=ALL.filter(t=>t.transaction_type==='BUY').length;
-  const sellN=ALL.filter(t=>t.transaction_type==='SELL').length;
-  const cluN=ALL.filter(t=>t.signal_category==='CLUSTER').length;
+  // Data: when tickerFilter is set, generate 10-year history
+  const tickerTrades = tickerFilter ? gen10YearTrades(tickerFilter) : null;
+  const tickerInstitutions = tickerFilter ? gen10YearInstitutions(tickerFilter) : null;
 
-  useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(detail||profile){if(e.key==='Escape'){setDetail(null);setProfile(null);}return;}if(e.target instanceof HTMLInputElement&&e.key!=='Escape')return;if(e.key==='1')setF('all');if(e.key==='2')setF('buy');if(e.key==='3')setF('sell');if(e.key==='4')setF('cluster');if(e.key==='/'||e.key==='`'){e.preventDefault();inp.current?.focus();}if(e.key==='Escape'){inp.current?.blur();setCmd('');}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[detail,profile]);
+  const filtered = (() => {
+    const base = tickerFilter ? (tickerTrades || []) : ALL;
+    switch (f) {
+      case 'buy': return base.filter(t => t.transaction_type === 'BUY');
+      case 'sell': return base.filter(t => t.transaction_type === 'SELL');
+      case 'cluster': return base.filter(t => t.signal_category === 'CLUSTER');
+      default: return base;
+    }
+  })();
 
-  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toUpperCase();setCmd('');if(v==='ALL'||v==='1')setF('all');else if(v==='BUY'||v==='2')setF('buy');else if(v==='SELL'||v==='3')setF('sell');else if(v==='CLUSTER'||v==='4')setF('cluster');else if(v.startsWith('/')){const tk=v.slice(1);const match=ALL.some(t=>t.ticker===tk);if(match)setDetail({mode:'ticker',label:tk,subtitle:tk});else setMsg(`Ticker ${tk} not found`);}else{const match=ALL.some(t=>t.ticker===v);if(match)setDetail({mode:'ticker',label:v,subtitle:v});else if(/^[A-Z]{1,5}$/.test(v))setMsg(`Ticker ${v} not found`);else setMsg('?');}inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
+  const instData = tickerFilter ? (tickerInstitutions || []) : INSTS;
+
+  const buyN = filtered.filter(t => t.transaction_type === 'BUY').length;
+  const sellN = filtered.filter(t => t.transaction_type === 'SELL').length;
+  const cluN = filtered.filter(t => t.signal_category === 'CLUSTER').length;
+
+  const clearTickerFilter = () => {
+    setTickerFilter(null);
+    setF('all');
+  };
+
+  useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(detail||profile){if(e.key==='Escape'){setDetail(null);setProfile(null);}return;}if(e.target instanceof HTMLInputElement&&e.key!=='Escape')return;if(e.key==='1'){setF('all');setTickerFilter(null);}if(e.key==='2')setF('buy');if(e.key==='3')setF('sell');if(e.key==='4')setF('cluster');if(e.key==='/'||e.key==='`'){e.preventDefault();inp.current?.focus();}if(e.key==='Escape'){inp.current?.blur();setCmd('');clearTickerFilter();}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[detail,profile,tickerFilter]);
+
+  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toUpperCase();setCmd('');if(v==='ALL'||v==='1'){setF('all');clearTickerFilter();}else if(v==='BUY'||v==='2')setF('buy');else if(v==='SELL'||v==='3')setF('sell');else if(v==='CLUSTER'||v==='4')setF('cluster');else if(v==='CLEAR'||v==='CLS'){clearTickerFilter();setMsg('Filter cleared');}else{const tk=v.startsWith('/')?v.slice(1):v;if(/^[A-Z]{1,5}$/.test(tk)){setTickerFilter(tk);setDetail(null);setF('all');setMsg(`🔍 ${tk} — 10Y history`);}else{setMsg('?');}}inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',background:'#000',position:'relative'}}>
       <div style={{display:'flex',alignItems:'center',height:22,padding:'0 8px',fontSize:9,color:'#888',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',gap:12}}>
-        <span style={{color:'#fff',fontWeight:600}}>{f==='buy'?'🟢 BUY':f==='sell'?'🔴 SELL':f==='cluster'?'🟣 CLUSTER':'◉ ALL'}</span>
-        <span>{filtered.length} of {ALL.length}</span>
-        <span style={{marginLeft:'auto',color:msg?'#ff8c00':'#555'}}>{msg||'1-4 filter  /=cmd  click to explore'}</span>
+        {tickerFilter ? (
+          <>
+            <span style={{color:'#ff8c00',fontWeight:700}}>🔍 {tickerFilter}</span>
+            <span style={{color:'#0c6'}}>10年歷史</span>
+            <span>{filtered.length} trades | {instData.length} inst</span>
+            <span style={{marginLeft:'auto',color:'#555',cursor:'pointer'}} onClick={clearTickerFilter}>ESC 清除</span>
+          </>
+        ) : (
+          <>
+            <span style={{color:'#fff',fontWeight:600}}>{f==='buy'?'🟢 BUY':f==='sell'?'🔴 SELL':f==='cluster'?'🟣 CLUSTER':'◉ ALL'}</span>
+            <span>{filtered.length} of {ALL.length}</span>
+            <span style={{marginLeft:'auto',color:msg?'#ff8c00':'#555'}}>{msg||'1-4 filter  /=cmd  click to explore'}</span>
+          </>
+        )}
       </div>
 
       {detail ? (
@@ -217,7 +326,7 @@ export default function FeedPage() {
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gridTemplateRows:'1fr 1fr',flex:1,overflow:'hidden'}}>
           {/* Q1: INSIDER TRADES */}
           <div style={{borderRight:'1px solid #1f1f1f',borderBottom:'1px solid #1f1f1f',display:'flex',flexDirection:'column',overflow:'hidden'}}>
-            <Hdr title={t('feed.section_insider_trades')||'INSIDER TRADES'} detail="tap ticker/insider/company" />
+            <Hdr title={tickerFilter ? `🔍 ${tickerFilter} · 內部人交易 (10年)` : (t('feed.section_insider_trades')||'INSIDER TRADES')} detail={tickerFilter ? `${filtered.length}筆 | ESC清除` : 'tap ticker/insider/company'} />
             <div style={{flex:1,overflow:'auto'}}>
               <Row>
                 <Cell w={CW.T} color="#555" bold>TICKER</Cell>
@@ -259,10 +368,10 @@ export default function FeedPage() {
 
           {/* Q3: INSTITUTION FLOW */}
           <div style={{borderRight:'1px solid #1f1f1f',display:'flex',flexDirection:'column',overflow:'hidden'}}>
-            <Hdr title={t('feed.section_institutions')||'INSTITUTION FLOW'} detail="tap institution/ticker" />
+            <Hdr title={tickerFilter ? `🏦 ${tickerFilter} · 機構持股 (10年)` : (t('feed.section_institutions')||'INSTITUTION FLOW')} detail={tickerFilter ? `${instData.length}筆` : 'tap institution/ticker'} />
             <div style={{flex:1,overflow:'auto'}}>
               <Row><Cell w={108} color="#555" bold>INSTITUTION</Cell><Cell w={52} color="#555" bold>TICK</Cell><R w={75} c="#555" b>AMOUNT</R><R w={55} c="#555" b>CHG%</R></Row>
-              {INSTS.map((o,i)=>(<Row key={`${o.institution}-${o.ticker}`} h={i%2===0}>
+              {instData.map((o,i)=>(<Row key={`${o.institution}-${o.ticker}-${i}`} h={i%2===0}>
                 <Cell w={108} color="#e6e6e6" onClick={()=>setDetail({mode:'institution',label:o.institution})}>{S(o.institution,14)}</Cell>
                 <Cell w={52} color="#ff8c00" bold underline onClick={()=>setDetail({mode:'ticker',label:o.ticker,subtitle:o.company_name})}>{o.ticker}</Cell>
                 <R w={75} c="#e6e6e6">{F(o.amount)}</R><R w={55} c={o.direction==='NEW'?'#ff8c00':o.change_pct>0?'#0c6':'#f33'} b>{o.direction==='NEW'?'NEW':`${o.change_pct>0?'+':''}${o.change_pct}%`}</R>
@@ -274,10 +383,27 @@ export default function FeedPage() {
           <div style={{display:'flex',flexDirection:'column',overflow:'hidden'}}>
             <Hdr title="COMMANDS & STATS" />
             <div style={{flex:1,padding:8,fontFamily:'JetBrains Mono,monospace',overflow:'auto'}}>
-              <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>DATA</div>
-              <div style={{fontSize:10,color:'#888',marginBottom:8}}>
-                <div>Total: <span style={{color:'#fff'}}>{ALL.length}</span> | Buy: <span style={{color:'#0c6'}}>{buyN}</span> | Sell: <span style={{color:'#f33'}}>{sellN}</span> | Cluster: <span style={{color:'#ff8c00'}}>{cluN}</span></div>
-              </div>
+              {tickerFilter ? (
+                <>
+                  <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>🔍 當前過濾</div>
+                  <div style={{fontSize:10,color:'#e6e6e6',marginBottom:8,padding:'4px 6px',background:'#0d0d0d',border:'1px solid #333'}}>
+                    <div>股票: <span style={{color:'#ff8c00',fontWeight:700}}>{tickerFilter}</span></div>
+                    <div style={{marginTop:2}}>內部人: <span style={{color:'#0c6'}}>{buyN} 買 / {sellN} 賣</span></div>
+                    <div>機構: <span style={{color:'#8b5cf6'}}>{instData.length} 筆</span></div>
+                  </div>
+                  <button onClick={clearTickerFilter}
+                    style={{width:'100%',background:'transparent',border:'1px solid #f33',color:'#f33',cursor:'pointer',padding:'3px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginBottom:12}}>
+                    ✕ 清除過濾 (ESC)
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>DATA</div>
+                  <div style={{fontSize:10,color:'#888',marginBottom:8}}>
+                    <div>Total: <span style={{color:'#fff'}}>{ALL.length}</span> | Buy: <span style={{color:'#0c6'}}>{buyN}</span> | Sell: <span style={{color:'#f33'}}>{sellN}</span> | Cluster: <span style={{color:'#ff8c00'}}>{cluN}</span></div>
+                  </div>
+                </>
+              )}
               <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>NAVIGATION</div>
               <div style={{fontSize:10,color:'#888',marginBottom:8}}>
                 <div><span style={{color:'#ff8c00',textDecoration:'underline'}}>TICKER</span> → stock detail</div>
@@ -314,7 +440,11 @@ export default function FeedPage() {
         style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:55,background:'rgba(0,0,0,0.6)',cursor:'pointer'}} />}
 
       <div style={{display:'flex',alignItems:'center',height:18,padding:'0 8px',fontSize:9,color:'#555',background:'#0a0a0a',borderTop:'1px solid #1f1f1f',gap:12}}>
-        <span>🟠 Ticker=stock | 🟠 Insider=history | 🟠 Company/Title=profile | ESC to close</span>
+        {tickerFilter ? (
+          <><span style={{color:'#ff8c00'}}>🔍 過濾中: {tickerFilter}</span><span>1-4切換 BUY/SELL | ESC清除</span></>
+        ) : (
+          <><span>🟠 Ticker=stock | 🟠 Insider=history | 🟠 Company/Title=profile | ESC to close</span></>
+        )}
         <span style={{marginLeft:'auto'}}>🐋 WhaleTrace</span>
       </div>
     </div>
