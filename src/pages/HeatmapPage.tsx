@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+
+
 
 // ─── Deterministic seed ──────────────────────────────────
 function seedFrom(s: string): number {
@@ -215,7 +216,6 @@ function HeatTile({
 
 // ─── Page Component ──────────────────────────────────────
 export default function HeatmapPage() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [mode, setMode] = useState<HeatmapMode>('SIGNAL');
   const [cellSize, setCellSize] = useState(80);
