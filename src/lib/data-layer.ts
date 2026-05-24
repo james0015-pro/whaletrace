@@ -143,7 +143,7 @@ export async function getInsiderTrades(
 
   // 2. Fallback: SEC local data
   if (!_secFallbackCache) {
-    try { _secFallbackCache = await loadSecTrades(); } catch {}
+    try { _secFallbackCache = await loadSecTrades(); } catch { /* fallback — handled below */ }
   }
   if (_secFallbackCache && _secFallbackCache.length > 0) {
     let filtered = _secFallbackCache;
@@ -210,7 +210,7 @@ export async function fetchStockSnapshots(): Promise<StockSnapshotLegacy[]> {
       _snapshotCache = data;
       return data.map(toLegacySnapshot);
     }
-  } catch {}
+  } catch { /* fallback — handled below */ }
 
   return [];
 }
@@ -257,7 +257,7 @@ export async function getStockSnapshot(ticker: string): Promise<StockSnapshotLeg
 
     if (error) throw error;
     if (data) return toLegacySnapshot(data);
-  } catch {}
+  } catch { /* fallback — handled below */ }
 
   return null;
 }
@@ -301,7 +301,7 @@ export async function fetchInstitutionalHoldings(ticker: string): Promise<Instit
         is_super_investor: false,
       }));
     }
-  } catch {}
+  } catch { /* fallback — handled below */ }
 
   return [];
 }
@@ -323,7 +323,7 @@ export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
           direction: h.change_direction === 'INCREASED' ? 'INCREASED' as const : 'DECREASED' as const,
         });
       }
-    } catch {}
+    } catch { /* fallback — handled below */ }
   }
 
   if (allOrders.length > 0) return allOrders;
