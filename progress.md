@@ -4,13 +4,13 @@
 
 ## 最後更新
 
-**2026-05-24** — Night Shift 12: Market Intelligence +3 Cards (NVDA $80B Buyback, Anthropic x MSFT Chips, Growth→Value Rotation)
+**2026-05-24** — Night Shift 13: Bloomberg Heatmap Page (feat-021) — colored tile grid with 3 modes
 
 ## 專案狀態
 
 | 子系統 | 狀態 | 說明 |
 |--------|------|------|
-| 前端 (React) | ✅ v3 就緒 | Bloomberg/Finviz 混合風格，四象限儀表板，code-split，市場情報卡片資料驅動 |
+| 前端 (React) | ✅ v3 就緒 | Bloomberg/Finviz 混合風格，四象限儀表板，code-split，市場情報卡片資料驅動，9 個 lazy-loaded pages |
 | 資料層 | ✅ 已接入 | n8n SEC EDGAR Proxy + WhaleTrace API + Mock fallback |
 | 雙語 (i18n) | ✅ 就緒 | zh-TW + en，react-i18next |
 | Telegram 推播 | ✅ 就緒 | n8n 定時共振警報推送 |
@@ -19,7 +19,7 @@
 | 關注清單 (後端) | ⬜ 未實作 | 有 localStorage 前端版，無後端持久化 |
 | 測試 (Vitest) | ✅ 63 tests | utils + price-utils + sec-converter + SignalBadge |
 | 測試 (E2E) | ✅ 15 tests | Playwright smoke tests — 8 routes, navigation, interactions |
-| 效能 | ✅ code-split | React.lazy 8 page chunks，initial load 326KB main + 20KB page |
+| 效能 | ✅ code-split | React.lazy 9 page chunks，initial load 326KB main + 20KB page |
 | 數據刷新 | ✅ 自動化 | refresh_and_deploy.sh 一鍵爬取→複製→建置→部署 + hermes cron 排程 (每日 06/18 UTC) |
 
 ## 已完成功能
@@ -47,6 +47,7 @@
 - [x] feat-018 WCAG 2.1 AA 無障礙審計 — 鍵盤導航 + ARIA 標籤/角色 + 載入指示器 + 跑馬燈 aria-hidden (WCAG_AUDIT.md)
 - [x] feat-019 Playwright E2E Smoke Tests — 15 tests (8 routes + navigation + interactions), playwright.config.ts, scripts/run-e2e.sh, all 15/15 pass
 - [x] feat-020 市場情報擴充 v3 — 33 張卡片：+3 (NVDA $80B Buyback, Anthropic x MSFT AI Chip Deal, Growth→Value Rotation Signal) based on 2026-05-24 Google News headlines
+- [x] feat-021 熱度圖頁面 — Bloomberg 終端機風格彩色磚塊網格 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 44-120px，hover 提示框 + 色彩圖例，導航按鈕 (TERM/OVR/TREE/WATCH)
 
 ## 下一步 (優先順序)
 
@@ -70,4 +71,5 @@
 | 2026-05-23 | Night Shift 10 | feat-019 Playwright E2E Smoke Tests: npm install -D @playwright/test, playwright.config.ts (chromium headless shell), e2e/smoke.spec.ts (15 tests: App Shell 2, FeedPage 1, Dashboard 2, StockDetail 3, Watchlist 1, Treemap 1, Navigation 3, Interactions 2), scripts/run-e2e.sh runner, vitest.config.ts exclude e2e/. All 15/15 pass + 63/63 unit tests. npm run build ✅. |
 | 2026-05-23 | Night Shift 9 | WCAG 2.1 AA 審計：修復 13 處鍵盤導航 (Cell/R 元件 + DashboardPage 卡片 + FeedPage 遮罩)，8 處 ARIA 標籤/角色 (TopNavBar 6 按鈕 + LoadingFallback + Ticker tape aria-hidden)，1 處載入指示器 (role="status" + aria-live="polite")。npm run build ✅ (1.71s)，npm test ✅ (63/63)。建立 WCAG_AUDIT.md。feat-018 ✅。|
 | 2026-05-24 | Night Shift 11 | **SEC 爬蟲修復 + 資料刷新**: 上次 cron 執行 night_shift_scrape.py 命中 SEC rate limit (0.3s delay)，sec_insider_trades.json = 0 trades。修復：(1) 建立 sec_incremental_scrape.py (逐檔存檔 + 3.0s delay + 429 自動 90s backoff retry)，(2) 降低 filings/ticker 5→3 避免超時。**成果**: 149 real SEC Form 4 trades (44 buys, 75 sells) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-21。yfinance 190 筆機構持股 (19/20 tickers, BRK.B = none)。npm run build ✅ (2.25s) → GitHub Pages 部署 + rebuild trigger 201。night_shift_scrape.py 也修復：sleep 0.3s→2.0s + 429 retry。|
-| 2026-05-24 | Night Shift 12 | **市場情報擴充 v3**: 搜尋 Google News RSS 取得 2026-05-24 最新金融頭條。新增 3 張卡片：(1) NVDA $80B Buyback — Motley Fool/Yahoo Finance 報導 NVDA 董事會授權額外 $80B 回購，總額 ~$115B 科技史上最大，Yahoo 比擬 Apple 2013 年回購模式 (2) Anthropic x MSFT Chips — CNBC/Reuters 報導 Anthropic 洽談使用 Microsoft Athena 客製化 AI 晶片，對沖「MSFT 輸掉 AI 競賽」敘事 (3) Growth→Value Rotation — Morningstar/Goldman Sachs 同步發出戰術性成長→價值輪動訊號。market_intelligence.json 30→33 張卡片。npm run build ✅ (1.72s) + 63/63 tests ✅ → GitHub Pages 部署驗證 ✅ (DashboardPage-20WhfzB1.js 確認含 3 張新卡片)。|
+| 2026-05-24 | Night Shift 12 | **市場情報擴充 v3**: 搜尋 Google News RSS 取得 2026-05-24 最新金融頭條。新增 3 張卡片：(1) NVDA $80B Buyback — Motley Fool/Yahoo Finance 報導 NVDA 董事會授權額外 $80B 回購，總額 ~$115B 科技史上最大，Yahoo 比擬 Apple 2013 年回購模式 (2) Anthropic x MSFT Chips — CNBC/Reuters 報導 Anthropic 洽談使用 Microsoft Athena 客製化 AI 晶片，對沖「MSFT 輸掉 AI 競賽」敘事 (3) Growth→Value Rotation — Morningstar/Goldman Sachs 同步發出戰術性成長→價值輪動訊號。market_intelligence.json 30→33 張卡片。npm run build ✅ (1.72s) + 63/63 tests ✅ → GitHub Pages 部署驗證 ✅ (DashboardPage-20WhfzB1.js 確認含 3 張新卡片)。 |
+| 2026-05-24 | Night Shift 13 | **feat-021: Bloomberg Heatmap 頁面**: 建立 src/pages/HeatmapPage.tsx — Bloomberg 終端機風格彩色磚塊網格。3 種模式切換 (SIGNAL 信心分數 / NET_FLOW 淨流向 / VOLUME 交易量)，可調磚塊大小 (44-120px range slider)，hover scale(1.08) + 提示框 (買/賣/淨值)，色彩圖例 (綠→黃→紅)，點擊導航至 /stocks/:ticker。新增 route (/heatmap) + TopNavBar 導航按鈕 (HEAT) + lazy load chunk。npm run build ✅ (HeatmapPage-BIvIc1cC.js 8.37KB gzipped 2.90KB) + 63/63 tests ✅。feature_list.json v3.2.0→v3.3.0。 |

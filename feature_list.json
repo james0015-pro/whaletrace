@@ -1,7 +1,7 @@
 {
   "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
   "project": "WhaleTrace — 鯨魚共振訊號雷達",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "last_updated": "2026-05-24",
   "features": [
     {
@@ -143,6 +143,13 @@
       "status": "completed",
       "priority": "P2",
       "description": "+3 張卡片：NVDA $80B Buyback (Motley Fool/Yahoo), Anthropic x MSFT AI Chip Deal (CNBC/Reuters), Growth→Value Rotation (Morningstar/Goldman Sachs)"
+    },
+    {
+      "id": "feat-021",
+      "name": "Bloomberg Heatmap 熱度圖頁面",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/heatmap — Bloomberg 終端機風格彩色磚塊網格，3 模式 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 (44-120px)，hover 提示框，色彩圖例，點擊導航至股票詳情"
     }
   ]
 }

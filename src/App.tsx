@@ -13,6 +13,7 @@ const SignalsPage = lazy(() => import('@/pages/SignalsPage'));
 const InstitutionsPage = lazy(() => import('@/pages/InstitutionsPage'));
 const StockDetailPage = lazy(() => import('@/pages/StockDetailPage'));
 const TreemapPage = lazy(() => import('@/pages/TreemapPage'));
+const HeatmapPage = lazy(() => import('@/pages/HeatmapPage'));
 const WatchlistPage = lazy(() => import('@/pages/WatchlistPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
@@ -50,6 +51,7 @@ export default function App() {
                   <Route path="/institutions" element={<InstitutionsPage />} />
                   <Route path="/stocks/:ticker" element={<StockDetailPage />} />
                   <Route path="/treemap" element={<TreemapPage />} />
+                  <Route path="/heatmap" element={<HeatmapPage />} />
                   <Route path="/watchlist" element={<WatchlistPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                 </Routes>

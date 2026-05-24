@@ -84,6 +84,11 @@ export function TopNavBar() {
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('treemap')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
         TREE
       </button>
+      <button onClick={()=>{window.location.hash='#/heatmap';window.location.reload();}}
+        aria-label="Navigate to Heatmap"
+        style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('heatmap')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
+        HEAT
+      </button>
       <button onClick={()=>{window.location.hash='#/watchlist';window.location.reload();}}
         aria-label="Navigate to Watchlist"
         style={{background:'transparent',border:'1px solid #333',color:window.location.hash.includes('watchlist')?'#ff8c00':'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginRight:4,height:20,borderRadius:2}}>
