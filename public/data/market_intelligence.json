@@ -267,5 +267,32 @@
     "highlight": "Business Insider 5/23: Claude Has Already Won the AI Coding War — Cursor Is Declining. CNBC 5/22: GitHub Should Have Won but Outages Got in the Way",
     "highlight_color": "#8b5cf6",
     "detail": "AI coding tools competitive landscape undergoes seismic shift Q2 2026. Business Insider 5/23 declares: Claude Has Already Won the AI Coding War — Claude Code's superior reasoning, longer context windows, and artifact-based collaborative coding have captured the startup/elite developer ecosystem. Cursor is declining as its GPT-4.5 foundation hits diminishing returns vs Claude's recursive self-improvement. CNBC 5/22: GitHub Copilot should have won given MSFT's $13B OpenAI investment and 100M+ developer base, but repeated outages and reliability issues eroded trust. The Information 5/18: MSFT executives privately sounding alarm on Copilot losing leadership position. Key winner: Anthropic — now the default AI coding partner for YC startups, open-source projects, and enterprise dev teams. Verdict: 2026 is the year coding AI shifted from copilot to agent — autonomous agents that design, implement, and deploy independently"
+  },
+  {
+    "id": 31,
+    "title": "NVDA $80B Buyback",
+    "source": "2026-05-24 Motley Fool / Yahoo Finance / CNBC (TODAY)",
+    "border_color": "#0c6",
+    "highlight": "Nvidia board authorizes additional $80 BILLION stock buyback — Yahoo Finance: 'may unleash an Apple-like stock move'. Total buyback authorization now ~$115B",
+    "highlight_color": "#0c6",
+    "detail": "Motley Fool 5/24 (TODAY): Nvidia's board authorized an ADDITIONAL $80 billion share repurchase program — on top of the $35B already outstanding. Combined buyback authorization = ~$115B, the largest in tech history. Yahoo Finance 5/21: compares to Apple's 2013 buyback that marked the beginning of AAPL's decade-long $600B+ repurchase program — 'the same pattern is forming.' Key signals: (1) NVDA management is using the post-earnings stock dip as a buying opportunity — $58.3B quarterly net profit funds the repurchase organically (2) this is a STRONG insider signal that management believes the stock is undervalued at $110-120 (3) unlike dividend, buyback compounds: fewer shares outstanding → higher EPS → higher valuation multiples. CNBC 5/20: Susquehanna's Roland notes buyback + higher dividend ($0.02→0.04/qtr) signals maturation from growth-only to capital-return story. Counterpoint: big buybacks at peak AI hype cycle echo Cisco 2000 buyback before dot-com collapse — but Cisco had 100x PE, NVDA at ~45x forward PE is historically reasonable"
+  },
+  {
+    "id": 32,
+    "title": "Anthropic x MSFT Chips",
+    "source": "2026-05-21 CNBC / Reuters / The Information",
+    "border_color": "#8b5cf6",
+    "highlight": "Anthropic in talks to use Microsoft's custom AI chips after MSFT's $5B+ investment — echoes Google TPU + Broadcom playbook",
+    "highlight_color": "#8b5cf6",
+    "detail": "CNBC 5/21: Anthropic and Microsoft in advanced talks for Anthropic to use Microsoft's custom AI chips (Athena) for inference workloads — a direct counter to the 'MSFT lost AI race' narrative. MSFT invested $5B+ in Anthropic, creating a triangular OpenAI-Microsoft-Anthropic alliance that now spans both models (Claude + GPT) and infrastructure (Athena chips + Azure). This mirrors Google TPU + Broadcom ASIC playbook — hyperscalers designing own silicon, partnering with leading AI labs for guaranteed demand. Key implication: the AI chip war is shifting from 'everyone buys NVDA' to 'hyperscalers build their own, NVDA gets the rest.' MSFT stock implication: Athena chip adoption by Anthropic would de-risk MSFT's $13B OpenAI bet by diversifying AI infrastructure strategy. The Information first reported the talks; Reuters confirmed both sides are 'seriously exploring' a multi-year chip supply agreement"
+  },
+  {
+    "id": 33,
+    "title": "Growth → Value Rotation",
+    "source": "2026-05-22 Morningstar / Goldman Sachs",
+    "border_color": "#f33",
+    "highlight": "Morningstar: 'It's Time to Reallocate from Growth to Value' — Goldman: hedge funds max out SOXX at ATH while rotation signals flash",
+    "highlight_color": "#f33",
+    "detail": "Morningstar 5/22 issues explicit tactical call: reallocate from growth stocks to value stocks. Four converging signals: (1) hedge fund SOXX allocation at all-time high — every institutional investor is already long AI/semis, no incremental buyer left (2) DJIA 50,000 milestone typically signals late-cycle euphoria (3) Morningstar's fair value estimates show growth stocks 12% overvalued vs value stocks 8% undervalued — largest spread since 2007 (4) Goldman Sachs 5/23 report confirms hedge funds rotating OUT of NVDA and INTO industrial/value cyclicals. This doesn't mean AI thesis is wrong — it means the trade is crowded and the easy money has been made. NVDA earnings beat and stock fell: the textbook definition of 'priced to perfection.' Contrarian signal: when Morningstar and Goldman both say rotate, the rotation may already be priced in"
   }
 ]

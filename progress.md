@@ -4,7 +4,7 @@
 
 ## 最後更新
 
-**2026-05-24** — Night Shift 11: SEC Scraper Rate-Limit Fix + Data Refresh
+**2026-05-24** — Night Shift 12: Market Intelligence +3 Cards (NVDA $80B Buyback, Anthropic x MSFT Chips, Growth→Value Rotation)
 
 ## 專案狀態
 
@@ -46,6 +46,7 @@
 - [x] feat-017 Vitest 單元測試 — 63 tests (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)
 - [x] feat-018 WCAG 2.1 AA 無障礙審計 — 鍵盤導航 + ARIA 標籤/角色 + 載入指示器 + 跑馬燈 aria-hidden (WCAG_AUDIT.md)
 - [x] feat-019 Playwright E2E Smoke Tests — 15 tests (8 routes + navigation + interactions), playwright.config.ts, scripts/run-e2e.sh, all 15/15 pass
+- [x] feat-020 市場情報擴充 v3 — 33 張卡片：+3 (NVDA $80B Buyback, Anthropic x MSFT AI Chip Deal, Growth→Value Rotation Signal) based on 2026-05-24 Google News headlines
 
 ## 下一步 (優先順序)
 
@@ -69,3 +70,4 @@
 | 2026-05-23 | Night Shift 10 | feat-019 Playwright E2E Smoke Tests: npm install -D @playwright/test, playwright.config.ts (chromium headless shell), e2e/smoke.spec.ts (15 tests: App Shell 2, FeedPage 1, Dashboard 2, StockDetail 3, Watchlist 1, Treemap 1, Navigation 3, Interactions 2), scripts/run-e2e.sh runner, vitest.config.ts exclude e2e/. All 15/15 pass + 63/63 unit tests. npm run build ✅. |
 | 2026-05-23 | Night Shift 9 | WCAG 2.1 AA 審計：修復 13 處鍵盤導航 (Cell/R 元件 + DashboardPage 卡片 + FeedPage 遮罩)，8 處 ARIA 標籤/角色 (TopNavBar 6 按鈕 + LoadingFallback + Ticker tape aria-hidden)，1 處載入指示器 (role="status" + aria-live="polite")。npm run build ✅ (1.71s)，npm test ✅ (63/63)。建立 WCAG_AUDIT.md。feat-018 ✅。|
 | 2026-05-24 | Night Shift 11 | **SEC 爬蟲修復 + 資料刷新**: 上次 cron 執行 night_shift_scrape.py 命中 SEC rate limit (0.3s delay)，sec_insider_trades.json = 0 trades。修復：(1) 建立 sec_incremental_scrape.py (逐檔存檔 + 3.0s delay + 429 自動 90s backoff retry)，(2) 降低 filings/ticker 5→3 避免超時。**成果**: 149 real SEC Form 4 trades (44 buys, 75 sells) from 20/20 tickers，日期範圍 2026-03-01 ~ 2026-05-21。yfinance 190 筆機構持股 (19/20 tickers, BRK.B = none)。npm run build ✅ (2.25s) → GitHub Pages 部署 + rebuild trigger 201。night_shift_scrape.py 也修復：sleep 0.3s→2.0s + 429 retry。|
+| 2026-05-24 | Night Shift 12 | **市場情報擴充 v3**: 搜尋 Google News RSS 取得 2026-05-24 最新金融頭條。新增 3 張卡片：(1) NVDA $80B Buyback — Motley Fool/Yahoo Finance 報導 NVDA 董事會授權額外 $80B 回購，總額 ~$115B 科技史上最大，Yahoo 比擬 Apple 2013 年回購模式 (2) Anthropic x MSFT Chips — CNBC/Reuters 報導 Anthropic 洽談使用 Microsoft Athena 客製化 AI 晶片，對沖「MSFT 輸掉 AI 競賽」敘事 (3) Growth→Value Rotation — Morningstar/Goldman Sachs 同步發出戰術性成長→價值輪動訊號。market_intelligence.json 30→33 張卡片。npm run build ✅ (1.72s) + 63/63 tests ✅ → GitHub Pages 部署驗證 ✅ (DashboardPage-20WhfzB1.js 確認含 3 張新卡片)。|

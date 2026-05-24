@@ -1,8 +1,8 @@
 {
   "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
   "project": "WhaleTrace — 鯨魚共振訊號雷達",
-  "version": "3.1.0",
-  "last_updated": "2026-05-23",
+  "version": "3.2.0",
+  "last_updated": "2026-05-24",
   "features": [
     {
       "id": "feat-001",
@@ -136,6 +136,13 @@
       "status": "completed",
       "priority": "P3",
       "description": "Playwright 端到端 smoke tests — 15 tests (8 routes, navigation, stock detail, interactions), all pass"
+    },
+    {
+      "id": "feat-020",
+      "name": "市場情報擴充 v3 (33 張卡片)",
+      "status": "completed",
+      "priority": "P2",
+      "description": "+3 張卡片：NVDA $80B Buyback (Motley Fool/Yahoo), Anthropic x MSFT AI Chip Deal (CNBC/Reuters), Growth→Value Rotation (Morningstar/Goldman Sachs)"
     }
   ]
 }
