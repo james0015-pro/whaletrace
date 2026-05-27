@@ -1,0 +1,1530 @@
+{
+  "source": "yfinance institutional_holders",
+  "scraped_at": "2026-05-24T06:19:04.236691+00:00",
+  "total_records": 190,
+  "tickers_scanned": 20,
+  "tickers_with_data": 19,
+  "tickers_without_data": 1,
+  "data": [
+    {
+      "ticker": "AAPL",
+      "holder": "Blackrock Inc.",
+      "shares": 1144695425.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 353504849532.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 953847648.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 294567237641.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "State Street Corporation",
+      "shares": 602341409.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 186015078339.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 368616954.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 113836290434.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 331437055.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 102354393752.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "FMR, LLC",
+      "shares": 307442040.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 94944253044.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Morgan Stanley",
+      "shares": 244474722.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 75498685438.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 231622141.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 71529551280.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Berkshire Hathaway, Inc",
+      "shares": 227917808.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 70385579135.0
+    },
+    {
+      "ticker": "AAPL",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 200426620.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 61895750256.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Blackrock Inc.",
+      "shares": 593328571.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 248349544309.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 482558086.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 201984341591.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "State Street Corporation",
+      "shares": 306708289.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 128378890773.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "FMR, LLC",
+      "shares": 190211367.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 79616773278.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 188501918.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 78901249197.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 167490848.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 70106645474.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 127128999.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 53212386042.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Morgan Stanley",
+      "shares": 124881288.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 52271561632.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 117242934.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 49074375743.0
+    },
+    {
+      "ticker": "MSFT",
+      "holder": "Capital Research Global Investors",
+      "shares": 96093061.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 40221673246.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Blackrock Inc.",
+      "shares": 1925533174.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 414625061883.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 1538550382.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 331296056573.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "State Street Corporation",
+      "shares": 993885601.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 214013388283.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "FMR, LLC",
+      "shares": 993852968.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 214006361419.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 601327167.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 129483779971.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 510126721.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 109845587766.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 447798884.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 96424534511.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 370102688.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 79694212484.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Morgan Stanley",
+      "shares": 342954346.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 73848359952.0
+    },
+    {
+      "ticker": "NVDA",
+      "holder": "Northern Trust Corporation",
+      "shares": 252741836.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 54422900008.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Blackrock Inc.",
+      "shares": 446980992.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 171180311051.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 378261579.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 144862837371.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "FMR, LLC",
+      "shares": 236544675.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 90589514473.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "State Street Corporation",
+      "shares": 226259132.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 86650460058.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 151888094.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 58168583544.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Morgan Stanley",
+      "shares": 120955598.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 46322365513.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 96536714.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 36970665478.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 80506798.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 30831688528.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 70925551.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 27162358353.0
+    },
+    {
+      "ticker": "GOOGL",
+      "holder": "Bank of America Corporation",
+      "shares": 68768715.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 26336354867.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Blackrock Inc.",
+      "shares": 735564992.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 195895674056.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 631176205.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 168094851538.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "State Street Corporation",
+      "shares": 390450321.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 103984732348.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "FMR, LLC",
+      "shares": 358698691.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 95528638014.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 233228057.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 62113297848.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Morgan Stanley",
+      "shares": 173925856.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 46319935243.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 168937577.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 44991456743.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 127012849.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 33826062875.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 122998950.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 32757081264.0
+    },
+    {
+      "ticker": "AMZN",
+      "holder": "Capital Research Global Investors",
+      "shares": 118434267.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 31541414854.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Blackrock Inc.",
+      "shares": 168843283.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 103038303532.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 142138157.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 86741233078.0
+    },
+    {
+      "ticker": "META",
+      "holder": "FMR, LLC",
+      "shares": 116614753.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 71165320304.0
+    },
+    {
+      "ticker": "META",
+      "holder": "State Street Corporation",
+      "shares": 88523840.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 54022559462.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 54165192.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 33054850598.0
+    },
+    {
+      "ticker": "META",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 50180811.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 30623342210.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Capital World Investors",
+      "shares": 41055422.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 25054482230.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Morgan Stanley",
+      "shares": 38078962.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 23238067721.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 37856635.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 23102390444.0
+    },
+    {
+      "ticker": "META",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 32985340.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 20129633910.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Blackrock Inc.",
+      "shares": 208095009.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 88650556816.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 182850783.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 77896263851.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "State Street Corporation",
+      "shares": 114695458.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 48861413182.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 68003110.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 28970005555.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 49252925.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 20982239060.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 46075161.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 19628479787.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Capital World Investors",
+      "shares": 42904073.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 18277564557.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Morgan Stanley",
+      "shares": 39177400.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 16689964556.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "FMR, LLC",
+      "shares": 36027976.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 15348278407.0
+    },
+    {
+      "ticker": "TSLA",
+      "holder": "Goldman Sachs Group Inc",
+      "shares": 29398294.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 12523967514.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Blackrock Inc.",
+      "shares": 208220293.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 63794534386.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 165278733.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 50638099023.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "State Street Corporation",
+      "shares": 124276661.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 38075884003.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Morgan Stanley",
+      "shares": 68544442.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 21000646474.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 65580826.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 20092653790.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Bank of America Corporation",
+      "shares": 65660460.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 20117052055.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 62550814.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 19164318698.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Northern Trust Corporation",
+      "shares": 31221042.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9565503000.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "FMR, LLC",
+      "shares": 31433969.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9630739575.0
+    },
+    {
+      "ticker": "JPM",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 27487323.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8421566154.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Blackrock Inc.",
+      "shares": 136190947.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 44790479314.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 107005168.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 35191860174.0
+    },
+    {
+      "ticker": "V",
+      "holder": "State Street Corporation",
+      "shares": 82306015.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 27068802615.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Morgan Stanley",
+      "shares": 45979950.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 15121886180.0
+    },
+    {
+      "ticker": "V",
+      "holder": "FMR, LLC",
+      "shares": 44908229.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14769418572.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 44883639.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14761331413.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 41075869.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 13509031997.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 37604815.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 12367471740.0
+    },
+    {
+      "ticker": "V",
+      "holder": "TCI Fund Management Ltd",
+      "shares": 30468133.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10020359729.0
+    },
+    {
+      "ticker": "V",
+      "holder": "Capital World Investors",
+      "shares": 25178201.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8280606867.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Blackrock Inc.",
+      "shares": 73467531.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 28539931857.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 58870777.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 22869530813.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "State Street Corporation",
+      "shares": 45332186.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 17610194350.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Capital World Investors",
+      "shares": 27783415.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10793023258.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 24036504.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9337460738.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 22768695.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8844954974.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 20873946.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8108901828.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Charles Schwab Investment Management, Inc.",
+      "shares": 20817755.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8087073310.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 19102541.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7420764125.0
+    },
+    {
+      "ticker": "UNH",
+      "holder": "Capital Research Global Investors",
+      "shares": 17112218.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 6647583347.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Blackrock Inc.",
+      "shares": 322741137.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 49999056353.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 271198613.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 42014088629.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "State Street Corporation",
+      "shares": 213904380.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 33138066157.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "FMR, LLC",
+      "shares": 140010460.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 21690420206.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 115629047.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 17913251749.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 95478649.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14791552128.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 85599509.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 13261075777.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Morgan Stanley",
+      "shares": 71718998.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 11110707038.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Bank of America Corporation",
+      "shares": 68483813.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10609512184.0
+    },
+    {
+      "ticker": "XOM",
+      "holder": "Bank Of New York Mellon Corporation",
+      "shares": 44289134.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 6861272558.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Blackrock Inc.",
+      "shares": 353085648.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 42465609699.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 284852775.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 34259242293.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "State Street Corporation",
+      "shares": 185928865.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 22361663969.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 122469785.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14729440630.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 105856140.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 12731317602.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 93696778.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 11268911175.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Morgan Stanley",
+      "shares": 85906471.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10331970978.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Bank of America Corporation",
+      "shares": 65844247.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7919087365.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Invesco Ltd.",
+      "shares": 43531267.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5235505335.0
+    },
+    {
+      "ticker": "WMT",
+      "holder": "Northern Trust Corporation",
+      "shares": 41765304.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5023112971.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Blackrock Inc.",
+      "shares": 213385546.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 50004768068.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 156605370.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 36698901832.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "State Street Corporation",
+      "shares": 133476288.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 31278832841.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 63514436.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14883972699.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 63096344.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14785997021.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 59164862.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 13864693544.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Morgan Stanley",
+      "shares": 44721167.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10479958111.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "State Farm Mutual Automobile Insurance Co",
+      "shares": 31590952.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7403023575.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Northern Trust Corporation",
+      "shares": 29319669.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 6870771126.0
+    },
+    {
+      "ticker": "JNJ",
+      "holder": "Bank of America Corporation",
+      "shares": 25516697.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5979582681.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Blackrock Inc.",
+      "shares": 67011988.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 33408157070.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Mastercard Foundation Asset Management Corp",
+      "shares": 65234702.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 32522108892.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 52337454.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 26092314764.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "State Street Corporation",
+      "shares": 36478022.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 18185753399.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 32656501.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 16280572287.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "FMR, LLC",
+      "shares": 24263911.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 12096530397.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 21071444.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10504957871.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 19434544.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9688897731.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 18574710.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9260236082.0
+    },
+    {
+      "ticker": "MA",
+      "holder": "Morgan Stanley",
+      "shares": 15162577.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7559151267.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Blackrock Inc.",
+      "shares": 187029747.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 27014577113.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 151049902.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 21817648213.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "State Street Corporation",
+      "shares": 101250847.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14624672587.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 64403372.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9302423208.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 62847265.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 9077659110.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Morgan Stanley",
+      "shares": 49216260.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7108796714.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Charles Schwab Investment Management, Inc.",
+      "shares": 41360143.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5974059155.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 33202858.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4795820890.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "Price (T.Rowe) Associates Inc",
+      "shares": 32092077.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4635379680.0
+    },
+    {
+      "ticker": "PG",
+      "holder": "FMR, LLC",
+      "shares": 30709456.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4435673899.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Blackrock Inc.",
+      "shares": 78661037.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 24626411429.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 64687996.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 20251871381.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "State Street Corporation",
+      "shares": 46675858.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14612811205.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 25277177.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7913525988.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 24937966.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7807329198.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Morgan Stanley",
+      "shares": 22369334.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7003167559.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Charles Schwab Investment Management, Inc.",
+      "shares": 17085966.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5349103500.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Bank of America Corporation",
+      "shares": 16314357.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5107535865.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Capital World Investors",
+      "shares": 16143812.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5054143341.0
+    },
+    {
+      "ticker": "HD",
+      "holder": "Capital Research Global Investors",
+      "shares": 14986308.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4691763555.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Blackrock Inc.",
+      "shares": 539258516.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 27933590717.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Berkshire Hathaway, Inc",
+      "shares": 513624165.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 26605731355.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 409704665.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 21222701334.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "State Street Corporation",
+      "shares": 294909309.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 15276301981.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "FMR, LLC",
+      "shares": 198484617.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10281503009.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 163431813.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8465767788.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 157925189.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8180524669.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Capital World Investors",
+      "shares": 144289396.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7474190602.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 132271796.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 6851678931.0
+    },
+    {
+      "ticker": "BAC",
+      "holder": "Morgan Stanley",
+      "shares": 108670801.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5629147408.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Blackrock Inc.",
+      "shares": 135454797.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 13951844091.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 115115672.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 11856914216.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "State Street Corporation",
+      "shares": 83702903.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8621399009.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "JPMORGAN CHASE & CO",
+      "shares": 76893065.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 7919985695.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 41587677.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4283530731.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 35394670.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 3645651010.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Morgan Stanley",
+      "shares": 33798796.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 3481275988.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Wellington Management Group, LLP",
+      "shares": 27890688.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2872740864.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "FMR, LLC",
+      "shares": 21953360.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2261196080.0
+    },
+    {
+      "ticker": "DIS",
+      "holder": "Northern Trust Corporation",
+      "shares": 19952805.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2055138915.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Blackrock Inc.",
+      "shares": 79691184.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 14349992086.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Vanguard Capital Management LLC",
+      "shares": 59333776.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 10684233478.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "State Street Corporation",
+      "shares": 48953388.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 8815036935.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Morgan Stanley",
+      "shares": 31675603.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 5703826064.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Geode Capital Management, LLC",
+      "shares": 22225157.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 4002084183.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Vanguard Portfolio Management LLC",
+      "shares": 19419407.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 3496852760.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Capital World Investors",
+      "shares": 16711525.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 3009244429.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Harris Associates L.P.",
+      "shares": 14917993.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2686283108.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Capital Research Global Investors",
+      "shares": 13705564.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2467961009.0
+    },
+    {
+      "ticker": "CRM",
+      "holder": "Arrowstreet Capital, Limited Partnership",
+      "shares": 12659217.0,
+      "date_reported": "2026-03-31 00:00:00",
+      "pct_out": 0,
+      "value": 2279545297.0
+    }
+  ]
+}

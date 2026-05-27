@@ -60,3 +60,24 @@ export function formatPercentChange(value: number): string {
   const sign = value > 0 ? '+' : '';
   return `${sign}${value.toFixed(1)}%`;
 }
+
+/** Format number with compact notation (no $ sign): 1.2M, 3.4B, 500K */
+export function formatCompactNumber(v: number | null | undefined): string {
+  if (v == null) return '\u2014';
+  if (v >= 1e9) return (v / 1e9).toFixed(2) + 'B';
+  if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
+  return String(v);
+}
+
+/** Truncate string to max length */
+export function truncate(s: string, n: number): string {
+  return s.length > n ? s.slice(0, n) : s;
+}
+
+/** Deterministic seed from string (hash → positive int) */
+export function seedFrom(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}

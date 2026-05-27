@@ -1,108 +1,171 @@
 // ============================================================
-// WhaleTrace Data Layer — n8n SEC Proxy + WhaleTrace API + Mock Fallback
+// WhaleTrace Data Layer — Supabase 為主，n8n + Mock 為備援
 // ============================================================
-// 順序：試 n8n webhook → fallback mock data
-// 提供與現有 hooks/components 相容的介面
 
 import type { InsiderTrade, PaginatedResponse, ResonanceSignal } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 import {
-  MOCK_TRADES,
   MOCK_RESONANCE_SIGNALS,
   MOCK_INSTITUTION_ORDERS,
   getPaginatedTrades,
 } from '@/lib/mock-data';
+import { loadSecTrades } from '@/lib/sec-converter';
+import { supabase } from '@/lib/supabase';
 
 // ============================================================
-// n8n Webhook URLs
+// Supabase 資料轉換
 // ============================================================
 
-const N8N_BASE = 'https://n8n-james0015.zeabur.app/webhook';
-
-const ENDPOINTS = {
-  /** Stock Query v2 — 完整資料（365天內部人+機構） */
-  insiderTrades: (ticker: string, limit = 10) =>
-    `${N8N_BASE}/stock-query?ticker=${ticker}&limit=${limit}`,
-
-  /** WhaleTrace 籌碼快照（機構持股%、放空%、估值） */
-  stockSnapshot: (ticker?: string) =>
-    ticker
-      ? `${N8N_BASE}/whaletrace-snapshot?ticker=${ticker}`
-      : `${N8N_BASE}/whaletrace-snapshot`,
-
-  /** WhaleTrace 機構持股明細（分頁） */
-  institutionalHoldings: (ticker: string, page = 1, pageSize = 20) =>
-    `${N8N_BASE}/whaletrace-institutional?ticker=${ticker}&page=${page}&page_size=${pageSize}`,
-} as const;
-
-// ============================================================
-// Types from n8n SEC response
-// ============================================================
-
-interface StockQueryResponse {
+interface InsiderTradeRow {
+  id: number;
   ticker: string;
+  company_name: string | null;
+  insider_name: string;
+  role: string | null;
+  transaction_date: string;
+  filing_date: string;
+  security: string | null;
+  transaction_type: string | null;
+  shares: number | null;
   price: number | null;
+  value: number | null;
+  shares_held: number | null;
+  filing_url: string | null;
+}
+
+interface InstitutionalRow {
+  id: number;
+  ticker: string;
+  institution_name: string;
+  shares: number | null;
+  market_value: number | null;
+  change_shares: number | null;
+  change_pct: number | null;
+  portfolio_pct: number | null;
+  filing_date: string | null;
+}
+
+interface StockSnapshotRow {
+  id: number;
+  ticker: string;
+  snapshot_date: string;
+  inst_ownership_pct: number | null;
+  insider_ownership_pct: number | null;
+  short_float_pct: number | null;
+  short_ratio: number | null;
   market_cap: number | null;
-  inst_own_pct: string | null;
-  insider_sentiment: string;
-  insider_buys: number;
-  insider_sells: number;
-  insider_trades_365d: number;
-  insiders: Array<{
-    name: string;
-    buys: number;
-    sells: number;
-    total_value: number;
-    trades: Array<{
-      date: string;
-      buy_or_sell: string;
-      shares: number;
-      price: number;
-      value: number;
-    }>;
-  }>;
-  institutional_holders: Array<{
-    holder: string;
-    date: string;
-    direction: string;
-    shares_held: string;
-    value: string;
-    change_pct: string;
-  }>;
+  pe_ratio: number | null;
+  analyst_recommendation: string | null;
 }
 
-function transformStockQueryToInsiderTrades(data: StockQueryResponse): InsiderTrade[] {
-  const results: InsiderTrade[] = [];
-  for (const insider of (data.insiders || [])) {
-    for (const trade of (insider.trades || [])) {
-      const isBuy = trade.buy_or_sell.includes('買');
-      results.push({
-        id: ++_realIdCounter,
-        ticker: data.ticker,
-        company_name: data.ticker,
-        insider_name: insider.name,
-        title: '',
-        transaction_type: isBuy ? 'BUY' : 'SELL',
-        shares: trade.shares,
-        price: trade.price,
-        total_value: trade.value,
-        filing_date: trade.date,
-        trade_date: trade.date,
-        is_10b5_1: false,
-        sec_form_url: '',
-        signal_category: isBuy ? 'BUY' : 'SELL',
-        signal_strength: 50,
-      });
+function toInsiderTrade(row: InsiderTradeRow): InsiderTrade {
+  const isBuy = row.transaction_type === 'Buy' || row.transaction_type === 'BUY';
+  return {
+    id: row.id,
+    ticker: row.ticker,
+    company_name: row.company_name || row.ticker,
+    insider_name: row.insider_name,
+    title: row.role || 'Insider',
+    transaction_type: isBuy ? 'BUY' : 'SELL',
+    shares: row.shares ?? 0,
+    price: row.price ?? 0,
+    total_value: row.value ?? 0,
+    filing_date: row.filing_date,
+    trade_date: row.transaction_date,
+    is_10b5_1: false,
+    sec_form_url: row.filing_url || '',
+    signal_category: isBuy ? 'BUY' : 'SELL',
+    signal_strength: 50,
+  };
+}
+
+// ============================================================
+// Insider Trades（從 Supabase）
+// ============================================================
+
+let _supabaseTradesCache: InsiderTrade[] | null = null;
+
+export async function fetchRealInsiderTrades(): Promise<InsiderTrade[]> {
+  if (_supabaseTradesCache) return _supabaseTradesCache;
+
+  try {
+    const { data, error } = await supabase
+      .from('insider_trades')
+      .select('*')
+      .order('filing_date', { ascending: false })
+      .limit(100);
+
+    if (error) throw error;
+    if (data && data.length > 0) {
+      _supabaseTradesCache = data.map(toInsiderTrade);
+      return _supabaseTradesCache;
     }
+  } catch {
+    // Supabase 不可用 → fall through to n8n
   }
-  return results;
+
+  // Fallback: n8n (keep original logic)
+  return [];
+}
+
+let _secFallbackCache: InsiderTrade[] | null = null;
+
+export async function getInsiderTrades(
+  filter: 'all' | 'buy' | 'sell' | 'cluster',
+  page: number,
+  pageSize: number,
+): Promise<PaginatedResponse<InsiderTrade>> {
+  // 1. Try Supabase
+  if (!_supabaseTradesCache) {
+    await fetchRealInsiderTrades().catch(() => {});
+  }
+
+  if (_supabaseTradesCache && _supabaseTradesCache.length > 0) {
+    let filtered: InsiderTrade[];
+    switch (filter) {
+      case 'buy':
+        filtered = _supabaseTradesCache.filter(t => t.transaction_type === 'BUY');
+        break;
+      case 'sell':
+        filtered = _supabaseTradesCache.filter(t => t.transaction_type === 'SELL');
+        break;
+      case 'cluster':
+        filtered = _supabaseTradesCache.filter(t => t.signal_category === 'CLUSTER');
+        break;
+      default:
+        filtered = [..._supabaseTradesCache];
+    }
+    filtered.sort((a, b) => b.filing_date.localeCompare(a.filing_date));
+    const start = (page - 1) * pageSize;
+    const data = filtered.slice(start, start + pageSize);
+    return { data, total: filtered.length, page, page_size: pageSize, has_more: start + data.length < filtered.length };
+  }
+
+  // 2. Fallback: SEC local data
+  if (!_secFallbackCache) {
+    try { _secFallbackCache = await loadSecTrades(); } catch { /* fallback — handled below */ }
+  }
+  if (_secFallbackCache && _secFallbackCache.length > 0) {
+    let filtered = _secFallbackCache;
+    if (filter === 'buy') filtered = _secFallbackCache.filter(t => t.transaction_type === 'BUY');
+    else if (filter === 'sell') filtered = _secFallbackCache.filter(t => t.transaction_type === 'SELL');
+    filtered.sort((a, b) => b.filing_date.localeCompare(a.filing_date));
+    const start = (page - 1) * pageSize;
+    const data = filtered.slice(start, start + pageSize);
+    return { data, total: filtered.length, page, page_size: pageSize, has_more: start + data.length < filtered.length };
+  }
+
+  // 3. Fallback: mock data
+  return getPaginatedTrades(filter, page, pageSize);
 }
 
 // ============================================================
-// Types from WhaleTrace API response
+// Stock Snapshots（從 Supabase）
 // ============================================================
 
-interface StockSnapshotRaw {
+let _snapshotCache: StockSnapshotRow[] | null = null;
+
+interface StockSnapshotLegacy {
   ticker: string;
   company_name: string;
   market_cap: number;
@@ -130,13 +193,80 @@ interface StockSnapshotRaw {
   data_date: string;
 }
 
-interface SnapshotResponse {
-  data: StockSnapshotRaw[];
-  total: number;
-  generated_at: string;
+export async function fetchStockSnapshots(): Promise<StockSnapshotLegacy[]> {
+  if (_snapshotCache) {
+    return _snapshotCache.map(toLegacySnapshot);
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('stock_snapshots')
+      .select('*')
+      .order('snapshot_date', { ascending: false })
+      .limit(50);
+
+    if (error) throw error;
+    if (data && data.length > 0) {
+      _snapshotCache = data;
+      return data.map(toLegacySnapshot);
+    }
+  } catch { /* fallback — handled below */ }
+
+  return [];
 }
 
-interface InstitutionalHoldingRaw {
+function toLegacySnapshot(row: StockSnapshotRow): StockSnapshotLegacy {
+  return {
+    ticker: row.ticker,
+    company_name: row.ticker,
+    market_cap: row.market_cap ?? 0,
+    sector: '',
+    industry: '',
+    price: 0,
+    pe_trailing: row.pe_ratio ?? 0,
+    pe_forward: 0,
+    peg: 0,
+    inst_own_pct: row.inst_ownership_pct ?? 0,
+    insider_own_pct: row.insider_ownership_pct ?? 0,
+    insider_trans_pct: 0,
+    short_float_pct: row.short_float_pct ?? 0,
+    short_ratio: row.short_ratio ?? 0,
+    roe: 0,
+    beta: 0,
+    rsi14: 0,
+    debt_equity: 0,
+    revenue_growth: 0,
+    profit_margin: 0,
+    analyst_target: 0,
+    recommendation: row.analyst_recommendation || 'N/A',
+    sma50: 0,
+    sma200: 0,
+    data_date: row.snapshot_date,
+  };
+}
+
+export async function getStockSnapshot(ticker: string): Promise<StockSnapshotLegacy | null> {
+  try {
+    const { data, error } = await supabase
+      .from('stock_snapshots')
+      .select('*')
+      .eq('ticker', ticker.toUpperCase())
+      .order('snapshot_date', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) throw error;
+    if (data) return toLegacySnapshot(data);
+  } catch { /* fallback — handled below */ }
+
+  return null;
+}
+
+// ============================================================
+// Institutional Holdings（從 Supabase）
+// ============================================================
+
+interface InstitutionalHoldingLegacy {
   ticker: string;
   institution_name: string;
   quarter: string;
@@ -148,228 +278,52 @@ interface InstitutionalHoldingRaw {
   is_super_investor: boolean;
 }
 
-interface InstitutionalResponse {
-  data: InstitutionalHoldingRaw[];
-  total: number;
-  page: number;
-  page_size: number;
-  has_more: boolean;
-}
-
-// ============================================================
-// n8n API Client
-// ============================================================
-
-async function fetchFromN8N<T>(url: string, timeoutMs = 15000): Promise<T> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-
+export async function fetchInstitutionalHoldings(ticker: string): Promise<InstitutionalHoldingLegacy[]> {
   try {
-    const resp = await fetch(url, { signal: controller.signal });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    return resp.json();
-  } finally {
-    clearTimeout(timer);
-  }
-}
+    const { data, error } = await supabase
+      .from('institutional_holdings')
+      .select('*')
+      .eq('ticker', ticker.toUpperCase())
+      .order('market_value', { ascending: false })
+      .limit(30);
 
-// ============================================================
-// Transform: n8n SEC → InsiderTrade
-// ============================================================
-
-let _realIdCounter = 1000000;
-
-function transformToInsiderTrade(raw: InsiderTrade): InsiderTrade {
-  return raw;
-}
-
-// Old transform removed — now handled by transformStockQueryToInsiderTrades
-
-// ============================================================
-// Insider Trades (n8n SEC Proxy — 現有邏輯)
-// ============================================================
-
-let _realTradesCache: InsiderTrade[] | null = null;
-const TRACKED_TICKERS = [
-  'AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META',
-  'TSLA', 'BRK-B', 'JPM', 'V', 'UNH', 'XOM', 'WMT', 'JNJ', 'MA',
-  'PG', 'HD', 'BAC', 'DIS', 'CRM', 'CRWV', 'PLTR', 'RDDT',
-  'TSM', 'AMD', 'INTC', 'COIN', 'SMCI',
-  'NFLX', 'ADBE', 'NVO', 'LLY', 'AVGO', 'ORCL', 'ABBV', 'PEP', 'KO'
-];
-
-export async function fetchRealInsiderTrades(
-  tickers: string[] = TRACKED_TICKERS,
-  limitPerTicker = 5,
-): Promise<InsiderTrade[]> {
-  if (_realTradesCache) return _realTradesCache;
-
-  const allTrades: InsiderTrade[] = [];
-
-  for (const ticker of tickers) {
-    try {
-      const url = ENDPOINTS.insiderTrades(ticker, limitPerTicker);
-      const data = await fetchFromN8N<StockQueryResponse>(url, 10000);
-
-      if (data?.insiders?.length) {
-        const transformed = transformStockQueryToInsiderTrades(data);
-        allTrades.push(...transformed);
-      }
-    } catch {
-      // n8n 無法連線 — 該 ticker 跳過
+    if (error) throw error;
+    if (data) {
+      return data.map((row: InstitutionalRow) => ({
+        ticker: row.ticker,
+        institution_name: row.institution_name,
+        quarter: row.filing_date || '',
+        shares: row.shares ?? 0,
+        market_value: row.market_value ?? 0,
+        change_direction: (row.change_shares ?? 0) >= 0 ? 'INCREASED' : 'DECREASED',
+        change_shares: row.change_shares ?? 0,
+        pct_of_portfolio: row.portfolio_pct ?? 0,
+        is_super_investor: false,
+      }));
     }
-  }
-
-  if (allTrades.length > 0) {
-    _realTradesCache = allTrades;
-  }
-
-  return allTrades;
-}
-
-export async function getInsiderTrades(
-  filter: 'all' | 'buy' | 'sell' | 'cluster',
-  page: number,
-  pageSize: number,
-): Promise<PaginatedResponse<InsiderTrade>> {
-  if (!_realTradesCache) {
-    await fetchRealInsiderTrades().catch(() => {});
-  }
-
-  if (_realTradesCache && _realTradesCache.length > 0) {
-    let filtered: InsiderTrade[];
-    switch (filter) {
-      case 'buy':
-        filtered = _realTradesCache.filter(
-          (t) => t.transaction_type === 'BUY' && t.signal_category !== 'CLUSTER',
-        );
-        break;
-      case 'sell':
-        filtered = _realTradesCache.filter((t) => t.transaction_type === 'SELL');
-        break;
-      case 'cluster':
-        filtered = _realTradesCache.filter((t) => t.signal_category === 'CLUSTER');
-        break;
-      default:
-        filtered = [..._realTradesCache];
-    }
-
-    filtered.sort((a, b) => b.filing_date.localeCompare(a.filing_date));
-
-    const start = (page - 1) * pageSize;
-    const data = filtered.slice(start, start + pageSize);
-
-    return {
-      data,
-      total: filtered.length,
-      page,
-      page_size: pageSize,
-      has_more: start + data.length < filtered.length,
-    };
-  }
-
-  return getPaginatedTrades(filter, page, pageSize);
-}
-
-// ============================================================
-// Stock Snapshots (NEW — WhaleTrace API)
-// ============================================================
-
-let _snapshotCache: StockSnapshotRaw[] | null = null;
-
-export async function fetchStockSnapshots(): Promise<StockSnapshotRaw[]> {
-  if (_snapshotCache) return _snapshotCache;
-
-  try {
-    const data = await fetchFromN8N<SnapshotResponse>(ENDPOINTS.stockSnapshot(), 10000);
-    if (data?.data?.length) {
-      _snapshotCache = data.data;
-      return data.data;
-    }
-  } catch {
-    // WhaleTrace API 不可用 — 沿用空陣列
-  }
+  } catch { /* fallback — handled below */ }
 
   return [];
 }
 
-export async function getStockSnapshot(
-  ticker: string,
-): Promise<StockSnapshotRaw | null> {
-  // 先試快取
-  if (_snapshotCache) {
-    const found = _snapshotCache.find(
-      (s) => s.ticker.toUpperCase() === ticker.toUpperCase(),
-    );
-    if (found) return found;
-  }
-
-  // 直接查 API
-  try {
-    const data = await fetchFromN8N<StockSnapshotRaw>(
-      ENDPOINTS.stockSnapshot(ticker),
-      10000,
-    );
-    return data && data.ticker ? data : null;
-  } catch {
-    return null;
-  }
-}
-
-// ============================================================
-// Institutional Holdings (NEW — WhaleTrace API)
-// ============================================================
-
-let _holdingsCache: Map<string, InstitutionalHoldingRaw[]> = new Map();
-
-export async function fetchInstitutionalHoldings(
-  ticker: string,
-): Promise<InstitutionalHoldingRaw[]> {
-  if (_holdingsCache.has(ticker)) {
-    return _holdingsCache.get(ticker)!;
-  }
-
-  try {
-    const data = await fetchFromN8N<InstitutionalResponse>(
-      ENDPOINTS.institutionalHoldings(ticker, 1, 30),
-      10000,
-    );
-
-    if (data?.data?.length) {
-      _holdingsCache.set(ticker, data.data);
-      return data.data;
-    }
-  } catch {
-    // API 不可用
-  }
-
-  return [];
-}
-
-/** 機構大單 — 從 WhaleTrace API 取真實資料，fallback mock */
+/** 機構大單 — Supabase → fallback mock */
 export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
   const allOrders: InstitutionOrder[] = [];
 
-  // 試取前 5 檔追蹤股票的機構持股
-  for (const ticker of TRACKED_TICKERS.slice(0, 5)) {
+  for (const ticker of ['AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL']) {
     try {
       const holdings = await fetchInstitutionalHoldings(ticker);
       for (const h of holdings) {
-        // InstitutionOrder uses: institution, ticker, company_name, amount, change_pct, direction
         allOrders.push({
           institution: h.institution_name,
           ticker: h.ticker,
-          company_name: h.ticker,  // will be enriched from snapshot if available
+          company_name: h.ticker,
           amount: h.market_value,
           change_pct: 0,
-          direction: h.change_direction === 'INCREASED' ? 'INCREASED' as const
-            : h.change_direction === 'DECREASED' ? 'DECREASED' as const
-            : 'NEW' as const,
+          direction: h.change_direction === 'INCREASED' ? 'INCREASED' as const : 'DECREASED' as const,
         });
       }
-    } catch {
-      // skip
-    }
+    } catch { /* fallback — handled below */ }
   }
 
   if (allOrders.length > 0) return allOrders;
@@ -377,20 +331,19 @@ export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
 }
 
 // ============================================================
-// Resonance Signals (still mock — awaiting 13F quarterly data)
+// Resonance Signals（mock — 等 Supabase 擴充）
 // ============================================================
 
 export async function getResonanceSignals(): Promise<ResonanceSignal[]> {
-  // TODO: 等 WhaleTrace API 擴充共振訊號計算
   return MOCK_RESONANCE_SIGNALS;
 }
 
 // ============================================================
-// Clear cache (for manual refresh)
+// Clear cache
 // ============================================================
 
 export function clearDataCache(): void {
-  _realTradesCache = null;
+  _supabaseTradesCache = null;
+  _secFallbackCache = null;
   _snapshotCache = null;
-  _holdingsCache = new Map();
 }

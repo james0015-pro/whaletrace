@@ -1,0 +1,162 @@
+{
+  "$schema": "https://walkinglabs.github.io/learn-harness-engineering/schemas/feature_list.json",
+  "project": "WhaleTrace — 鯨魚共振訊號雷達",
+  "version": "3.4.0",
+  "last_updated": "2026-05-24",
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Bloomberg 四象限終端機主頁",
+      "status": "completed",
+      "priority": "P0",
+      "description": "黑底琥珀 JetBrains Mono 四象限：內部人交易(Q1) + 共振訊號(Q2) + 機構流向(Q3) + 指令面板(Q4)"
+    },
+    {
+      "id": "feat-002",
+      "name": "股票詳情頁 (Bloomberg 風格)",
+      "status": "completed",
+      "priority": "P0",
+      "description": "/stocks/:ticker — 信心分數 + 趨勢圖 + 價格圖表 + 機構持股表 + 內部人時間軸 + localStorage watchlist"
+    },
+    {
+      "id": "feat-003",
+      "name": "Dashboard 儀表板頁面",
+      "status": "completed",
+      "priority": "P0",
+      "description": "/dashboard — 共振訊號卡片 + 機構大單表 + 市場情報 (NVDA/SOX/AI泡沫/Arm)"
+    },
+    {
+      "id": "feat-004",
+      "name": "Treemap 市場熱力圖",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/treemap — Finviz 風格 SVG treemap，3 模式切換 (機構/內部人/放空風險)"
+    },
+    {
+      "id": "feat-005",
+      "name": "SEC EDGAR 真實資料接入",
+      "status": "completed",
+      "priority": "P0",
+      "description": "n8n proxy → SEC Form 4 → data-layer.ts → 自動 fallback mock data"
+    },
+    {
+      "id": "feat-006",
+      "name": "Finviz/OpenInsider 爬蟲資料接入",
+      "status": "completed",
+      "priority": "P0",
+      "description": "Python 爬蟲 (server/scrapers/) → JSON 輸出 → data/ → 前端直接 import"
+    },
+    {
+      "id": "feat-007",
+      "name": "Telegram 共振警報推播",
+      "status": "completed",
+      "priority": "P1",
+      "description": "n8n workflow: 每 30 分鐘掃描 20 檔 → 檢測共振訊號 → Telegram Markdown 推送"
+    },
+    {
+      "id": "feat-008",
+      "name": "i18n 中英雙語切換",
+      "status": "completed",
+      "priority": "P1",
+      "description": "react-i18next + zh-TW/en locales + TopNavBar 語言按鈕"
+    },
+    {
+      "id": "feat-009",
+      "name": "GitHub Pages 部署",
+      "status": "completed",
+      "priority": "P0",
+      "description": "Vite build → gh-pages branch → GitHub Pages (james0015-pro.github.io/whaletrace)"
+    },
+    {
+      "id": "feat-010",
+      "name": "關注清單頁面 (localStorage 前端版)",
+      "status": "completed",
+      "priority": "P1",
+      "description": "Bloomberg 終端機風格 WatchlistPage — localStorage 持久化，與 StockDetailPage watchlist 同步，10 欄位表格 (#/TICK/COMPANY/CONF/BUY/SEL/NET/SIGNAL/LAST/✂)，含摘要列、空狀態、共鳴信號指示器"
+    },
+    {
+      "id": "feat-011",
+      "name": "Supabase 認證 + 後端關注清單",
+      "status": "planned",
+      "priority": "P2",
+      "description": "Phase 4: Supabase auth (email/password) + 關注清單後端持久化 + 個人設定"
+    },
+    {
+      "id": "feat-012",
+      "name": "市場情報自動化",
+      "status": "completed",
+      "priority": "P2",
+      "description": "DashboardPage 市場情報卡片 → market_intelligence.json 資料驅動 + MarketIntelligenceCard React 元件。後續透過 script 更新 JSON 即可刷新卡片內容。"
+    },
+    {
+      "id": "feat-013",
+      "name": "機構 13F 季度真實資料",
+      "status": "planned",
+      "priority": "P2",
+      "description": "等 SEC 13F 季度週期 → 自動替換 MOCK_INSTITUTION_ORDERS"
+    },
+    {
+      "id": "feat-014",
+      "name": "效能優化 (code splitting + lazy loading)",
+      "status": "completed",
+      "priority": "P3",
+      "description": "React.lazy → 按頁面分割 bundle → 主 bundle 326KB + 8 個 page chunks (0.8-20KB each)"
+    },
+    {
+      "id": "feat-015",
+      "name": "Cron 排程自動化 (數據刷新)",
+      "status": "completed",
+      "priority": "P1",
+      "description": "hermes cron job 每日 06/18 UTC 自動執行 refresh_and_deploy.sh (爬蟲→建置→部署)"
+    },
+    {
+      "id": "feat-016",
+      "name": "市場情報卡片擴充至 17 張",
+      "status": "completed",
+      "priority": "P2",
+      "description": "market_intelligence.json 17 張卡片：去重 Broadcom ASIC + 新增 NVDA $200B/Lenovo AI Surge/SpaceX IPO (CNBC 即時頭條)"
+    },
+    {
+      "id": "feat-017",
+      "name": "Vitest 單元測試",
+      "status": "completed",
+      "priority": "P3",
+      "description": "Vitest + @testing-library/react 設定 + 63 個測試 (utils 38 + price-utils 12 + sec-converter 7 + SignalBadge 6)"
+    },
+    {
+      "id": "feat-018",
+      "name": "WCAG 2.1 無障礙審計",
+      "status": "completed",
+      "priority": "P3",
+      "description": "WCAG 2.1 AA 審計 + 修復 — 鍵盤導航(13 處) + ARIA labels(8 處) + role='status' + aria-hidden ticker tape"
+    },
+    {
+      "id": "feat-019",
+      "name": "Playwright E2E Smoke Tests",
+      "status": "completed",
+      "priority": "P3",
+      "description": "Playwright 端到端 smoke tests — 15 tests (8 routes, navigation, stock detail, interactions), all pass"
+    },
+    {
+      "id": "feat-020",
+      "name": "市場情報擴充 v3 (33 張卡片)",
+      "status": "completed",
+      "priority": "P2",
+      "description": "+3 張卡片：NVDA $80B Buyback (Motley Fool/Yahoo), Anthropic x MSFT AI Chip Deal (CNBC/Reuters), Growth→Value Rotation (Morningstar/Goldman Sachs)"
+    },
+    {
+      "id": "feat-021",
+      "name": "Bloomberg Heatmap 熱度圖頁面",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/heatmap — Bloomberg 終端機風格彩色磚塊網格，3 模式 (SIGNAL/NET_FLOW/VOLUME)，可調磚塊大小 (44-120px)，hover 提示框，色彩圖例，點擊導航至股票詳情"
+    },
+    {
+      "id": "feat-022",
+      "name": "Finviz-Style Bloomberg Screener 篩選器頁面",
+      "status": "completed",
+      "priority": "P1",
+      "description": "/screener — Bloomberg 終端機風格 Finviz 篩選器，12 欄位可排序表格 (TICK/COMPANY/PRICE/MKT CAP/P/E/RS(14)/INST%/INS%/SIGNAL/B/S/NET)，5 種篩選 + ticker 搜尋，資料來自 stock_snapshots.json + sec_insider_trades.json"
+    }
+  ]
+}

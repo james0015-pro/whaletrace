@@ -1,0 +1,388 @@
+[
+  {
+    "id": 1,
+    "title": "NVDA",
+    "source": "2026-05-24 Motley Fool / 24/7 Wall St / Barron's / TheStreet",
+    "border_color": "#f33",
+    "highlight": "NVDA boosts dividend +2,400% ($0.01->$0.25/qtr) alongside $80B buyback -- Motley Fool 5/24: strongest confidence signal yet. S&P 500 semi exposure hits 18% -- 2x 2000 Tech Bubble peak (24/7 Wall St 5/19). 6 consecutive earnings beats, stock fell after ALL of them",
+    "highlight_color": "#f33",
+    "detail": "Q1 FY2027 revenue $81.6B (+85%) / net profit $58.3B (+211%) are the strongest earnings in semiconductor history -- yet the stock fell for the 6th consecutive time post-earnings. TWO MAJOR NEW DEVELOPMENTS (5/24): (1) Dividend surge -- NVDA announced a 2,400% quarterly dividend increase from $0.01 to $0.25 per share, alongside an additional $80B buyback authorization (total buyback now ~$115B, largest in tech history). Motley Fool 5/24: the dividend surge is the strongest confidence signal yet from management -- with $58.3B quarterly net profit, NVDA can self-fund shareholder returns while still investing $20B+/year in R&D. The dividend+buyback combo signals maturation from pure growth to capital-return story, similar to Apple's 2013 pivot that preceded a decade of outperformance. (2) S&P 500 semiconductor concentration reaches 18% -- 24/7 Wall St 5/19 reports semiconductor stocks now make up 18% of the S&P 500 index, exactly double the ~9% peak during the 2000 Tech Bubble. This concentration risk is unprecedented: when NVDA sneezes, the entire index catches a cold. Hedge funds are max-long SOXX at all-time highs (Benzinga 5/19), Michael Burry draws direct 1999-2000 dot-com parallels (CNBC 5/8). Motley Fool 5/23: Nvidia Just Crushed Earnings Estimates, but the Stock Fell -- three paradoxes: (1) market prices perfection -- another beat is expected (2) custom silicon threat (Broadcom ASIC / Google TPU / Meta MTIA / Anthropic) erodes GPU lock-in (3) beat margin narrowing (growth decelerating from triple-digit to double-digit). JPMorgan reset price target (TheStreet 5/23). Trefis: $200B CPU TAM (Vera CPU + Grace superchip) is real but market views as unproven execution risk. The dividend hike is management's answer to the stock's post-earnings decline pattern -- a signal that even at $5.5T market cap, they believe the stock is undervalued"
+  },
+  {
+    "id": 2,
+    "title": "Broadcom ASIC",
+    "source": "Custom AI Chips",
+    "border_color": "#8b5cf6",
+    "highlight": "Google TPU / Meta MTIA / Anthropic custom chips — 6 AI customers locked, $100B 2027 revenue target",
+    "detail": "Broadcom AI revenue growing rapidly as hyperscalers diversify from NVDA GPU. 6 major AI customers locked (Google TPU, Meta MTIA, Anthropic custom chips) — $100B 2027 revenue target. NVDA GPU dominance under structural threat as hyperscalers shift to custom ASIC",
+    "highlight_color": "#8b5cf6"
+  },
+  {
+    "id": 3,
+    "title": "Geopolitics",
+    "source": "2026-05-21",
+    "border_color": "#ff8c00",
+    "highlight": "Trump pushes NVDA China chip export deal — Beijing counters: wants AMD chips instead",
+    "detail": "Stalemate reshapes AI chip supply chain. AMD $10B Taiwan investment (2026/5/21) strengthens AMD position"
+  },
+  {
+    "id": 4,
+    "title": "SOX / AI Bubble",
+    "source": "2026-05-22",
+    "border_color": "#f33",
+    "highlight": "Philly SOX at 2-week low — Morningstar draws 1999 dot-com parallel",
+    "highlight_color": "#f33",
+    "detail": "Harvard Business Review also warns of AI overinvestment cycle. Fund managers brace for AI/semi correction"
+  },
+  {
+    "id": 5,
+    "title": "Arm / Cathie Wood",
+    "source": "2026-05-22",
+    "border_color": "#ff8c00",
+    "highlight": "Arm +15% on AGI CPU narrative — Cathie Wood cuts semi exposure (contradictory signals)",
+    "highlight_color": "#ff8c00",
+    "detail": "NVDA Q1 $81.6B (+85%) record but stock fell — Investopedia: \"Lost Its Edge\", Fortune: \"forecasts disappoint\". AI valuation ceiling still in question"
+  },
+  {
+    "id": 6,
+    "title": "AI Rotation",
+    "source": "2026-05-20 WSJ",
+    "border_color": "#0c6",
+    "highlight": "Intel + AMD lead chip rally — SOX +4.7%, Wall Street dubs it \"AI changing of the guard\"",
+    "highlight_color": "#0c6",
+    "detail": "Arm +15% (AGI CPU) + Intel recovery + AMD $10B Taiwan investment — investors rotate from NVDA to diversified AI chip plays. SOX nears 2-week high reversal"
+  },
+  {
+    "id": 7,
+    "title": "Big Tech AI Capex",
+    "source": "2026-05-23 Reuters",
+    "border_color": "#8b5cf6",
+    "highlight": "Hyperscaler AI capex surges past $800B annual run-rate — trajectory toward $1T by 2027",
+    "highlight_color": "#8b5cf6",
+    "detail": "MSFT/GOOGL/META/AMZN combined AI infrastructure spend accelerates despite NVDA stock weakness. Gates Foundation exits all remaining MSFT shares amid shift to AI infrastructure spending — signal or noise? Hyperscalers simultaneously build custom silicon (TPU/MTIA/Trainium) to reduce NVDA dependency"
+  },
+  {
+    "id": 8,
+    "title": "TSLA / SpaceX IPO",
+    "source": "2026-05-22",
+    "border_color": "#0c6",
+    "highlight": "TSLA abandons India factory — SpaceX IPO incoming (TSLA holds 19M shares)",
+    "highlight_color": "#0c6",
+    "detail": "Paul Tudor Jones 9x stake increase signals conviction. SpaceX IPO could unlock $10B+ for TSLA balance sheet. India pivot suggests margin focus"
+  },
+  {
+    "id": 9,
+    "title": "Google I/O 2026",
+    "source": "2026-05-20",
+    "border_color": "#8b5cf6",
+    "highlight": "100 announcements — Gemini 3.5 Flash, Antigravity 2.0, OpenClaw agentic coding",
+    "highlight_color": "#8b5cf6",
+    "detail": "Agentic AI era officially here: autonomous agents that can code, browse, and execute tasks independently. GOOGL positioning as AI platform leader beyond search"
+  },
+  {
+    "id": 10,
+    "title": "SEC Tokenization",
+    "source": "2026-05-23 SEC / Yahoo / BitKE",
+    "border_color": "#ff8c00",
+    "highlight": "SEC Commissioner differentiates tokenized securities vs synthetic instruments — BUT Wall Street opposition delays CLARITY Act to late 2026 (Yahoo 5/22)",
+    "highlight_color": "#ff8c00",
+    "detail": "BitKE 5/23: SEC Commissioner Hester Peirce distinguishes tokenized securities from synthetic instruments. Yahoo Finance 5/22 reports Wall Street firms (Goldman Sachs, JPMorgan, Citadel) lobbying against CLARITY Act, pushing the bill from Spring to late 2026. Key Wall Street concerns: (1) decentralized exchanges would cannibalize 70% of equity trading fees (2) T+0 blockchain settlement would eliminate the $3.2T securities lending market (3) compliance costs for legacy broker-dealers estimated at $2-4B each. Despite regulatory taxonomy progress, the bill path through Senate Banking Committee is now blocked by heavy industry opposition. US capital markets transformation faces classic innovator dilemma: technology is ready but incumbents fight to maintain status quo."
+  },
+  {
+    "id": 11,
+    "title": "Akamai x Anthropic",
+    "source": "2026-05-23",
+    "border_color": "#8b5cf6",
+    "highlight": "Akamai leads S&P 500 on reported Anthropic AI edge computing deal",
+    "highlight_color": "#8b5cf6",
+    "detail": "AI inference at the edge — Akamai's CDN infrastructure (4,100+ PoPs globally) repurposed for low-latency AI model serving. Anthropic partnership positions Akamai as AI infrastructure play beyond traditional CDN. Edge AI market projected $27B by 2030 — Akamai + Cloudflare + Fastly competing for LLM inference workloads at the edge"
+  },
+  {
+    "id": 12,
+    "title": "DJIA 50,000",
+    "source": "2026-05-22/24 Benzinga / Investopedia",
+    "border_color": "#0c6",
+    "highlight": "Dow Jones breaches 50,000 for first time -- DELL +15%, Qualcomm +11.6% lead historic rally. AI rotation accelerates: NVDA down while enterprise AI infrastructure stocks surge. US-Iran peace talks fuel risk appetite",
+    "highlight_color": "#0c6",
+    "detail": "Historic milestone signals broad market strength beyond mega-cap tech. Benzinga 5/22: DELL surged +15% and Qualcomm jumped +11.6% as the DJIA crossed 50,000 for the first time in history. The DJIA milestone coincided with S&P 500's 8th consecutive weekly gain (Investopedia 5/22), the longest winning streak since 2017. AI trade rotation accelerates: investors shift from concentrated NVDA bet to diversified enterprise AI infrastructure plays -- DELL (AI server manufacturing), QCOM (edge AI chips), TSLA/AAPL (AI-at-the-edge narrative). US-Iran peace negotiations (mediated by Oman and Qatar) emerged as an additional catalyst, reducing geopolitical risk premium and energy cost uncertainty. The rally breadth (NYSE advance-decline line at record highs) suggests genuine underlying strength rather than narrow mega-cap leadership -- a healthy sign for market sustainability"
+  },
+  {
+    "id": 13,
+    "title": "COMPUTEX Vera CPU",
+    "source": "2026-05-22 Wccftech",
+    "border_color": "#ff8c00",
+    "highlight": "NVIDIA Vera CPU: 1.5x x86 performance — NVDA formally enters CPU market vs Intel/AMD",
+    "highlight_color": "#ff8c00",
+    "detail": "COMPUTEX 2026: NVDA unveils Vera, first ARM-based data center CPU claiming 1.5x performance over x86 rivals. Marks NVDA's entry into $80B server CPU market — direct challenge to Intel Xeon/AMD EPYC duopoly. Combined with Grace superchip, NVDA building fully integrated AI infrastructure stack (GPU+CPU+DPU)"
+  },
+  {
+    "id": 14,
+    "title": "BlackBerry Auto AI",
+    "source": "2026-05-23",
+    "border_color": "#8b5cf6",
+    "highlight": "BlackBerry +18% — emerges as automotive AI dark horse in AI rotation narrative",
+    "highlight_color": "#8b5cf6",
+    "detail": "BlackBerry (BB) surges 18% on automotive AI momentum — QNX/Ivy platform positioned as vehicle AI middleware standard. Joins TSLA/DELL/QCOM in broad AI rotation beyond NVDA. 250M+ vehicles running QNX globally, Ivy platform enables real-time vehicle data AI processing"
+  },
+  {
+    "id": 15,
+    "title": "NVDA $200B Oppty",
+    "source": "2026-05-23 CNBC",
+    "border_color": "#0c6",
+    "highlight": "Nvidia earnings reveal $200B revenue opportunity beyond traditional GPU sales",
+    "highlight_color": "#0c6",
+    "detail": "CNBC analysis: Nvidia Q1 beat obscured a $200B+ TAM expansion — sovereign AI, enterprise AI factories, and robotics (Omniverse + GR00T) represent untapped markets. Jensen Huang positioning NVDA as \"AI operating system\" not just chip vendor. Market may be underweighting the total addressable market expansion"
+  },
+  {
+    "id": 16,
+    "title": "SpaceX / OpenAI IPO",
+    "source": "2026-05-23 CNBC",
+    "border_color": "#ff8c00",
+    "highlight": "Mega-IPOs could signal market top — SpaceX + OpenAI prep record public floats",
+    "highlight_color": "#ff8c00",
+    "detail": "Analysts warn: SpaceX (est. $350B valuation) and OpenAI (est. $200B+) simultaneous IPO preparations echo 1999 dot-com peak. Both expected to file S-1 within weeks. TSLA holds ~$15B in SpaceX equity — IPO would immediately strengthen TSLA balance sheet but raises broader market overheating concerns"
+  },
+  {
+    "id": 17,
+    "title": "Lenovo AI Surge",
+    "source": "2026-05-23 CNBC",
+    "border_color": "#0c6",
+    "highlight": "Lenovo +20% on record earnings — AI server revenue nearly doubles YoY",
+    "highlight_color": "#0c6",
+    "detail": "Lenovo shares jumped nearly 20% after reporting record earnings driven by AI infrastructure demand. AI server revenue nearly doubled YoY — signals enterprise AI adoption accelerating beyond hyperscalers. Dell, HPE, Super Micro also benefiting. AI infrastructure buildout entering Phase 2: enterprise deployment at scale"
+  },
+  {
+    "id": 18,
+    "title": "SpaceX $1.5T IPO",
+    "source": "2026-05-20/23 Fortune / WSJ / CNBC / 24/7 Wall St",
+    "border_color": "#ff8c00",
+    "highlight": "SpaceX .5T IPO: Musk could become world first trillionaire (24/7 Wall St 5/22); Fortune: non-rocket core growth; WSJ: dual-class stock cements Musk control",
+    "highlight_color": "#ff8c00",
+    "detail": "24/7 Wall St 5/22 analysis: At .5T IPO valuation, Elon Musk would become the world first trillionaire — surpassing Rockefeller relative wealth share in American history (Rockefeller at peak controlled ~1.5% of US GDP). Fortune 5/23 analysis: SpaceX rocket launch business is NOT the growth driver — Starlink (2.4B, +58% YoY) and Starship (Mars colonization + deep-space transport) are the real valuation anchors. WSJ 5/20: dual-class share structure gives Musk 78% voting control with only 42% economic ownership — IPO investors get rich but not powerful. CNBC 5/22: renewed speculation Musk may merge Tesla + SpaceX into single T+ entity, though legal/regulatory barriers are enormous. TSLA holds 19M SpaceX shares (~8B at IPO), enough to fully fund TSLA AI infrastructure expansion. S-1 also disclosed: .29B Bitcoin on balance sheet, xAI subsidiary losses, Anthropic partnership for Starlink AI optimization. IPO date still TBD — SEC review of dual-class structure likely to take 6-9 months"
+  },
+  {
+    "id": 19,
+    "title": "Hedge Fund AI All-In",
+    "source": "2026-05-19 Benzinga / CNBC",
+    "border_color": "#f33",
+    "highlight": "Hedge funds max out SOXX exposure at all-time high — Michael Burry warns 1999-2000 dot-com deja vu",
+    "highlight_color": "#f33",
+    "detail": "Benzinga 5/19: Hedge fund semiconductor ETF (SOXX) allocation hits record levels — institutional investors going all-in on AI chips at peak valuations. Michael Burry (The Big Short) draws direct parallel to 1999-2000 dot-com bubble pattern (CNBC 5/8 interview): 'AI is real, but the valuation is 1999.' SOX index at elevated levels despite NVDA rotation. Combined with Morningstar dot-com parallel and HBR overinvestment warnings, concentration risk is historically extreme"
+  },
+  {
+    "id": 20,
+    "title": "NVDA $58.3B Net Profit",
+    "source": "2026-05-23 WSJ / Reuters",
+    "border_color": "#0c6",
+    "highlight": "NVDA 0B Networking biz set to surpass Broadcom — 24/7 Wall St 5/23: 'second growth curve' now rivals GPU; InfiniBand+Spectrum Ethernet dominate AI data center fabric",
+    "highlight_color": "#0c6",
+    "detail": "24/7 Wall St 5/23 analysis: NVIDIA's networking business has quietly grown to a 0B annual run-rate, putting it on track to surpass Broadcom as the #1 data center networking vendor within 12-18 months. This represents NVDA's 'second growth curve' beyond GPU sales. Key components: (1) InfiniBand (Mellanox acquisition) — still the gold standard for AI training clusters, 80%+ market share in TOP500 supercomputers (2) Spectrum Ethernet — NVDA's push into the much larger Ethernet switching market (0B+ TAM), with Spectrum-X purpose-built for AI cloud fabrics (3) BlueField DPU — offloads networking, storage, and security from CPU, creating a 'third socket' in every AI server. The strategic significance: NVDA is no longer just a GPU company — it's building the entire AI data center stack (GPU+CPU+DPU+networking). This vertically integrated approach locks customers into the NVDA ecosystem: once you use NVDA networking, switching to AMD GPU becomes prohibitively complex. Broadcom (AVGO) is the primary competitor in custom ASIC and networking but NVDA's software-defined networking (DOCA, Cumulus Linux) creates higher switching costs. Market implication: if NVDA's networking business is valued at Broadcom's networking multiple (15-20x revenue), it alone would justify 00B-.2T of NVDA's T market cap — meaning the GPU business is effectively being valued at a discount."
+  },
+  {
+    "id": 21,
+    "title": "MSFT/GitHub AI Loss",
+    "source": "2026-05-22 Fortune / CNBC / The Information",
+    "border_color": "#f33",
+    "highlight": "Fortune: 'Microsoft Lost Its Way in AI Race' — CNBC: 'GitHub outages got in the way' — The Information: 'Executives Sound Alarm'",
+    "highlight_color": "#f33",
+    "detail": "Three top-tier media outlets simultaneously criticize Microsoft's AI leadership erosion. Fortune 5/22: internal reorganization chaos, talent exodus to OpenAI/Anthropic, Azure AI growth slowing vs AWS/GCP. CNBC: repeated GitHub outages disrupted developer workflows — Copilot reliability issues eroding trust. The Information: senior executives privately sounding alarm on competitive positioning. MSFT's $13B OpenAI investment faces diminishing returns as enterprises shift to multi-model strategies (Anthropic Claude + Google Gemini). Stock implications: MSFT faces risk of AI premium de-rating if Q2 cloud numbers disappoint"
+  },
+  {
+    "id": 22,
+    "title": "Gemini Omni + Agentic Search",
+    "source": "2026-05-23 NYT / Google I/O",
+    "border_color": "#8b5cf6",
+    "highlight": "Google Gemini Omni (5/19) + agentic search overhaul (5/23 TODAY) — first search box redesign in 25 years under AI-first paradigm",
+    "highlight_color": "#8b5cf6",
+    "detail": "NYT 5/20: Google's agentic search represents the most radical search engine redesign since 1998 — AI agents autonomously browse, compare, and synthesize results before presenting answers. Gemini Omni (launched 5/19) adds multimodal reasoning (text+image+audio+video) and real-time web grounding. Google positioning Gemini as the 'AI operating system' for search, cloud, and enterprise — directly challenging MSFT/OpenAI's Copilot dominance. GOOGL stock implications: search moat reinforcement could reverse recent AI-market-share-loss narrative"
+  },
+  {
+    "id": 23,
+    "title": "Fed Rate HIKE Signal",
+    "source": "2026-05-24 CNBC / Forbes / CBS News / JP Morgan",
+    "border_color": "#f33",
+    "highlight": "Fed minutes: officials see rate HIKE ahead if inflation stays elevated - massive shift from cut expectations, threatens tech valuations",
+    "highlight_color": "#f33",
+    "detail": "CNBC 5/24: \"Fed officials see rate hike ahead if inflation stays elevated, minutes show.\" Forbes Fed Meeting Tracker 2026 updates: interest rate shifts reshape investor strategy. CBS News: \"Will the Fed cut interest rates? Here's what to expect at Wednesday's meeting.\" The narrative has flipped from \"when will they cut?\" to \"will they hike?\" JP Morgan and TD Economics both flag the hawkish pivot. Impact: growth/tech stocks (Mag 7) face multiple compression if rates move higher. The \"higher for longer\" thesis strengthens - rate cuts in 2026 now look unlikely. This is a structural headwind for high-PE AI/semiconductor names."
+  },
+  {
+    "id": 24,
+    "title": "EU China Chip Flop",
+    "source": "2026-05-23 EU Commission",
+    "border_color": "#ff8c00",
+    "highlight": "EU reverses China chip sanctions it barred only weeks ago — proposes sanctions reprieve for Chinese chip firm",
+    "highlight_color": "#ff8c00",
+    "detail": "European Commission flip-flop signals geopolitical fragmentation of semiconductor supply chains. Short-lived sanctions expose policy incoherence — China chip firms gain breathing room. US-led tech decoupling agenda faces European resistance, potentially benefiting non-US equipment makers"
+  },
+  {
+    "id": 25,
+    "title": "Tesla FSD v14.3",
+    "source": "2026-05-22 Tesla Release",
+    "border_color": "#0c6",
+    "highlight": "FSD v14.3.3 adds intervention-free live streak counter — Robotaxi Q4 launch across 12 US states",
+    "highlight_color": "#0c6",
+    "detail": "Tesla FSD milestone: intervention-free streak counter gamifies autonomous driving progress. Robotaxi roadmap: Q4 launch → 12 states → Europe expansion. BASENOR reports regulatory approvals accelerating as Waymo and Cruise face renewed competition from FSD-equipped Tesla fleet"
+  },
+  {
+    "id": 26,
+    "title": "Gates Exits MSFT",
+    "source": "2026-05-23 CNBC",
+    "border_color": "#ff8c00",
+    "highlight": "Gates Foundation sold ALL remaining Microsoft stock — 40-year conviction position fully liquidated",
+    "highlight_color": "#ff8c00",
+    "detail": "Bill & Melinda Gates Foundation exits entire MSFT position — the stock that made Gates the world's richest man. Portfolio rebalancing toward global health + climate tech, or signal that MSFT's AI-heavy capex cycle erodes the investment thesis? Investors debate: portfolio optimization or canary in the coal mine"
+  },
+  {
+    "id": 27,
+    "title": "TI Power Chips",
+    "source": "2026-05-23 Analyst Upgrade",
+    "border_color": "#0c6",
+    "highlight": "Texas Instruments has the power chips AI data centers need — analyst upgrades to Buy",
+    "highlight_color": "#0c6",
+    "detail": "TI's analog and power management chips are critical for AI data center power delivery — every GPU rack needs 5-10x more power regulation vs traditional server racks. AI infrastructure buildout creates structural demand tailwind for TI's bread-and-butter analog business, bypassing the GPU chip war entirely"
+  },
+  {
+    "id": 28,
+    "title": "TSMC Supply Pressure",
+    "source": "2026-05-18 digitimes",
+    "border_color": "#f33",
+    "highlight": "Structural shift — Samsung/Intel/Apple simultaneously testing foundry alternatives to TSMC: not a short-term fluctuation",
+    "highlight_color": "#f33",
+    "detail": "digitimes 5/18 deep-dive: For the first time, all three major TSMC customers are simultaneously and seriously testing alternative foundry options — Samsung Foundry (3nm GAA for Apple A-series), Intel Foundry (18A for US government chips), and a potential Samsung-Apple partnership. This is NOT a short-term pricing renegotiation — it's a structural supply chain diversification play driven by: ①TSMC's $31.38B capex (5/13) cannot keep pace with AI demand ②Taiwan geopolitical risk premium rising ③TSMC's near-100% advanced node market share creates customer concentration anxiety. TSMC's CEO C.C. Wei acknowledged the pressure at COMPUTEX 2026 but emphasized technology moat depth (3nm/2nm lead time). Outcome: TSMC remains dominant but the era of unquestioned monopoly is ending — expect margin compression as customers gain credible alternatives"
+  },
+  {
+    "id": 29,
+    "title": "Broadcom $600B Network",
+    "source": "2026-05-23 Citigroup / AOL / Barchart",
+    "border_color": "#0c6",
+    "highlight": "Citigroup names AVGO top 2026 semiconductor pick — $600B Networking biz set to surpass Broadcom's own name, AVGO AI packaging layout gets unanimous analyst love",
+    "highlight_color": "#0c6",
+    "detail": "Citigroup 5/23: names Broadcom as #1 semiconductor stock for 2026 (AOL/Barchart), citing three structural catalysts: (1) AVGO's AI networking revenue ($60B+ annual run-rate) is on track to surpass traditional Broadcom semiconductor revenue within 2 years — the networking tail is now wagging the dog (2) AI custom ASIC pipeline: 6 hyperscaler customers locked (Google TPU, Meta MTIA, Anthropic), $100B+ 2027 target — AVGO has quietly become the #2 AI chip company behind only NVDA (3) AI packaging dominance: AVGO's advanced 2.5D/3D packaging ecosystem is being positioned as the pick-and-shovel play for ALL AI chips regardless of who designs them. Wall Street consensus: AVGO is the structural winner from NVDA's GPU dominance erosion — when hyperscalers diversify to custom ASIC, AVGO captures the silicon, not NVDA"
+  },
+  {
+    "id": 30,
+    "title": "AI Coding War",
+    "source": "2026-05-23 Business Insider / CNBC / The Information",
+    "border_color": "#8b5cf6",
+    "highlight": "Business Insider 5/23: Claude Has Already Won the AI Coding War — Cursor Is Declining. CNBC 5/22: GitHub Should Have Won but Outages Got in the Way",
+    "highlight_color": "#8b5cf6",
+    "detail": "AI coding tools competitive landscape undergoes seismic shift Q2 2026. Business Insider 5/23 declares: Claude Has Already Won the AI Coding War — Claude Code's superior reasoning, longer context windows, and artifact-based collaborative coding have captured the startup/elite developer ecosystem. Cursor is declining as its GPT-4.5 foundation hits diminishing returns vs Claude's recursive self-improvement. CNBC 5/22: GitHub Copilot should have won given MSFT's $13B OpenAI investment and 100M+ developer base, but repeated outages and reliability issues eroded trust. The Information 5/18: MSFT executives privately sounding alarm on Copilot losing leadership position. Key winner: Anthropic — now the default AI coding partner for YC startups, open-source projects, and enterprise dev teams. Verdict: 2026 is the year coding AI shifted from copilot to agent — autonomous agents that design, implement, and deploy independently"
+  },
+  {
+    "id": 31,
+    "title": "NVDA $80B Buyback",
+    "source": "2026-05-24 Motley Fool / Yahoo Finance / CNBC (TODAY)",
+    "border_color": "#0c6",
+    "highlight": "Nvidia board authorizes additional $80 BILLION stock buyback — Yahoo Finance: 'may unleash an Apple-like stock move'. Total buyback authorization now ~$115B",
+    "highlight_color": "#0c6",
+    "detail": "Motley Fool 5/24 (TODAY): Nvidia's board authorized an ADDITIONAL $80 billion share repurchase program — on top of the $35B already outstanding. Combined buyback authorization = ~$115B, the largest in tech history. Yahoo Finance 5/21: compares to Apple's 2013 buyback that marked the beginning of AAPL's decade-long $600B+ repurchase program — 'the same pattern is forming.' Key signals: (1) NVDA management is using the post-earnings stock dip as a buying opportunity — $58.3B quarterly net profit funds the repurchase organically (2) this is a STRONG insider signal that management believes the stock is undervalued at $110-120 (3) unlike dividend, buyback compounds: fewer shares outstanding → higher EPS → higher valuation multiples. CNBC 5/20: Susquehanna's Roland notes buyback + higher dividend ($0.02→0.04/qtr) signals maturation from growth-only to capital-return story. Counterpoint: big buybacks at peak AI hype cycle echo Cisco 2000 buyback before dot-com collapse — but Cisco had 100x PE, NVDA at ~45x forward PE is historically reasonable"
+  },
+  {
+    "id": 32,
+    "title": "Anthropic x MSFT Chips",
+    "source": "2026-05-21 CNBC / Reuters / The Information",
+    "border_color": "#8b5cf6",
+    "highlight": "Anthropic in talks to use Microsoft's custom AI chips after MSFT's $5B+ investment — echoes Google TPU + Broadcom playbook",
+    "highlight_color": "#8b5cf6",
+    "detail": "CNBC 5/21: Anthropic and Microsoft in advanced talks for Anthropic to use Microsoft's custom AI chips (Athena) for inference workloads — a direct counter to the 'MSFT lost AI race' narrative. MSFT invested $5B+ in Anthropic, creating a triangular OpenAI-Microsoft-Anthropic alliance that now spans both models (Claude + GPT) and infrastructure (Athena chips + Azure). This mirrors Google TPU + Broadcom ASIC playbook — hyperscalers designing own silicon, partnering with leading AI labs for guaranteed demand. Key implication: the AI chip war is shifting from 'everyone buys NVDA' to 'hyperscalers build their own, NVDA gets the rest.' MSFT stock implication: Athena chip adoption by Anthropic would de-risk MSFT's $13B OpenAI bet by diversifying AI infrastructure strategy. The Information first reported the talks; Reuters confirmed both sides are 'seriously exploring' a multi-year chip supply agreement"
+  },
+  {
+    "id": 33,
+    "title": "Mag 7 Rotation Accelerates",
+    "source": "2026-05-24 Fortune / Morningstar / Goldman / Barron's",
+    "border_color": "#ff8c00",
+    "highlight": "Fortune: \"The Magnificent 7 stocks are dying, and Wall Street is pretty happy about it\" - broad rotation from Mag 7 into rest of S&P 500 underway",
+    "highlight_color": "#ff8c00",
+    "detail": "Fortune 5/24: \"The 'Magnificent 7' stocks are dying, and Wall Street is pretty happy about it.\" Morningstar: \"Is a Stock Market Rotation Underway? These Sectors Are Outpacing Tech in 2026.\" Goldman Sachs via Barron's: \"Magnificent 7 Dominance Expected Again in 2026, but a Broadening Trade Is Starting.\" The Chronicle-Journal: \"The Great Rotation of 2026: Why the Magnificent Seven Are Stalling While the Rest of the Market Soars.\" 24/7 Wall St: \"Is the 2026 Market Rotation Already Underway?\" Multiple independent sources confirm the same signal: Mag 7 YTD significantly underperforming rest of S&P 500, breadth improving, rotation from mega-cap growth to value/cyclicals accelerating. Implications: Mag 7 PE compression, alpha opportunity in non-Mag 7 names, sector rotation from tech to financials/energy/industrials."
+  },
+  {
+    "id": 34,
+    "title": "S&P 500 Rally",
+    "source": "2026-05-22 Investopedia",
+    "border_color": "#0c6",
+    "highlight": "S&P 500 posts 8th consecutive weekly gain — DJIA hits fresh all-time high. US-Iran peace talks drive risk-on sentiment across global markets",
+    "highlight_color": "#0c6",
+    "detail": "Investopedia 5/22: S&P 500 recorded its 8th straight weekly gain, matching the longest winning streak since 2017. DJIA breached a new all-time high, driven by broadening market participation beyond mega-cap tech. US-Iran peace negotiations (mediated by Oman and Qatar) emerged as an unexpected catalyst — de-escalation in the Middle East reduces geopolitical risk premium and energy cost uncertainty, both tailwinds for equities. The peace talks focus on a phased sanctions relief framework in exchange for nuclear program transparency. Key market implications: (1) lower oil prices improve corporate margins and consumer spending (2) reduced military escalation risk lowers VIX (3) emerging market funds reallocate from defensive positions to risk assets. Contrarian note: 8-week win streaks historically precede 2-4% pullbacks — the last 8-week streak (Nov 2024) was followed by a 3.5% correction within 2 weeks. The rally breadth (NYSE advance-decline line at record highs) suggests underlying strength, but extreme bullish sentiment (AAII bull ratio above 55%) is a yellow flag"
+  },
+  {
+    "id": 35,
+    "title": "Gemini Omni + Spark",
+    "border_color": "#4285f4",
+    "highlight": "Google Gemini Omni launches today (5/24) with native multimodal reasoning. Gemini Spark is a 24/7 autonomous AI agent for consumers — Google enters the agentic AI war against Claude Code and GitHub Copilot",
+    "highlight_color": "#4285f4",
+    "source": "2026-05-24 Google I/O 2026 / Google AI Blog",
+    "detail": "Google I/O 2026 continues delivering: Gemini Omni officially released today as Google's first natively multimodal model — text, image, audio, and video reasoning in a single unified architecture. Key specs: 100M+ token context window, real-time video understanding, SOTA on MMLU-Pro (92.3%), and 3x faster inference than Gemini 2.5 Pro. Gemini Spark represents Google's boldest consumer AI play yet: a 24/7 autonomous agent that proactively manages calendar, email, research, and coding tasks without user prompts — it watches, learns, and acts. Competitive positioning: Google leverages its full-stack integration (Gmail 1.8B users, Workspace, Android 3B devices) to distribute agents at scale — something Claude Code (dev-focused) and GitHub Copilot (IDE-bound) cannot match. Market implications: (1) GOOGL cloud revenue likely accelerates as enterprises adopt Omni APIs (2) consumer AI adoption crosses chasm — Spark is the first agent your parents might actually use (3) puts pressure on MSFT/OpenAI to accelerate Copilot consumer strategy. Criticisms: privacy concerns with an always-on agent, regulatory risk in EU (GDPR), and Google's history of launching and abandoning AI products (RIP Google Bard, Duet AI, Gemini 1.0)"
+  },
+  {
+    "id": 36,
+    "title": "Meta Llama→Muse Spark",
+    "border_color": "#ff6b6b",
+    "highlight": "Meta abandons open-source Llama, pivots to proprietary Muse Spark — seismic shift in open-source AI ecosystem. All Llama-dependent projects and startups face an uncertain future",
+    "highlight_color": "#ff6b6b",
+    "source": "2026-05-24 Google I/O 2026 Coverage / AI Industry Reports",
+    "detail": "Meta has officially discontinued the Llama open-source model family in favor of Muse Spark, a proprietary enterprise-grade AI platform. This represents the largest reversal in open-source AI since the movement began — Llama downloads exceeded 500M, with 100K+ derivative models on Hugging Face. Impact analysis: (1) LLM ecosystem fragmentation — Llama 4 was the most-used open-source base model; its disappearance forces startups to choose between Mistral (French, EU regulatory overhead), Qwen (Chinese, geopolitical risk), or proprietary APIs (vendor lock-in). (2) Academic research disruption — hundreds of papers and projects that assumed Llama as the open baseline now need to retool. (3) Geopolitical dimension — Llama was the only Western open-source counterweight to China's Qwen and DeepSeek; without it, the open-source AI landscape tilts toward Chinese models. (4) Zuckerberg's motivation: Meta's Reality Labs is burning 0B+/year; monetizing AI through Muse Spark enterprise subscriptions is a direct revenue play. The open-source community's response has been swift — Hugging Face announced an emergency \"Post-Llama Initiative\" to fund Mistral and Falcon development. Contrarian view: this could actually strengthen the open-source ecosystem by forcing diversification rather than over-reliance on a single provider. Key stocks to watch: META (short-term margin pressure if Muse Spark adoption is slow), MSFT/GOOGL/AMZN (cloud providers capture Llama refugees), private: Anthropic/Mistral/Cohere (open-source vacuum = bigger TAM)"
+  },
+  {
+    "id": 37,
+    "title": "AMD Triple Catalyst",
+    "border_color": "#ed1c24",
+    "highlight": "AMD server CPU market doubles to $120B. Lisa Su visits TSMC for 2nm talks. $10B Taiwan AI packaging investment confirmed. AMD is executing on all fronts simultaneously",
+    "highlight_color": "#ed1c24",
+    "source": "2026-05-21 AMD Official / 2026-05-23 digitimes / 2026-05-22 TIKR",
+    "detail": "AMD is experiencing a rare triple-catalyst moment: (1) Server CPU TAM expansion — Mercury Research data shows x86 server CPU market has doubled to $120B annual TAM, driven by AI inference workloads shifting from GPU to CPU for cost efficiency. AMD EPYC Turin (Zen 6) is capturing 34% unit share (up from 28% in Q4 2025), with cloud hyperscalers (AWS, Azure, GCP) deploying EPYC for inference-as-a-service. (2) TSMC 2nm partnership — digitimes 5/23 confirms Lisa Su visited TSMC's Hsinchu HQ to secure 2nm (N2) capacity allocation for next-gen EPYC \"Venice\" CPUs and MI400 AI accelerators. 2nm brings 25-30% perf/watt improvement over 3nm, critical for competing with NVIDIA's Blackwell Ultra (also on TSMC 3nm). (3) Taiwan AI packaging hub — AMD's $10B investment in advanced packaging facilities in Taiwan (CoWoS-L and 2.5D/3D IC) reduces dependency on TSMC's constrained CoWoS capacity and positions AMD as a packaging technology leader. The investment includes a dedicated R&D center for chiplet interconnect standards (UCIe 2.0). Stock implications: AMD trades at 28x forward P/E vs NVDA at 35x — the valuation gap reflects market skepticism about AMD's AI roadmap, but if any of these three catalysts delivers ahead of expectations, AMD could rerate 30-40%. Key risk: NVIDIA's Vera CPU (x1.5 x86 performance) directly challenges EPYC in the data center, and NVIDIA's NVLink ecosystem lock-in is hard to break"
+  },
+  {
+    "id": 38,
+    "title": "COMPUTEX 2026 前哨戰",
+    "source": "2026-05-24 Wccftech / Taipei Times / Motley Fool / ANI News / Times of India",
+    "border_color": "#ff8c00",
+    "highlight": "Jensen Huang + Lisa Su arrive in Taiwan simultaneously TODAY (5/24) — Wccftech: NVDA Vera CPU 1.5x x86 showdown; Motley Fool: shareholder bonanza; TSMC C.C. Wei meeting confirmed",
+    "highlight_color": "#ff8c00",
+    "detail": "COMPUTEX 2026: The two most important CEOs in semiconductors — Jensen Huang (NVIDIA) and Lisa Su (AMD) — landed in Taiwan on the same day (5/24), setting up what Wccftech calls 'the most consequential COMPUTEX in decades.' Key storylines: (1) NVDA Vera CPU vs AMD EPYC Venice — the first direct x86 vs ARM data center CPU war goes public at COMPUTEX. Wccftech 5/22: Vera claims 1.5x x86 performance, but AMD's 2nm Venice (confirmed after Lisa Su's TSMC visit) will narrow the gap. (2) Motley Fool 5/23: 'Nvidia shareholders should be thrilled' — Huang expected to announce new AI partnerships and potentially the Grace-Next superchip roadmap. (3) ANI News 5/24: Huang confirms meetings with TSMC CEO C.C. Wei to secure advanced packaging capacity (CoWoS-L for Blackwell Ultra). (4) Times of India 5/24: Huang reiterates 'will not give up China market' despite US export controls — NVDA designing China-compliant H200-Lite variant. (5) Lisa Su's COMPUTEX keynote (5/25) expected to detail AMD's 0B Taiwan AI packaging investment and EPYC Venice 2nm timeline. Market implications: COMPUTEX historically moves semiconductor stocks 5-10% in the following week — the dual-CEO narrative amplifies the potential."
+  },
+  {
+    "id": 39,
+    "title": "DeepSeek Harness Team",
+    "source": "2026-05-21/23 Pandaily / Decrypt / WEEX / the-decoder",
+    "border_color": "#8b5cf6",
+    "highlight": "DeepSeek forms internal 'Harness' team to challenge Claude Code — four independent sources confirm (Pandaily, Decrypt, WEEX, the-decoder). Beijing's full-stack AI coding strategy emerges",
+    "highlight_color": "#8b5cf6",
+    "detail": "Pandaily 5/21, Decrypt 5/21, WEEX 5/23, and the-decoder 5/20 all independently confirm: DeepSeek has assembled an internal team codenamed 'Harness' (ironic naming coincidence with Harness Engineering methodology) to build a direct competitor to Anthropic's Claude Code. Key details: (1) The Harness team is staffed with 40+ engineers poached from Baidu, Alibaba, and ByteDance — Beijing's best AI coding talent concentrated in one unit. (2) DeepSeek's strategy is 'full-stack AI coding' — not just code completion but agentic autonomous development (design -> implement -> test -> deploy), mirroring Claude Code's agent loop. (3) WEEX 5/23: Harness will leverage DeepSeek-V3's 128K context window and function-calling capabilities already demonstrated in DeepSeek's API. (4) the-decoder 5/20: Harness represents China's strategic push to reduce dependency on Western AI coding tools — currently 70%+ of Chinese developers use GitHub Copilot or Claude Code. (5) Competitive landscape: this creates a three-way AI coding war — Anthropic Claude Code (current leader, winning startup ecosystem), GitHub Copilot (incumbent with 100M+ developer base but reliability issues), and DeepSeek Harness (China's sovereign AI coding play). Geopolitical dimension: if Harness succeeds, it weakens US AI tool export control leverage — Chinese developers won't need access to Claude or Copilot."
+  },
+  {
+    "id": 40,
+    "title": "Semi $830B+ Milestone",
+    "source": "2026-05-24 Omdia / Deloitte / IDC",
+    "border_color": "#0c6",
+    "highlight": "Global semiconductor market surpassed $830B in 2025 driven by AI demand, heading toward trillion-dollar threshold - Omdia/Deloitte/IDC reports",
+    "highlight_color": "#0c6",
+    "detail": "Omdia 5/24: \"Semiconductor market surpasses $830bn in 2025, driven by AI demand and broad segment growth.\" Deloitte 2026 Global Semiconductor Industry Outlook: projects continued double-digit growth with AI infrastructure as primary driver. IDC: \"Semiconductor Market to Surge Past the Trillion-Dollar Threshold: AI Infrastructure Drives Market Growth.\" Key data points: (1) AI chips (GPU/ASIC/FPGA) are the fastest-growing segment, (2) Memory (HBM) riding AI coattails, (3) Broad analog/industrial recovery in 2H 2026. Non-AI semis still in correction but showing early recovery signs. Implications: NVDA/AVGO/MRVL benefit from AI chip growth, MU/Samsung from HBM, TI/ADI from broad recovery. Risk: if AI capex slows, the trillion-dollar thesis could stall."
+  },
+  {
+    "id": 41,
+    "title": "New Fed Chair Warsh",
+    "source": "2026-05-24 MarketWatch / Motley Fool / Politico / Reuters / Intellectia AI / MSN",
+    "border_color": "#f33",
+    "highlight": "Kevin Warsh sworn in as Fed Chair — vows to 'blow up the 15-year playbook' that kept stocks rising. Bond investors already testing him. Balance sheet shrinkage from $6.7T incoming.",
+    "highlight_color": "#f33",
+    "detail": "MarketWatch 5/22: 'The oil shock meets the Fed curse: What Kevin Warsh's swearing-in means for your portfolio.' Politico 5/22: 'Trump finally gets his Fed chair. Bond investors are already testing him.' Motley Fool 5/20: '7 Words From New Fed Chair Kevin Warsh That Portend a Significant Shift in Central Bank Ideology.' Intellectia AI 5/23: 'Kevin Warsh Fed Chair: What It Means for Investors in 2026.' Key implications: (1) Warsh wants to shrink the Fed's $6.7T balance sheet — could drain liquidity that has supported equity valuations for 15 years. IndexBox 5/17 reports explicit balance sheet reduction plans. (2) Motley Fool 5/17: 'New Fed Chair Kevin Warsh Wants to Blow Up the Playbook That's Kept Stocks Rising for 15 Years' — signaling a fundamental shift from the Greenspan/Bernanke/Yellen/Powell era of accommodative policy. (3) Reuters 5/22: 'New Fed Chair Warsh unlikely to cut rates soon, says market expert' — despite Trump's pressure for cuts. (4) Reuters 5/19: 'Warsh's arrival leaves long bonds without a safety net' — bond vigilantes may return. (5) CNBC 5/22: treasury yields surging as 'risk-free' bonds compete with equities. (6) MSN 5/24: 'Warsh takes Fed helm as markets brace for possible rate hikes.' The combination of Warsh's hawkish ideology + Iran oil shock + existing inflation stickiness = most uncertain Fed transition since Volcker 1979. Barron's 4/25: 'Kevin Warsh Wants to Fix the Fed. Will Trump's Pick Break It Instead?' — question now being answered in real-time."
+  },
+  {
+    "id": 42,
+    "title": "Hedge Funds: Software→Semis",
+    "source": "2026-05-24 Goldman Sachs / Seeking Alpha / GuruFocus / Benzinga / ANI News",
+    "border_color": "#0c6",
+    "highlight": "Goldman Sachs reports hedge funds rotating OUT of software INTO semiconductors at record pace — SOXX exposure hits all-time high. 'Chipmakers emerge as biggest Wall Street bet' (ANI News 5/24)",
+    "highlight_color": "#0c6",
+    "detail": "Goldman Sachs 5/23: 'How Hedge Funds Are Trading Semiconductor Stocks' — a landmark report detailing the largest sector rotation since the 2020 COVID re-opening trade. Seeking Alpha 5/24: 'Goldman Sachs sees funds fleeing software for semiconductors as tech trade evolves.' GuruFocus 5/24: 'Investor Shift: Hedge Funds Favor Semiconductors Over Software' — net flows show software losing AUM while semis gain at the fastest rate in 5 years. ANI News 5/24: 'Hedge funds double down on AI stocks; chipmakers emerge biggest Wall Street bet.' Benzinga 5/19: 'Hedge Funds Go All-In On Semiconductors As SOXX Exposure Hits Record Highs' — SOXX (iShares Semiconductor ETF) positioning hit all-time high among hedge fund 13F filings. Blockonomi 5/21: 'Hedge Funds Dump Semiconductor Stocks While Maintaining AI Positions' — BUT this appears to be profit-taking on non-AI semis while maintaining/exiting core AI positions (NVDA/AVGO/MRVL). Key distinction: the rotation is INTO AI semis and OUT OF legacy software (not out of semis). This mirrors the dot-com era pattern where funds chased infrastructure (chips/networking) while abandoning application-layer plays. Risk: when hedge fund positioning is this concentrated, any negative AI catalyst could trigger a violent unwind."
+  },
+  {
+    "id": 43,
+    "title": "NVDA: $15T by 2029?",
+    "source": "2026-05-23 Motley Fool / Seeking Alpha / 24/7 Wall St",
+    "border_color": "#ff8c00",
+    "highlight": "Motley Fool prediction: NVDA becomes world's first $15 TRILLION company by 2029. Seeking Alpha: 'Market's skepticism creates a massive mispricing.' NVDA's hidden $60B networking business to overtake Broadcom.",
+    "highlight_color": "#ff8c00",
+    "detail": "Motley Fool 5/23: 'Prediction: Nvidia Will Become the World's First $15 Trillion Company by 2029' — argues NVDA's AI dominance + networking + CPU expansion creates an unmatched growth flywheel. 24/7 Wall St 5/23: 'Nvidia's Hidden $60 Billion Business Is About to Overtake Broadcom' — NVDA's networking division (InfiniBand + Spectrum-X Ethernet) is on track to surpass Broadcom's total networking revenue within 2 years. Seeking Alpha 5/24: 'Nvidia: Market's Skepticism Creates A Massive Mispricing' — argues NVDA's PE compression (from 60x to ~30x forward despite earnings growing 85%+) is irrational given the revenue runway. Barron's 5/22: 'Nvidia Stock Gets Even Cheaper With Each Earnings Beat' — 6 consecutive beats, stock fell after ALL of them. Motley Fool 5/24: 'After a 1,390% gain in 5 years, is it time to move on?' — counterpoint: some argue the easy money has been made. Fortune 5/20: 'The one number that will actually move Nvidia's stock' — data center revenue growth rate is the only metric that matters. The bull case rests on: (1) AI capex continuing at $800B+ annual run-rate through 2029, (2) NVDA maintaining 80%+ AI GPU market share, (3) Networking + CPU + software creating a moat beyond hardware. Bear case: (1) custom ASICs (Google TPU, Amazon Trainium, MSFT Athena) eating into GPU TAM, (2) China restrictions limiting growth, (3) 6 consecutive post-earnings selloffs suggest peak sentiment."
+  }
+]

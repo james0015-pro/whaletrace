@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+// useMemo removed: unused import
 
 interface WhaleScoreGaugeProps {
   score: number; // 0-100

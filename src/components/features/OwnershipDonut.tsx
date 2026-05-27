@@ -1,16 +1,10 @@
-import { useMemo } from 'react';
+// useMemo removed: unused import
+// seedFrom removed: dead code after getMockOwnership deletion
 
 interface OwnershipDonutProps {
   ticker: string;
-  instPct: number;    // institutional ownership %
-  insiderPct: number; // insider ownership %
-}
-
-// Deterministic seed from ticker for mock ownership data
-function seedFrom(s: string): number {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-  return Math.abs(h);
+  instPct: number;
+  insiderPct: number;
 }
 
 export default function OwnershipDonut({ ticker, instPct, insiderPct }: OwnershipDonutProps) {
@@ -91,11 +85,4 @@ export default function OwnershipDonut({ ticker, instPct, insiderPct }: Ownershi
   );
 }
 
-/** Generate mock ownership data from ticker seed */
-export function getMockOwnership(ticker: string): { instPct: number; insiderPct: number } {
-  const seed = seedFrom(ticker + '_own');
-  const rng = (n: number) => { const x = Math.sin(seed + n * 271) * 43758.5453; return x - Math.floor(x); };
-  const instPct = +(50 + rng(0) * 35).toFixed(1);  // 50-85%
-  const insiderPct = +(rng(1) * 15).toFixed(1);       // 0-15%
-  return { instPct, insiderPct };
-}
+// getMockOwnership removed: dead code, never imported elsewhere

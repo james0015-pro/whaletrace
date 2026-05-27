@@ -27,6 +27,9 @@ TRACKED_TICKERS = [
 ]
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
+SUPABASE_URL = "https://vihxecnwonwmqclaxubn.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpaHhlY253b253bXFjbGF4dWJuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU4NTY4OCwiZXhwIjoyMDk1MTYxNjg4fQ.-Tsme1Yakhfrj_nms3fG3TPvoblYS4WBSzO-Ejw5fK0"
+
 SUPER_INVESTORS = {
     'berkshire hathaway','baillie gifford','renaissance technologies',
     'vanguard group','blackrock','state street','t. rowe price',
@@ -399,20 +402,138 @@ def save_output(data: WhaleTraceData, out_dir: str = OUTPUT_DIR):
     
     return paths
 
+
+# ═══════════════════════════════════════════
+# Supabase Sync — DELETE + INSERT
+# ═══════════════════════════════════════════
+
+def _supabase_request(method: str, path: str, body=None, timeout=30):
+    """Make a Supabase REST API request (service_role)."""
+    import urllib.request, urllib.error
+    url = f"{SUPABASE_URL}{path}"
+    data = json.dumps(body).encode() if body else None
+    req = urllib.request.Request(url, data=data, method=method)
+    req.add_header("apikey", SUPABASE_KEY)
+    req.add_header("Authorization", f"Bearer {SUPABASE_KEY}")
+    req.add_header("Content-Type", "application/json")
+    req.add_header("Prefer", "return=minimal")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status, None
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode()[:300]
+
+
+def sync_to_supabase(data: WhaleTraceData, tickers: list[str]) -> dict:
+    """DELETE existing rows for tickers, then INSERT fresh data into Supabase."""
+    ticker_list = ",".join(tickers)
+    ticker_filter = f"?ticker=in.({ticker_list})"
+    results = {}
+
+    # ─── 1. stock_snapshots ───
+    if data.stock_snapshots:
+        rows = []
+        for s in data.stock_snapshots:
+            rows.append({
+                "ticker": s.get("ticker", ""),
+                "snapshot_date": s.get("data_date", date.today().isoformat()),
+                "inst_ownership_pct": s.get("inst_own_pct"),
+                "insider_ownership_pct": s.get("insider_own_pct"),
+                "short_float_pct": s.get("short_float_pct"),
+                "short_ratio": s.get("short_ratio"),
+                "market_cap": s.get("market_cap"),
+                "pe_ratio": s.get("pe_trailing"),
+                "analyst_recommendation": s.get("recommendation", ""),
+            })
+        code, _ = _supabase_request("DELETE", f"/rest/v1/stock_snapshots{ticker_filter}")
+        code2, _ = _supabase_request("POST", "/rest/v1/stock_snapshots", rows)
+        results["stock_snapshots"] = f"deleted={code} inserted={code2} rows={len(rows)}"
+
+    # ─── 2. insider_trades ───
+    if data.insider_trades:
+        rows = []
+        for t in data.insider_trades:
+            rows.append({
+                "ticker": t.get("ticker", ""),
+                "insider_name": t.get("insider_name", ""),
+                "role": t.get("title", ""),
+                "transaction_date": t.get("trade_date", ""),
+                "filing_date": t.get("filing_date", ""),
+                "security": "Common Stock",
+                "transaction_type": t.get("transaction_type", ""),
+                "shares": t.get("shares", 0),
+                "price": 0,
+                "value": 0,
+                "shares_held": 0,
+                "filing_url": t.get("filing_url", ""),
+            })
+        code, _ = _supabase_request("DELETE", f"/rest/v1/insider_trades{ticker_filter}")
+        code2, _ = _supabase_request("POST", "/rest/v1/insider_trades", rows)
+        results["insider_trades"] = f"deleted={code} inserted={code2} rows={len(rows)}"
+
+    # ─── 3. institutional_holdings ───
+    if data.institutional_holdings:
+        rows = []
+        for h in data.institutional_holdings:
+            # Convert "2026Q2" → "2026-04-01"
+            quarter = h.get("quarter", "")
+            if quarter and "Q" in quarter:
+                try:
+                    yr, q = quarter.split("Q")
+                    month = {"1": "01", "2": "04", "3": "07", "4": "10"}.get(q, "01")
+                    filing_date = f"{yr}-{month}-01"
+                except:
+                    filing_date = ""
+            else:
+                filing_date = quarter
+            rows.append({
+                "ticker": h.get("ticker", ""),
+                "institution_name": h.get("institution_name", ""),
+                "shares": h.get("shares", 0),
+                "market_value": h.get("market_value", 0),
+                "change_shares": h.get("change_shares", 0),
+                "change_pct": 0,
+                "portfolio_pct": h.get("pct_of_portfolio", 0),
+                "filing_date": filing_date,
+                "source": "whaletrace-scraper",
+            })
+        code, _ = _supabase_request("DELETE", f"/rest/v1/institutional_holdings{ticker_filter}")
+        code2, _ = _supabase_request("POST", "/rest/v1/institutional_holdings", rows)
+        results["institutional_holdings"] = f"deleted={code} inserted={code2} rows={len(rows)}"
+
+    return results
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="WhaleTrace 完整籌碼爬蟲")
     parser.add_argument("--tickers", type=str, help="股票代碼，逗號分隔")
     parser.add_argument("--output", type=str, default=OUTPUT_DIR)
     parser.add_argument("--quick", action="store_true", help="快速模式（僅 Finviz+yfinance）")
+    parser.add_argument("--sync-supabase", action="store_true", help="爬取後同步至 Supabase")
     args = parser.parse_args()
-    
+
     tickers = [t.strip().upper() for t in args.tickers.split(",")] if args.tickers else TRACKED_TICKERS
-    
-    print(f"🕷️ WhaleTrace Scraper v3 — {len(tickers)} tickers")
+
+    print(f"🕷️ WhaleTrace Scraper v4 — {len(tickers)} tickers")
     print(f"   {'快速模式: Finviz + yfinance' if args.quick else '完整模式: Finviz + yfinance + Nasdaq + MarketBeat + SEC + Fintel'}")
-    print(f"   輸出: {args.output}\n")
-    
+    print(f"   輸出: {args.output}")
+    if args.sync_supabase:
+        print(f"   Supabase: ✅ 啟用同步\n")
+    else:
+        print()
+
     data = scrape_all(tickers, quick=args.quick)
     save_output(data, args.output)
-    
+
     print(f"\n✅ Done. {len(data.stock_snapshots)} snapshots, {len(data.institutional_holdings)} holdings, {len(data.insider_trades)} insider trades, {len(data.sec_filings)} SEC filings, {len(data.fintel_shorts)} short data")
+
+    # ─── Supabase Sync ───
+    if args.sync_supabase:
+        print(f"\n🔄 Syncing to Supabase...")
+        try:
+            results = sync_to_supabase(data, tickers)
+            for table, status in results.items():
+                print(f"   {table}: {status}")
+            print(f"✅ Supabase sync complete!")
+        except Exception as e:
+            print(f"❌ Supabase sync failed: {e}")

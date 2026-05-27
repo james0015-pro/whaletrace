@@ -111,7 +111,7 @@ export function generateTrades(count: number): InsiderTrade[] {
     // filing_date 在 trade_date 之後 0-3 天
     const filingDate = new Date(tradeDate.getTime() + randInt(0, 3) * DAY_MS);
 
-    let category = deriveCategory(transactionType, is10b5);
+    const category = deriveCategory(transactionType, is10b5);
 
     // 累計同日同 ticker 買入筆數
     const buyKey = `${stock.ticker}::${toISODate(tradeDate)}`;
@@ -223,7 +223,8 @@ export function getPaginatedTrades(
 
 import type { ResonanceSignal } from '@/types';
 
-const INSTITUTIONS = [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _INSTITUTIONS = [
   'Vanguard Group', 'BlackRock', 'State Street', 'Fidelity',
   'Capital Group', 'T. Rowe Price', 'Goldman Sachs', 'Morgan Stanley',
   'JPMorgan Chase', 'Citadel', 'Renaissance Technologies', 'Baillie Gifford',

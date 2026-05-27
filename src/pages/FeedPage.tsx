@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MOCK_TRADES, MOCK_RESONANCE_SIGNALS, MOCK_INSTITUTION_ORDERS } from '@/lib/mock-data';
+import { formatCompactNumber, truncate } from '@/lib/utils';
 import type { InsiderTrade, ResonanceSignal, TradeType } from '@/types';
 import type { InstitutionOrder } from '@/lib/mock-data';
 
@@ -13,11 +14,20 @@ type FM = 'all'|'buy'|'sell'|'cluster';
 type DetailMode = 'insider'|'ticker'|'institution';
 type DetailTarget = { mode: DetailMode; label: string; subtitle?: string };
 
+const F = formatCompactNumber;
+const S = truncate;
+
 /* ============================================================
    Reusable components
    ============================================================ */
 function Cell({ w, color, bold, underline, onClick, children }: { w: number; color: string; bold?: boolean; underline?: boolean; onClick?: () => void; children: React.ReactNode }) {
-  return <span onClick={onClick} style={{width:w,color,fontWeight:bold?600:400,cursor:onClick?'pointer':'default',textDecoration:underline?'underline':'none',display:'inline-block',height:ROW_H,lineHeight:`${ROW_H}px`,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',fontFamily:'JetBrains Mono,monospace',fontSize:11,textAlign:'left',padding:'0 3px'}}>{children}</span>;
+  const interactive = !!onClick;
+  return <span
+    onClick={onClick}
+    role={interactive ? 'button' : undefined}
+    tabIndex={interactive ? 0 : undefined}
+    onKeyDown={interactive ? (e: React.KeyboardEvent) => { if (e.key === 'Enter') onClick?.(); } : undefined}
+    style={{width:w,color,fontWeight:bold?600:400,cursor:onClick?'pointer':'default',textDecoration:underline?'underline':'none',display:'inline-block',height:ROW_H,lineHeight:`${ROW_H}px`,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',fontFamily:'JetBrains Mono,monospace',fontSize:11,textAlign:'left',padding:'0 3px'}}>{children}</span>;
 }
 function Row({ children, h }: { children: React.ReactNode; h?: boolean }) {
   return <div style={{display:'flex',alignItems:'center',height:ROW_H,padding:0,fontSize:11,fontFamily:'JetBrains Mono,monospace',background:h?'rgba(255,255,255,0.03)':'transparent',borderBottom:'1px solid rgba(255,255,255,0.04)'}}>{children}</div>;
@@ -25,16 +35,14 @@ function Row({ children, h }: { children: React.ReactNode; h?: boolean }) {
 function Hdr({ title, detail }: { title: string; detail?: string }) {
   return <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',height:22,padding:'0 8px',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',fontSize:10,fontWeight:700,color:'#ff8c00',letterSpacing:1,textTransform:'uppercase'}}><span>{title}</span>{detail&&<span style={{color:'#555',fontWeight:400,fontSize:9}}>{detail}</span>}</div>;
 }
-const F = (v: number | null | undefined): string => {
-  if (v == null) return '—';
-  if (v >= 1e9) return (v/1e9).toFixed(2)+'B';
-  if (v >= 1e6) return (v/1e6).toFixed(1)+'M';
-  if (v >= 1e3) return (v/1e3).toFixed(0)+'K';
-  return String(v);
-};
-const S = (s: string, n: number): string => s.length > n ? s.slice(0, n) : s;
 function R({ w, c, b, onClick, children }: { w: number; c: string; b?: boolean; onClick?: () => void; children: React.ReactNode }) {
-  return <span onClick={onClick} style={{display:'inline-block',width:w,height:ROW_H,lineHeight:`${ROW_H}px`,color:c,fontWeight:b?600:400,fontSize:11,fontFamily:'JetBrains Mono,monospace',textAlign:'right',padding:'0 3px',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',cursor:onClick?'pointer':'default',textDecoration:onClick?'underline':'none'}}>{children}</span>;
+  const interactive = !!onClick;
+  return <span
+    onClick={onClick}
+    role={interactive ? 'button' : undefined}
+    tabIndex={interactive ? 0 : undefined}
+    onKeyDown={interactive ? (e: React.KeyboardEvent) => { if (e.key === 'Enter') onClick?.(); } : undefined}
+    style={{display:'inline-block',width:w,height:ROW_H,lineHeight:`${ROW_H}px`,color:c,fontWeight:b?600:400,fontSize:11,fontFamily:'JetBrains Mono,monospace',textAlign:'right',padding:'0 3px',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',verticalAlign:'middle',cursor:onClick?'pointer':'default',textDecoration:onClick?'underline':'none'}}>{children}</span>;
 }
 
 // Column widths for Q1 (total = 512 to fill panel)
@@ -70,7 +78,7 @@ function InsiderProfile({ trade, onClose }: { trade: InsiderTrade; onClose: () =
           <div style={{fontSize:11,color:'#e6e6e6',marginBottom:2}}>{trade.title}</div>
           <div style={{fontSize:11,color:'#888'}}>{trade.ticker} · {trade.company_name}</div>
         </div>
-        <button onClick={onClose} style={{background:'transparent',border:'1px solid #333',color:'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>✕</button>
+        <button onClick={onClose} aria-label="Close profile" style={{background:'transparent',border:'1px solid #333',color:'#888',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>✕</button>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,fontSize:10,marginBottom:12,padding:'8px 0',borderTop:'1px solid #1f1f1f',borderBottom:'1px solid #1f1f1f'}}>
         <div>Total trades: <span style={{color:'#fff'}}>{allByInsider.length}</span></div>
@@ -116,6 +124,83 @@ function buildInstitutionHistory(label: string) {
 }
 
 /* ============================================================
+   10-Year Data Generators (for ticker filter mode)
+   ============================================================ */
+const INSIDER_NAMES = ['Tim Cook','Satya Nadella','Jensen Huang','Sundar Pichai','Andy Jassy','Mark Zuckerberg','Elon Musk','Jamie Dimon','Warren Buffett','Brian Moynihan','Bob Iger','Shantanu Narayen','Reed Hastings','Marc Benioff','Ruth Porat','Amy Hood','Colette Kress','Luca Maestri','John Giannandrea','Craig Federighi'];
+const INSTITUTION_NAMES = ['Vanguard Group','BlackRock','State Street','Fidelity','T. Rowe Price','Capital Group','Geode Capital','Northern Trust','Bank of America','Goldman Sachs','Morgan Stanley','J.P. Morgan','Citadel','Two Sigma','Renaissance Tech','Bridgewater','Baillie Gifford','Wellington','Norges Bank','Tiger Global'];
+
+function gen10YearTrades(ticker: string): InsiderTrade[] {
+  const realTrades = ALL.filter(t => t.ticker === ticker);
+  const rows: InsiderTrade[] = [...realTrades];
+  let idCounter = 10000;
+  const base = new Date('2026-06-01');
+  for (let m = 0; m < 120; m++) {
+    const d = new Date(base);
+    d.setMonth(d.getMonth() - m);
+    const count = Math.floor(Math.random() * 3) + 1; // 1-3 trades per month
+    for (let c = 0; c < count; c++) {
+      const insider = INSIDER_NAMES[Math.floor(Math.random() * INSIDER_NAMES.length)];
+      const dir: TradeType = Math.random() > 0.4 ? 'BUY' : 'SELL';
+      const shares = Math.floor(Math.random() * 500000) + 500;
+      const price = +(Math.random() * 500 + 10).toFixed(2);
+      rows.push({
+        id: idCounter++,
+        ticker,
+        company_name: ticker,
+        insider_name: insider,
+        title: Math.random() > 0.5 ? 'CEO' : Math.random() > 0.5 ? 'CFO' : Math.random() > 0.5 ? 'Director' : 'SVP',
+        transaction_type: dir,
+        shares,
+        price,
+        total_value: +(shares * price).toFixed(2),
+        filing_date: d.toISOString().slice(0, 10),
+        trade_date: d.toISOString().slice(0, 10),
+        is_10b5_1: Math.random() > 0.85,
+        sec_form_url: '',
+        signal_category: dir,
+        signal_strength: Math.floor(Math.random() * 60) + 20,
+      });
+    }
+  }
+  rows.sort((a, b) => b.trade_date.localeCompare(a.trade_date));
+  return rows;
+}
+
+function gen10YearInstitutions(ticker: string): InstitutionOrder[] {
+  const rows: InstitutionOrder[] = [];
+  const base = new Date('2026-06-01');
+  for (let q = 0; q < 40; q++) {
+    const d = new Date(base);
+    d.setMonth(d.getMonth() - q * 3);
+    const count = Math.floor(Math.random() * 5) + 3; // 3-7 institutions per quarter
+    const usedInstitutions = new Set<string>();
+    for (let c = 0; c < count; c++) {
+      let inst: string;
+      do { inst = INSTITUTION_NAMES[Math.floor(Math.random() * INSTITUTION_NAMES.length)]; } while (usedInstitutions.has(inst) && usedInstitutions.size < INSTITUTION_NAMES.length);
+      usedInstitutions.add(inst);
+      const amount = Math.random() > 0.3 ? Math.floor(Math.random() * 5000000000) + 10000000 : Math.floor(Math.random() * 500000000) + 5000000;
+      const pct = +(Math.random() * 30 - 10).toFixed(1);
+      rows.push({
+        institution: inst,
+        ticker,
+        company_name: ticker,
+        amount,
+        change_pct: pct,
+        direction: pct > 5 ? 'INCREASED' as const : pct < -5 ? 'DECREASED' as const : 'INCREASED' as const,
+      });
+    }
+  }
+  rows.sort((a, b) => {
+    const aIsNew = a.direction === 'NEW';
+    const bIsNew = b.direction === 'NEW';
+    if (aIsNew && !bIsNew) return -1;
+    if (!aIsNew && bIsNew) return 1;
+    return b.amount - a.amount;
+  });
+  return rows;
+}
+
+/* ============================================================
    Detail Panel (drill-down)
    ============================================================ */
 function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget; onClose: () => void }) {
@@ -124,15 +209,12 @@ function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget;
   const push = (t: DetailTarget) => setStack(prev => [...prev, t]);
   const pop = () => { if (stack.length > 1) setStack(prev => prev.slice(0, -1)); else onClose(); };
 
-  let rows: ReturnType<typeof buildInsiderHistory> = [];
-  let title = active.label; let sub = active.subtitle || ''; let col2 = 'ENTITY';
+  let rows: ReturnType<typeof buildInsiderHistory>;
+  let col2: string;
 
-  let insiderInfo = '';
-  if (active.mode === 'insider') { const t = ALL.find(t => t.insider_name === active.label); if (t) insiderInfo = `${t.ticker} · ${t.title}`; }
-
-  if (active.mode === 'insider') { rows = buildInsiderHistory(active.label); sub = insiderInfo; col2 = 'TICKER'; }
-  else if (active.mode === 'ticker') { rows = buildTickerHistory(active.label); sub = `Stock trades`; col2 = 'INSIDER'; }
-  else { rows = buildInstitutionHistory(active.label); sub = `Institution 2YR flow`; col2 = 'TYPE'; }
+  if (active.mode === 'insider') { rows = buildInsiderHistory(active.label); col2 = 'TICKER'; }
+  else if (active.mode === 'ticker') { rows = buildTickerHistory(active.label); col2 = 'INSIDER'; }
+  else { rows = buildInstitutionHistory(active.label); col2 = 'TYPE'; }
 
   const tB=rows.filter(r=>r.dir==='BUY').reduce((s,r)=>s+r.value,0);
   const tS=rows.filter(r=>r.dir==='SELL').reduce((s,r)=>s+r.value,0);
@@ -140,9 +222,17 @@ function DetailPanel({ target: initialTarget, onClose }: { target: DetailTarget;
   return (
     <div style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:50,background:'#000',display:'flex',flexDirection:'column'}}>
       <div style={{display:'flex',alignItems:'center',padding:'4px 8px',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',gap:12}}>
-        <button onClick={pop} style={{background:'transparent',border:'1px solid #333',color:'#ff8c00',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>ESC BACK</button>
+        <button onClick={pop}
+          aria-label="Go back (Escape)"
+          style={{background:'transparent',border:'1px solid #333',color:'#ff8c00',cursor:'pointer',padding:'2px 8px',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>ESC BACK</button>
         <div style={{display:'flex',gap:4,alignItems:'center',fontSize:10,fontFamily:'JetBrains Mono,monospace'}}>
-          {stack.map((t,i) => (<span key={i} style={{display:'flex',gap:4,alignItems:'center'}}>{i>0&&<span style={{color:'#555'}}>&gt;</span>}<span style={{color:i===stack.length-1?'#ff8c00':'#888',fontWeight:i===stack.length-1?700:400,cursor:'pointer'}} onClick={()=>setStack(prev=>prev.slice(0,i+1))}>{t.mode==='ticker'?t.label:t.label}</span></span>))}
+          {stack.map((t,i) => (<span key={i} style={{display:'flex',gap:4,alignItems:'center'}}>{i>0&&<span style={{color:'#555'}}>&gt;</span>}<span
+            role="button"
+            tabIndex={0}
+            aria-label={`Navigate to ${t.mode} ${t.label} layer`}
+            onKeyDown={e=>{if(e.key==='Enter') setStack(prev=>prev.slice(0,i+1))}}
+            onClick={()=>setStack(prev=>prev.slice(0,i+1))}
+            style={{color:i===stack.length-1?'#ff8c00':'#888',fontWeight:i===stack.length-1?700:400,cursor:'pointer'}}>{t.mode==='ticker'?t.label:t.label}</span></span>))}
         </div>
         <span style={{marginLeft:'auto',color:'#555',fontSize:9}}>{rows.length} rows | 🟢{F(tB)} 🔴{F(tS)} | L{stack.length}</span>
       </div>
@@ -176,26 +266,116 @@ export default function FeedPage() {
   const { t } = useTranslation();
   const [f, setF] = useState<FM>('all');
   const [cmd, setCmd] = useState('');
+  const cmdRef = useRef('');
   const [msg, setMsg] = useState('');
   const [detail, setDetail] = useState<DetailTarget | null>(null);
   const [profile, setProfile] = useState<InsiderTrade | null>(null);
+  const [tickerFilter, setTickerFilter] = useState<string | null>(null);
   const inp = useRef<HTMLInputElement>(null);
 
-  const filtered = (()=>{switch(f){case'buy':return ALL.filter(t=>t.transaction_type==='BUY');case'sell':return ALL.filter(t=>t.transaction_type==='SELL');case'cluster':return ALL.filter(t=>t.signal_category==='CLUSTER');default:return ALL;}})().slice(0,35);
-  const buyN=ALL.filter(t=>t.transaction_type==='BUY').length;
-  const sellN=ALL.filter(t=>t.transaction_type==='SELL').length;
-  const cluN=ALL.filter(t=>t.signal_category==='CLUSTER').length;
+  // 10-year data — memoized, only regenerates when tickerFilter changes
+  const tickerTrades = useMemo(() => {
+    if (!tickerFilter) return null;
+    try { return gen10YearTrades(tickerFilter); } catch { return []; }
+  }, [tickerFilter]);
 
-  useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(detail||profile){if(e.key==='Escape'){setDetail(null);setProfile(null);}return;}if(e.target instanceof HTMLInputElement&&e.key!=='Escape')return;if(e.key==='1')setF('all');if(e.key==='2')setF('buy');if(e.key==='3')setF('sell');if(e.key==='4')setF('cluster');if(e.key==='/'||e.key==='`'){e.preventDefault();inp.current?.focus();}if(e.key==='Escape'){inp.current?.blur();setCmd('');}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[detail,profile]);
+  const tickerInstitutions = useMemo(() => {
+    if (!tickerFilter) return null;
+    try { return gen10YearInstitutions(tickerFilter); } catch { return []; }
+  }, [tickerFilter]);
 
-  const onCmd=(e:React.KeyboardEvent)=>{if(e.key!=='Enter')return;const v=cmd.trim().toLowerCase();setCmd('');if(v==='all'||v==='1')setF('all');else if(v==='buy'||v==='2')setF('buy');else if(v==='sell'||v==='3')setF('sell');else if(v==='cluster'||v==='4')setF('cluster');else if(v.startsWith('/'))setMsg('Search: '+v.slice(1).toUpperCase());else setMsg('?');inp.current?.blur();setTimeout(()=>setMsg(''),2500);};
+  const filtered = useMemo(() => {
+    const base = tickerFilter ? (tickerTrades || []) : ALL;
+    switch (f) {
+      case 'buy': return base.filter(t => t.transaction_type === 'BUY');
+      case 'sell': return base.filter(t => t.transaction_type === 'SELL');
+      case 'cluster': return base.filter(t => t.signal_category === 'CLUSTER');
+      default: return base;
+    }
+  }, [tickerFilter, tickerTrades, f]);
+
+  const instData = useMemo(() => tickerFilter ? (tickerInstitutions || []) : INSTS, [tickerFilter, tickerInstitutions]);
+
+  const buyN = useMemo(() => filtered.filter(t => t.transaction_type === 'BUY').length, [filtered]);
+  const sellN = useMemo(() => filtered.filter(t => t.transaction_type === 'SELL').length, [filtered]);
+  const cluN = useMemo(() => filtered.filter(t => t.signal_category === 'CLUSTER').length, [filtered]);
+
+  const clearTickerFilter = useCallback(() => {
+    setTickerFilter(null);
+    setF('all');
+  }, []);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (detail || profile) {
+        if (e.key === 'Escape') { setDetail(null); setProfile(null); }
+        return;
+      }
+      if (e.target instanceof HTMLInputElement && e.key !== 'Escape') return;
+      if (e.key === '1') { setF('all'); setTickerFilter(null); }
+      if (e.key === '2') setF('buy');
+      if (e.key === '3') setF('sell');
+      if (e.key === '4') setF('cluster');
+      if (e.key === '/' || e.key === '`') { e.preventDefault(); inp.current?.focus(); }
+      if (e.key === 'Escape') { inp.current?.blur(); setCmd(''); cmdRef.current = ''; clearTickerFilter(); }
+    };
+    window.addEventListener('keydown', h);
+    return () => window.removeEventListener('keydown', h);
+  }, [detail, profile, clearTickerFilter]);
+
+  // CMD handler — uses ref to avoid stale closure on cmd state
+  const onCmd = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== 'Enter') return;
+    const v = cmdRef.current.trim().toUpperCase();
+    setCmd('');
+    cmdRef.current = '';
+
+    if (v === 'ALL' || v === '1') { setF('all'); setTickerFilter(null); }
+    else if (v === 'BUY' || v === '2') setF('buy');
+    else if (v === 'SELL' || v === '3') setF('sell');
+    else if (v === 'CLUSTER' || v === '4') setF('cluster');
+    else if (v === 'CLEAR' || v === 'CLS' || v === 'RESET') { setTickerFilter(null); setF('all'); setMsg('Filter cleared'); }
+    else {
+      const tk = v.startsWith('/') ? v.slice(1) : v;
+      if (/^[A-Z]{1,5}$/.test(tk)) {
+        setTickerFilter(tk);
+        setDetail(null);
+        setF('all');
+        setMsg(`🔍 ${tk} — 10Y history`);
+      } else {
+        setMsg('?');
+      }
+    }
+    inp.current?.blur();
+    setTimeout(() => setMsg(''), 2500);
+  }, []);
+
+  // Sync cmd state → ref (for onCmd to always read latest)
+  const onCmdChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    cmdRef.current = val;
+    setCmd(val);
+  }, []);
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%',background:'#000',position:'relative'}}>
       <div style={{display:'flex',alignItems:'center',height:22,padding:'0 8px',fontSize:9,color:'#888',background:'#0a0a0a',borderBottom:'1px solid #1f1f1f',gap:12}}>
-        <span style={{color:'#fff',fontWeight:600}}>{f==='buy'?'🟢 BUY':f==='sell'?'🔴 SELL':f==='cluster'?'🟣 CLUSTER':'◉ ALL'}</span>
-        <span>{filtered.length} of {ALL.length}</span>
-        <span style={{marginLeft:'auto',color:msg?'#ff8c00':'#555'}}>{msg||'1-4 filter  /=cmd  click to explore'}</span>
+        {tickerFilter ? (
+          <>
+            <span style={{color:'#ff8c00',fontWeight:700}}>🔍 {tickerFilter}</span>
+            <span style={{color:'#0c6'}}>10年歷史</span>
+            <span>{filtered.length} trades | {instData.length} inst</span>
+            <span style={{marginLeft:'auto',color:'#555',cursor:'pointer'}} onClick={clearTickerFilter}>ESC 清除</span>
+          </>
+        ) : (
+          <>
+            <span style={{color:'#fff',fontWeight:600}}>{f==='buy'?'🟢 BUY':f==='sell'?'🔴 SELL':f==='cluster'?'🟣 CLUSTER':'◉ ALL'}</span>
+            <span>{filtered.length} of {ALL.length}</span>
+            <span style={{marginLeft:'auto',color:msg?'#ff8c00':'#555'}}>{msg||'1-4 filter  /=cmd  click to explore'}</span>
+          </>
+        )}
       </div>
 
       {detail ? (
@@ -204,7 +384,7 @@ export default function FeedPage() {
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gridTemplateRows:'1fr 1fr',flex:1,overflow:'hidden'}}>
           {/* Q1: INSIDER TRADES */}
           <div style={{borderRight:'1px solid #1f1f1f',borderBottom:'1px solid #1f1f1f',display:'flex',flexDirection:'column',overflow:'hidden'}}>
-            <Hdr title={t('feed.section_insider_trades')||'INSIDER TRADES'} detail="tap ticker/insider/company" />
+            <Hdr title={tickerFilter ? `🔍 ${tickerFilter} · 內部人交易 (10年)` : (t('feed.section_insider_trades')||'INSIDER TRADES')} detail={tickerFilter ? `${filtered.length}筆 | ESC清除` : 'tap ticker/insider/company'} />
             <div style={{flex:1,overflow:'auto'}}>
               <Row>
                 <Cell w={CW.T} color="#555" bold>TICKER</Cell>
@@ -246,10 +426,10 @@ export default function FeedPage() {
 
           {/* Q3: INSTITUTION FLOW */}
           <div style={{borderRight:'1px solid #1f1f1f',display:'flex',flexDirection:'column',overflow:'hidden'}}>
-            <Hdr title={t('feed.section_institutions')||'INSTITUTION FLOW'} detail="tap institution/ticker" />
+            <Hdr title={tickerFilter ? `🏦 ${tickerFilter} · 機構持股 (10年)` : (t('feed.section_institutions')||'INSTITUTION FLOW')} detail={tickerFilter ? `${instData.length}筆` : 'tap institution/ticker'} />
             <div style={{flex:1,overflow:'auto'}}>
               <Row><Cell w={108} color="#555" bold>INSTITUTION</Cell><Cell w={52} color="#555" bold>TICK</Cell><R w={75} c="#555" b>AMOUNT</R><R w={55} c="#555" b>CHG%</R></Row>
-              {INSTS.map((o,i)=>(<Row key={`${o.institution}-${o.ticker}`} h={i%2===0}>
+              {instData.map((o,i)=>(<Row key={`${o.institution}-${o.ticker}-${i}`} h={i%2===0}>
                 <Cell w={108} color="#e6e6e6" onClick={()=>setDetail({mode:'institution',label:o.institution})}>{S(o.institution,14)}</Cell>
                 <Cell w={52} color="#ff8c00" bold underline onClick={()=>setDetail({mode:'ticker',label:o.ticker,subtitle:o.company_name})}>{o.ticker}</Cell>
                 <R w={75} c="#e6e6e6">{F(o.amount)}</R><R w={55} c={o.direction==='NEW'?'#ff8c00':o.change_pct>0?'#0c6':'#f33'} b>{o.direction==='NEW'?'NEW':`${o.change_pct>0?'+':''}${o.change_pct}%`}</R>
@@ -261,10 +441,27 @@ export default function FeedPage() {
           <div style={{display:'flex',flexDirection:'column',overflow:'hidden'}}>
             <Hdr title="COMMANDS & STATS" />
             <div style={{flex:1,padding:8,fontFamily:'JetBrains Mono,monospace',overflow:'auto'}}>
-              <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>DATA</div>
-              <div style={{fontSize:10,color:'#888',marginBottom:8}}>
-                <div>Total: <span style={{color:'#fff'}}>{ALL.length}</span> | Buy: <span style={{color:'#0c6'}}>{buyN}</span> | Sell: <span style={{color:'#f33'}}>{sellN}</span> | Cluster: <span style={{color:'#ff8c00'}}>{cluN}</span></div>
-              </div>
+              {tickerFilter ? (
+                <>
+                  <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>🔍 當前過濾</div>
+                  <div style={{fontSize:10,color:'#e6e6e6',marginBottom:8,padding:'4px 6px',background:'#0d0d0d',border:'1px solid #333'}}>
+                    <div>股票: <span style={{color:'#ff8c00',fontWeight:700}}>{tickerFilter}</span></div>
+                    <div style={{marginTop:2}}>內部人: <span style={{color:'#0c6'}}>{buyN} 買 / {sellN} 賣</span></div>
+                    <div>機構: <span style={{color:'#8b5cf6'}}>{instData.length} 筆</span></div>
+                  </div>
+                  <button onClick={clearTickerFilter}
+                    style={{width:'100%',background:'transparent',border:'1px solid #f33',color:'#f33',cursor:'pointer',padding:'3px',fontSize:10,fontFamily:'JetBrains Mono,monospace',marginBottom:12}}>
+                    ✕ 清除過濾 (ESC)
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>DATA</div>
+                  <div style={{fontSize:10,color:'#888',marginBottom:8}}>
+                    <div>Total: <span style={{color:'#fff'}}>{ALL.length}</span> | Buy: <span style={{color:'#0c6'}}>{buyN}</span> | Sell: <span style={{color:'#f33'}}>{sellN}</span> | Cluster: <span style={{color:'#ff8c00'}}>{cluN}</span></div>
+                  </div>
+                </>
+              )}
               <div style={{color:'#ff8c00',fontWeight:600,fontSize:10,marginBottom:4}}>NAVIGATION</div>
               <div style={{fontSize:10,color:'#888',marginBottom:8}}>
                 <div><span style={{color:'#ff8c00',textDecoration:'underline'}}>TICKER</span> → stock detail</div>
@@ -277,7 +474,7 @@ export default function FeedPage() {
                 <div style={{fontSize:10,color:'#ff8c00',fontWeight:600,marginBottom:2}}>CMD</div>
                 <div style={{display:'flex',alignItems:'center',border:'1px solid #1f1f1f',padding:'3px 6px'}}>
                   <span style={{color:'#0c6',fontSize:12,marginRight:6}}>&gt;</span>
-                  <input ref={inp} value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={onCmd} placeholder="/AAPL | buy | sell | all"
+                  <input ref={inp} value={cmd} onChange={onCmdChange} onKeyDown={onCmd} placeholder="AAPL | /NVDA | buy | sell"
                     style={{flex:1,background:'transparent',border:'none',outline:'none',color:'#ff8c00',fontFamily:'JetBrains Mono,monospace',fontSize:12}}/>
                   <span style={{color:'#555',fontSize:9}}>↵</span>
                 </div>
@@ -292,10 +489,20 @@ export default function FeedPage() {
       {profile && <InsiderProfile trade={profile} onClose={() => setProfile(null)} />}
 
       {/* Backdrop for profile */}
-      {profile && <div onClick={()=>setProfile(null)} style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:55,background:'rgba(0,0,0,0.6)'}} />}
+      {profile && <div
+        role="button"
+        tabIndex={0}
+        aria-label="Close profile overlay"
+        onClick={()=>setProfile(null)}
+        onKeyDown={e=>{if(e.key==='Enter'||e.key==='Escape') setProfile(null)}}
+        style={{position:'absolute',top:0,left:0,right:0,bottom:0,zIndex:55,background:'rgba(0,0,0,0.6)',cursor:'pointer'}} />}
 
       <div style={{display:'flex',alignItems:'center',height:18,padding:'0 8px',fontSize:9,color:'#555',background:'#0a0a0a',borderTop:'1px solid #1f1f1f',gap:12}}>
-        <span>🟠 Ticker=stock | 🟠 Insider=history | 🟠 Company/Title=profile | ESC to close</span>
+        {tickerFilter ? (
+          <><span style={{color:'#ff8c00'}}>🔍 過濾中: {tickerFilter}</span><span>1-4切換 BUY/SELL | ESC清除</span></>
+        ) : (
+          <><span>🟠 Ticker=stock | 🟠 Insider=history | 🟠 Company/Title=profile | ESC to close</span></>
+        )}
         <span style={{marginLeft:'auto'}}>🐋 WhaleTrace</span>
       </div>
     </div>

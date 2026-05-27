@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+data
+!public/data/
+scripts/output/
 *.local
 
 # Editor directories and files
@@ -22,3 +25,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
+playwright-report/
+test-results/
+
+scripts/abu_ump_backtest.py
+scripts/vnpy_backtest.py
+__pycache__/
+insider_edge_results.json
