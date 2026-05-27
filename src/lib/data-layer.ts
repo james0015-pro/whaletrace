@@ -20,9 +20,9 @@ import {
 const N8N_BASE = 'https://n8n-james0015.zeabur.app/webhook';
 
 const ENDPOINTS = {
-  /** SEC Form 4 內部人交易（現有） */
+  /** Stock Query v2 — 完整資料（365天內部人+機構） */
   insiderTrades: (ticker: string, limit = 10) =>
-    `${N8N_BASE}/sec-insider-trades?ticker=${ticker}&limit=${limit}`,
+    `${N8N_BASE}/stock-query?ticker=${ticker}&limit=${limit}`,
 
   /** WhaleTrace 籌碼快照（機構持股%、放空%、估值） */
   stockSnapshot: (ticker?: string) =>
@@ -39,31 +39,63 @@ const ENDPOINTS = {
 // Types from n8n SEC response
 // ============================================================
 
-interface SECTransactionRaw {
+interface StockQueryResponse {
   ticker: string;
-  company_name: string;
-  insider_name: string;
-  role: string;
-  filing_date: string;
-  filing_url: string;
-  transaction_date: string;
-  security: string;
-  type: string;
-  code: string;
-  shares: number | null;
   price: number | null;
-  total_value: number | null;
-  shares_owned_after: number | null;
-  is_derivative: boolean;
+  market_cap: number | null;
+  inst_own_pct: string | null;
+  insider_sentiment: string;
+  insider_buys: number;
+  insider_sells: number;
+  insider_trades_365d: number;
+  insiders: Array<{
+    name: string;
+    buys: number;
+    sells: number;
+    total_value: number;
+    trades: Array<{
+      date: string;
+      buy_or_sell: string;
+      shares: number;
+      price: number;
+      value: number;
+    }>;
+  }>;
+  institutional_holders: Array<{
+    holder: string;
+    date: string;
+    direction: string;
+    shares_held: string;
+    value: string;
+    change_pct: string;
+  }>;
 }
 
-interface SECResponse {
-  success: boolean;
-  count: number;
-  query_ticker: string;
-  data_timestamp: string;
-  source: string;
-  trades: SECTransactionRaw[];
+function transformStockQueryToInsiderTrades(data: StockQueryResponse): InsiderTrade[] {
+  const results: InsiderTrade[] = [];
+  for (const insider of (data.insiders || [])) {
+    for (const trade of (insider.trades || [])) {
+      const isBuy = trade.buy_or_sell.includes('買');
+      results.push({
+        id: ++_realIdCounter,
+        ticker: data.ticker,
+        company_name: data.ticker,
+        insider_name: insider.name,
+        title: '',
+        transaction_type: isBuy ? 'BUY' : 'SELL',
+        shares: trade.shares,
+        price: trade.price,
+        total_value: trade.value,
+        filing_date: trade.date,
+        trade_date: trade.date,
+        is_10b5_1: false,
+        sec_form_url: '',
+        signal_category: isBuy ? 'BUY' : 'SELL',
+        signal_strength: 50,
+      });
+    }
+  }
+  return results;
 }
 
 // ============================================================
@@ -147,28 +179,11 @@ async function fetchFromN8N<T>(url: string, timeoutMs = 15000): Promise<T> {
 
 let _realIdCounter = 1000000;
 
-function transformToInsiderTrade(raw: SECTransactionRaw): InsiderTrade {
-  const isBuy = raw.type === 'BUY' || raw.type === 'DERIVATIVE_BUY';
-  const isSell = raw.type === 'SELL' || raw.type === 'DERIVATIVE_SELL';
-
-  return {
-    id: ++_realIdCounter,
-    ticker: raw.ticker,
-    company_name: raw.company_name,
-    insider_name: raw.insider_name,
-    title: raw.role,
-    transaction_type: isBuy ? 'BUY' : isSell ? 'SELL' : 'BUY',
-    shares: raw.shares ?? 0,
-    price: raw.price ?? 0,
-    total_value: raw.total_value ?? 0,
-    filing_date: raw.filing_date,
-    trade_date: raw.transaction_date,
-    is_10b5_1: false,
-    sec_form_url: raw.filing_url,
-    signal_category: isBuy ? 'BUY' : 'SELL',
-    signal_strength: 50,
-  };
+function transformToInsiderTrade(raw: InsiderTrade): InsiderTrade {
+  return raw;
 }
+
+// Old transform removed — now handled by transformStockQueryToInsiderTrades
 
 // ============================================================
 // Insider Trades (n8n SEC Proxy — 現有邏輯)
@@ -177,8 +192,10 @@ function transformToInsiderTrade(raw: SECTransactionRaw): InsiderTrade {
 let _realTradesCache: InsiderTrade[] | null = null;
 const TRACKED_TICKERS = [
   'AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META',
-  'TSLA', 'JPM', 'V', 'WMT', 'JNJ', 'PG', 'MA', 'UNH',
-  'HD', 'BAC', 'DIS', 'ADBE', 'NFLX', 'CRM',
+  'TSLA', 'BRK-B', 'JPM', 'V', 'UNH', 'XOM', 'WMT', 'JNJ', 'MA',
+  'PG', 'HD', 'BAC', 'DIS', 'CRM', 'CRWV', 'PLTR', 'RDDT',
+  'TSM', 'AMD', 'INTC', 'COIN', 'SMCI',
+  'NFLX', 'ADBE', 'NVO', 'LLY', 'AVGO', 'ORCL', 'ABBV', 'PEP', 'KO'
 ];
 
 export async function fetchRealInsiderTrades(
@@ -192,10 +209,10 @@ export async function fetchRealInsiderTrades(
   for (const ticker of tickers) {
     try {
       const url = ENDPOINTS.insiderTrades(ticker, limitPerTicker);
-      const data = await fetchFromN8N<SECResponse>(url, 10000);
+      const data = await fetchFromN8N<StockQueryResponse>(url, 10000);
 
-      if (data?.trades?.length) {
-        const transformed = data.trades.map(transformToInsiderTrade);
+      if (data?.insiders?.length) {
+        const transformed = transformStockQueryToInsiderTrades(data);
         allTrades.push(...transformed);
       }
     } catch {
