@@ -1,5 +1,6 @@
 // ============================================================
 // WhaleTrace Data Layer — Supabase 為主，n8n + Mock 為備援
+// v3: 使用 /stock-query (365天內部人+機構)
 // ============================================================
 
 import type { InsiderTrade, PaginatedResponse, ResonanceSignal } from '@/types';
@@ -11,6 +12,20 @@ import {
 } from '@/lib/mock-data';
 import { loadSecTrades } from '@/lib/sec-converter';
 import { supabase } from '@/lib/supabase';
+
+// ============================================================
+// Stock Query v3 — 完整 365 天資料
+// ============================================================
+
+const N8N_BASE = 'https://n8n-james0015.zeabur.app/webhook';
+
+async function fetchStockQuery(ticker: string) {
+  try {
+    const resp = await fetch(`${N8N_BASE}/stock-query?ticker=${ticker}`);
+    if (!resp.ok) return null;
+    return resp.json();
+  } catch { return null; }
+}
 
 // ============================================================
 // Supabase 資料轉換
@@ -80,7 +95,7 @@ function toInsiderTrade(row: InsiderTradeRow): InsiderTrade {
 }
 
 // ============================================================
-// Insider Trades（從 Supabase）
+// Insider Trades（Supabase → /stock-query fallback）
 // ============================================================
 
 let _supabaseTradesCache: InsiderTrade[] | null = null;
@@ -101,10 +116,9 @@ export async function fetchRealInsiderTrades(): Promise<InsiderTrade[]> {
       return _supabaseTradesCache;
     }
   } catch {
-    // Supabase 不可用 → fall through to n8n
+    // Supabase 不可用 → fall through
   }
 
-  // Fallback: n8n (keep original logic)
   return [];
 }
 
@@ -143,7 +157,7 @@ export async function getInsiderTrades(
 
   // 2. Fallback: SEC local data
   if (!_secFallbackCache) {
-    try { _secFallbackCache = await loadSecTrades(); } catch { /* fallback — handled below */ }
+    try { _secFallbackCache = await loadSecTrades(); } catch { /* fallback */ }
   }
   if (_secFallbackCache && _secFallbackCache.length > 0) {
     let filtered = _secFallbackCache;
@@ -160,7 +174,7 @@ export async function getInsiderTrades(
 }
 
 // ============================================================
-// Stock Snapshots（從 Supabase）
+// Stock Snapshots（Supabase + /stock-query fallback）
 // ============================================================
 
 let _snapshotCache: StockSnapshotRow[] | null = null;
@@ -210,7 +224,7 @@ export async function fetchStockSnapshots(): Promise<StockSnapshotLegacy[]> {
       _snapshotCache = data;
       return data.map(toLegacySnapshot);
     }
-  } catch { /* fallback — handled below */ }
+  } catch { /* fallback */ }
 
   return [];
 }
@@ -246,6 +260,7 @@ function toLegacySnapshot(row: StockSnapshotRow): StockSnapshotLegacy {
 }
 
 export async function getStockSnapshot(ticker: string): Promise<StockSnapshotLegacy | null> {
+  // Try Supabase
   try {
     const { data, error } = await supabase
       .from('stock_snapshots')
@@ -257,13 +272,34 @@ export async function getStockSnapshot(ticker: string): Promise<StockSnapshotLeg
 
     if (error) throw error;
     if (data) return toLegacySnapshot(data);
-  } catch { /* fallback — handled below */ }
+  } catch { /* fallback */ }
+
+  // Fallback: /stock-query
+  try {
+    const sq = await fetchStockQuery(ticker);
+    if (sq && sq.price) {
+      return {
+        ticker, company_name: ticker,
+        market_cap: sq.market_cap ?? 0,
+        sector: '', industry: '',
+        price: sq.price ?? 0,
+        pe_trailing: 0, pe_forward: 0, peg: 0,
+        inst_own_pct: parseFloat(sq.inst_own_pct) || 0,
+        insider_own_pct: 0, insider_trans_pct: 0,
+        short_float_pct: 0, short_ratio: 0,
+        roe: 0, beta: 0, rsi14: 0,
+        debt_equity: 0, revenue_growth: 0, profit_margin: 0,
+        analyst_target: 0, recommendation: 'N/A',
+        sma50: 0, sma200: 0, data_date: '',
+      };
+    }
+  } catch { /* fail */ }
 
   return null;
 }
 
 // ============================================================
-// Institutional Holdings（從 Supabase）
+// Institutional Holdings（Supabase + /stock-query fallback）
 // ============================================================
 
 interface InstitutionalHoldingLegacy {
@@ -301,16 +337,35 @@ export async function fetchInstitutionalHoldings(ticker: string): Promise<Instit
         is_super_investor: false,
       }));
     }
-  } catch { /* fallback — handled below */ }
+  } catch { /* fallback */ }
+
+  // Fallback: /stock-query
+  try {
+    const sq = await fetchStockQuery(ticker);
+    if (sq && sq.institutional_holders) {
+      return sq.institutional_holders.map((h: any) => ({
+        ticker,
+        institution_name: h.holder,
+        quarter: h.date || '',
+        shares: parseInt(h.shares_held) || 0,
+        market_value: parseInt(h.value) || 0,
+        change_direction: h.direction?.includes('增') ? 'INCREASED' : h.direction?.includes('減') ? 'DECREASED' : 'UNCHANGED',
+        change_shares: 0,
+        pct_of_portfolio: 0,
+        is_super_investor: false,
+      }));
+    }
+  } catch { /* fail */ }
 
   return [];
 }
 
-/** 機構大單 — Supabase → fallback mock */
+/** 機構大單 — Supabase → /stock-query → mock */
 export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
   const allOrders: InstitutionOrder[] = [];
+  const TICKERS = ['AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL'];
 
-  for (const ticker of ['AAPL', 'NVDA', 'TSLA', 'MSFT', 'GOOGL']) {
+  for (const ticker of TICKERS) {
     try {
       const holdings = await fetchInstitutionalHoldings(ticker);
       for (const h of holdings) {
@@ -323,7 +378,7 @@ export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
           direction: h.change_direction === 'INCREASED' ? 'INCREASED' as const : 'DECREASED' as const,
         });
       }
-    } catch { /* fallback — handled below */ }
+    } catch { /* skip */ }
   }
 
   if (allOrders.length > 0) return allOrders;
@@ -331,7 +386,7 @@ export async function getInstitutionOrders(): Promise<InstitutionOrder[]> {
 }
 
 // ============================================================
-// Resonance Signals（mock — 等 Supabase 擴充）
+// Resonance Signals
 // ============================================================
 
 export async function getResonanceSignals(): Promise<ResonanceSignal[]> {
